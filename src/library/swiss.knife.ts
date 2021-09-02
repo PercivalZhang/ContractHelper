@@ -15,6 +15,11 @@ export interface Token {
     decimals: number;
 }
 
+export interface LPToken {
+    token0: Token;
+    token1: Token;
+}
+
 export class SwissKnife {
     protected readonly web3: Web3;
     protected tokenDB: JSONDBBuilder;
@@ -55,6 +60,43 @@ export class SwissKnife {
             }
             token['address'] = tokenAddress;
             return token;
+        } catch (e) {
+            logger.error(`syncUpTokenDB > ${e.toString()}`);
+        }
+    }
+
+    public async isLPToken(address: string): Promise<boolean> {
+        try {
+            const pathABIFile = path.resolve('abi', 'pair.json');
+            logger.debug(`load api from local abi file: ${pathABIFile}`);
+            const apiInterfaceContract = JSON.parse(fs.readFileSync(pathABIFile).toString());
+            const lpContract = new this.web3.eth.Contract(apiInterfaceContract, address);
+
+            await lpContract.methods.token0().call();
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    public async getLPTokenDetails(address: string): Promise<LPToken> {
+        try {
+            const pathABIFile = path.resolve('abi', 'pair.json');
+            logger.debug(`load api from local abi file: ${pathABIFile}`);
+            const apiInterfaceContract = JSON.parse(fs.readFileSync(pathABIFile).toString());
+            const lpContract = new this.web3.eth.Contract(apiInterfaceContract, address);
+
+            const token0Address = await lpContract.methods.token0().call();
+            const token1Address = await lpContract.methods.token1().call();
+
+            const token0 = await this.syncUpTokenDB(token0Address);
+            const token1 = await this.syncUpTokenDB(token1Address);
+
+            const lpt: LPToken = {
+                token0,
+                token1,
+            };
+            return lpt;
         } catch (e) {
             logger.error(`syncUpTokenDB > ${e.toString()}`);
         }
