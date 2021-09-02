@@ -1,0 +1,144 @@
+[
+    {
+        "constant": true,
+        "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+        "name": "accountState",
+        "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "accrualBlockNumber",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [],
+        "name": "accrue",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+        "name": "accruedCurrent",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+        "name": "accruedStored",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "asset",
+        "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            { "internalType": "address", "name": "receiver", "type": "address" },
+            { "internalType": "uint256", "name": "amount", "type": "uint256" }
+        ],
+        "name": "claim",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [],
+        "name": "claimAll",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }],
+        "name": "deposit",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "globalAccruedIndex",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "property",
+        "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "superior",
+        "outputs": [{ "internalType": "contract Distributor", "name": "", "type": "address" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "superiorAccruedAmount",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "totalDeposits",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }],
+        "name": "withdraw",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+]
