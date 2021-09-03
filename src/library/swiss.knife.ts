@@ -30,7 +30,7 @@ export class SwissKnife {
     }
 
     public async syncUpTokenDB(tokenAddress: string, contract?: Contract): Promise<Token> {
-        logger.info(`syncUpTokenDB(${tokenAddress})`);
+        logger.debug(`syncUpTokenDB(${tokenAddress})`);
         let tokenContract = contract;
         try {
             const chainId = await this.web3.eth.net.getId();

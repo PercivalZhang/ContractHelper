@@ -12,10 +12,16 @@
         },
         "0x6ded0f2c886568fb4bb6f04f179093d3d167c9d7": {
             "symbol": "DFL",
-            "decimals": 18
+            "decimals": 18,
+            "address": "0x6ded0F2c886568Fb4Bb6F04f179093D3D167c9D7"
         },
         "0x55d398326f99059ff775485246999027b3197955": {
             "symbol": "USDT",
+            "decimals": 18,
+            "address": "0x55d398326f99059fF775485246999027B3197955"
+        },
+        "0x3c392c3fbe6ada6049373478a4f8dd668ab27b0c": {
+            "symbol": "mFIL",
             "decimals": 18
         }
     }
