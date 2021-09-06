@@ -88,10 +88,23 @@ export class ContractHelper {
         }
     }
 
+    public async callReadMethodWithFrom(methodName: string, fromUser: string, ...args: any[]): Promise<any> {
+        try {
+            logger.debug(`call method - ${methodName} : ${args}`);
+            const ret = await this.contract.methods[methodName](...args).call({from: fromUser});
+            logger.debug(`callReadMethod > ${JSON.stringify(ret)}`);
+            return ret;
+        } catch (e) {
+            if (!this.hideExceptionOutput) {
+                logger.error(`callReadMethod> ${e.message}`);
+            }
+        }
+    }
+
     public async callReadMethod(methodName: string, ...args: any[]): Promise<any> {
         try {
             logger.debug(`call method - ${methodName} : ${args}`);
-            const ret = await this.contract.methods[methodName](...args).call();
+            const ret = await this.contract.methods[methodName](...args).call({from: '0xD2050719eA37325BdB6c18a85F6c442221811FAC'});
             logger.debug(`callReadMethod > ${JSON.stringify(ret)}`);
             return ret;
         } catch (e) {

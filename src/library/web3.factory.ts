@@ -1,27 +1,25 @@
 import Web3 from 'web3';
 
 const HECO_TEST = 'https://http-testnet.hecochain.com';
-const HECO_MAIN = 'https://http-mainnet.hecochain.com';
+const HECO_MAIN = 'https://http-mainnet-node.huobichain.com';
 const ETH_MAIN = 'https://mainnet.infura.io/v3/11ae2b7ff4c04391b71dd5a196c21b0d';
 const Polygon = 'https://matic-mainnet.chainstacklabs.com';
 const OKExChain = 'https://exchainrpc.okex.org';
 const BSC = 'https://bsc-dataseed.binance.org';
-//const BSC = 'https://bsc-dataseed1.binance.org/'
+// const BSC = 'https://bsc-dataseed1.binance.org/'
 export enum NetworkType {
     ETH_MAIN,
     HECO,
     HECO_TEST,
     BSC,
     POLYGON,
-    OKEXChain
+    OKEXChain,
 }
 
 export class Web3Factory {
     private static instance: Web3Factory;
 
-    private constructor() {
-
-    }
+    private constructor() {}
 
     static getInstance() {
         if (!Web3Factory.instance) {
