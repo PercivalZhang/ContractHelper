@@ -23,6 +23,20 @@
         "0x3c392c3fbe6ada6049373478a4f8dd668ab27b0c": {
             "symbol": "mFIL",
             "decimals": 18
+        },
+        "0xee9801669c6138e84bd50deb500827b776777d28": {
+            "symbol": "O3",
+            "decimals": 18,
+            "address": "0xee9801669c6138e84bd50deb500827b776777d28"
+        },
+        "0xe27291056858da9ac876630fb369bb1878ccb010": {
+            "symbol": "LP-ETH",
+            "decimals": 18,
+            "address": "0xe27291056858Da9Ac876630FB369BB1878CcB010"
+        },
+        "0xe9e7cea3dedca5984780bafc599bd69add087d56": {
+            "symbol": "BUSD",
+            "decimals": 18
         }
     },
     "128": {
@@ -38,6 +52,26 @@
         "0x0298c2b32eae4da002a15f36fdf7615bea3da047": {
             "symbol": "HUSD",
             "decimals": 8
+        }
+    },
+    "137": {
+        "0x3ae112f0ff3893c8e8675de170fd72406e9580f2": {
+            "symbol": "ZENY",
+            "decimals": 18,
+            "address": "0x3Ae112f0fF3893C8e8675De170FD72406e9580F2"
+        },
+        "0xb82a20b4522680951f11c94c54b8800c1c237693": {
+            "symbol": "HONOR",
+            "decimals": 18,
+            "address": "0xb82A20B4522680951F11c94c54B8800c1C237693"
+        },
+        "0x2791bca1f2de4661ed88a30c99a7a9449aa84174": {
+            "symbol": "USDC",
+            "decimals": 6
+        },
+        "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270": {
+            "symbol": "WMATIC",
+            "decimals": 18
         }
     }
 }
