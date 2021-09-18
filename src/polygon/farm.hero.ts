@@ -1,7 +1,7 @@
-import { ContractHelper } from './library/contract.helper';
-import { LoggerFactory } from './library/LoggerFactory';
-import { NetworkType } from './library/web3.factory';
-import { SwissKnife } from './library/swiss.knife';
+import { ContractHelper } from '../library/contract.helper';
+import { LoggerFactory } from '../library/LoggerFactory';
+import { NetworkType } from '../library/web3.factory';
+import { SwissKnife } from '../library/swiss.knife';
 import BigNumber from 'bignumber.js';
 
 const network = NetworkType.POLYGON;
@@ -18,6 +18,55 @@ const BoardroomWithTimelockAddress = '0xdcfc3b59b74567083a76308b6d84aef483148689
 
 const FeeDistributionAddress = '0x047e7D6E8f4b6dEBa0537A7c7e852C4272981075';
 
+/* Farm中的yield挖矿就是流动性挖矿
+    master chef 合约地址： 0x8e5860DF653A467D1cC5b6160Dd340E8D475724E
+    PoolType
+    enum PoolType { ERC20, ERC721, ERC1155 }
+    只关注类为0的池子
+*/
+
+/**
+ * 单币质押池，对应UI中的Pool部分
+ * Deposit Fee is 2%.
+ * Withdawal fee varies from 0% - 0.5%, depends on the deposit time.
+ * @param vaultAddress 
+ * @param userAddress 
+ * Quick： 0x253f5089165579b86ddcae96143f871c1ec79031
+ */
+const getVaultReceipt = async (vaultAddress: string, userAddress: string) => {
+    const vault = new ContractHelper(vaultAddress, './FarmHero/vault.json', network);
+    vault.toggleHiddenExceptionOutput();
+
+    const shareToken = await swissKnife.syncUpTokenDB(ShareTokenAddress);
+
+    //获取奖励token的地址
+    const rewardTokenAddress = await vault.callReadMethod('rewardToken');
+    const rewardToken = await swissKnife.syncUpTokenDB(rewardTokenAddress);
+
+    //获取目标用户质押的share token - Honor的数量
+    const myBalance = new BigNumber(await vault.callReadMethod('balanceOf', userAddress));
+    logger.info(
+        `my staked - ${myBalance.dividedBy(Math.pow(10, shareToken.decimals)).toNumber().toFixed(6)} ${
+            shareToken.symbol
+        }`,
+    );
+
+    //获取目标用户可领取的奖励token数量
+    const pendingReward = new BigNumber(await vault.callReadMethod('earned', userAddress));
+    logger.info(
+        `pending reward - ${pendingReward.dividedBy(Math.pow(10, rewardToken.decimals)).toNumber().toFixed(6)} ${
+            rewardToken.symbol
+        }`,
+    );
+}
+/**
+ * Boardroom董事会
+ * No deposit fee, withdrawal fee.
+ * Rewards (ZENY) can be freely traded.
+ * @param boardroomAddress 
+ * @param userAddress 
+ * @param locked 
+ */
 const getBoardroomReceipt = async (boardroomAddress: string, userAddress: string, locked = true) => {
     const boardroom = new ContractHelper(boardroomAddress, './FarmHero/boardroom.json', network);
     boardroom.toggleHiddenExceptionOutput();
@@ -29,21 +78,21 @@ const getBoardroomReceipt = async (boardroomAddress: string, userAddress: string
         const timeLock = await boardroom.callReadMethod('timeLock');
         logger.info(`Unstake available in - ${timeLock} ms`);
     }
-
+    // 总质押的share token的数量
     const totalSupply = new BigNumber(await boardroom.callReadMethod('totalSupply'));
     logger.info(
         `Total staked - ${totalSupply.dividedBy(Math.pow(10, shareToken.decimals)).toNumber().toFixed(6)} ${
             shareToken.symbol
         }`,
     );
-
+    // 目标用户枝桠的share token数量     
     const myStakedBalance = new BigNumber(await boardroom.callReadMethod('balanceOf', userAddress));
     logger.info(
         `My staked - ${myStakedBalance.dividedBy(Math.pow(10, shareToken.decimals)).toNumber().toFixed(6)} ${
             shareToken.symbol
         }`,
     );
-
+    // 目标用户可领取奖励cash token的数量
     const earnedReward = new BigNumber(await boardroom.callReadMethod('earned', userAddress));
     logger.info(
         `My earned reward - ${earnedReward.dividedBy(Math.pow(10, cashToken.decimals)).toNumber().toFixed(6)} ${
@@ -51,14 +100,18 @@ const getBoardroomReceipt = async (boardroomAddress: string, userAddress: string
         }`,
     );
 };
-
+/**
+ * 单币质押/锁定，多种奖励（3种奖励token）
+ * 对应UI中Staking+Vesting
+ * @param userAddress 
+ */
 const getStakingVestingReceipt = async (userAddress: string) => {
     const feeDistributor = new ContractHelper(FeeDistributionAddress, './FarmHero/fee.distribution.v2.json', network);
     feeDistributor.toggleHiddenExceptionOutput();
 
     const shareToken = await swissKnife.syncUpTokenDB(ShareTokenAddress);
     const cashToken = await swissKnife.syncUpTokenDB(CashTokenAddress);
-
+    // 总质押（locked + unlocked）share token的数量
     const totalSupply = new BigNumber(await feeDistributor.callReadMethod('totalSupply'));
     logger.info(
         `Total staked - ${totalSupply.dividedBy(Math.pow(10, shareToken.decimals)).toNumber().toFixed(6)} ${
@@ -174,7 +227,9 @@ const main = async () => {
     await getBoardroomReceipt(BoardroomWithTimelockAddress, '0xD2050719eA37325BdB6c18a85F6c442221811FAC');
     await getBoardroomReceipt(BoardroomAddress, '0xD2050719eA37325BdB6c18a85F6c442221811FAC', false);
     logger.info(`--------------------------------------------------`)
-    await getStakingVestingReceipt('0xD2050719eA37325BdB6c18a85F6c442221811FAC')
+    await getStakingVestingReceipt('0xD2050719eA37325BdB6c18a85F6c442221811FAC');
+    logger.info(`--------------------------------------------------`)
+    await getVaultReceipt('0x253f5089165579b86ddcae96143f871c1ec79031', '0xD2050719eA37325BdB6c18a85F6c442221811FAC');
 };
 
 main().catch((e) => {
