@@ -197,12 +197,54 @@ const getLockPlusReceipt = async (userAddress: string) => {
     );
 };
 
+const getLPStakingReceipt = async (lpVaultAddress: string, userAddress: string) => {
+    const vault = new ContractHelper(lpVaultAddress, './Adamant/addy.staking.rewards.json', network);
+    vault.toggleHiddenExceptionOutput();
+
+    //获取质押token的地址
+    const stakingTokenAddress = await vault.callReadMethod('stakingToken');
+    const stakingToken = await swissKnife.syncUpTokenDB(stakingTokenAddress);
+    
+    //获取目标用户质押的lp token的数量: locked + unlocked
+    const myStakedBalance = new BigNumber(await vault.callReadMethod('balanceOf', userAddress));
+    logger.info(
+        `my staked - ${myStakedBalance.dividedBy(Math.pow(10, 18)).toNumber().toFixed(6)} ${
+            stakingToken.symbol
+        }`,
+    );
+    // 获取锁定部分的LP Token信息    
+    const myLockedBalanceData = await vault.callReadMethod('lockedStakesOf', userAddress);
+    console.log(myLockedBalanceData);
+    const myLockedBalance = new BigNumber(myLockedBalanceData[0].amount);
+    const endingTimestamp = new BigNumber(myLockedBalanceData[0].ending_timestamp);
+    const multiplier = new BigNumber(myLockedBalanceData[0].multiplier);
+    logger.info(
+        `my locked - ${myLockedBalance.dividedBy(Math.pow(10, 18)).toNumber().toFixed(6)} ${
+            stakingToken.symbol
+        }`,
+    );
+    logger.info(
+        `my mutiplier - ${multiplier.dividedBy(Math.pow(10, 6)).toNumber().toFixed(6)}`
+    );
+    const endingDatetime = new Date(endingTimestamp.multipliedBy(1000).toNumber());
+    logger.info(`my locked shares will be avaiable by ${endingDatetime.toLocaleDateString()}`);
+    // 获取已经解锁的LP Token数量    
+    const myUnlockedBalance = new BigNumber(await vault.callReadMethod('unlockedBalanceOf', userAddress));
+    logger.info(
+        `my unlocked - ${myUnlockedBalance.dividedBy(Math.pow(10, 18)).toNumber().toFixed(6)} ${
+            stakingToken.symbol
+        }`,
+    );
+}
+
 const main = async () => {
     await getBasicLockReceipt('0xD2050719eA37325BdB6c18a85F6c442221811FAC');
     logger.info(`-------------------------------------`)
     await getLockPlusReceipt('0xD2050719eA37325BdB6c18a85F6c442221811FAC');
     logger.info(`-------------------------------------`)
-    await getDemandDepositReceipt('0xD2050719eA37325BdB6c18a85F6c442221811FAC')
+    await getDemandDepositReceipt('0xD2050719eA37325BdB6c18a85F6c442221811FAC');
+    logger.info(`-------------------------------------`)
+    await getLPStakingReceipt('0xf7661ee874ec599c2b450e0df5c40ce823fef9d3','0xD2050719eA37325BdB6c18a85F6c442221811FAC') // quickswap ADDY/WETH LP
 };
 
 main().catch((e) => {
