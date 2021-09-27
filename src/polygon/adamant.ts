@@ -14,9 +14,12 @@ const Config = {
     addresses: {
         stakingDualRewards: '0xffd82f81513b207fb9d7d7835e178b6193f2ca96',
         lockedAddyVault: '0xc5bcd23f21b6288417eb6c760f8ac0fbb4bb8a56',
-        multiFeeDistribution: '0x920f22e1e5da04504b765f8110ab96a20e6408bd'
+        multiFeeDistribution: '0x920f22e1e5da04504b765f8110ab96a20e6408bd',
     },
 };
+
+const ADDY = '0xc3FdbadC7c795EF1D6Ba111e06fF8F16A20Ea539';
+
 /**
  * 获取活期存款的信息
  * @param userAddress
@@ -33,7 +36,7 @@ const getDemandDepositReceipt = async (userAddress: string) => {
     //获取质押token的地址
     const stakingTokenAddress = await vault.callReadMethod('stakingToken');
     const stakingToken = await swissKnife.syncUpTokenDB(stakingTokenAddress);
-
+    logger.info(`staking token - ${stakingToken.symbol} : ${stakingToken.address}`);
     //获取奖励token A的地址
     const rewardTokenAAddress = await vault.callReadMethod('rewardTokens', 0);
     const rewardTokenA = await swissKnife.syncUpTokenDB(rewardTokenAAddress);
@@ -65,8 +68,8 @@ const getDemandDepositReceipt = async (userAddress: string) => {
 
     //获取目标用户可领取的两种奖励token的数量
     const pendingRewards = await vault.callReadMethod('claimableRewards', userAddress);
-    console.log(pendingRewards)
-    for(const rewardItem of pendingRewards) {
+    console.log(pendingRewards);
+    for (const rewardItem of pendingRewards) {
         const rewardToken = await swissKnife.syncUpTokenDB(rewardItem[0]);
         const pendingReward = new BigNumber(rewardItem[1]);
         logger.info(
@@ -177,12 +180,11 @@ const getLockPlusReceipt = async (userAddress: string) => {
     const myShares = new BigNumber(myUserInfo[0]);
     logger.info(`my shares: ${myShares}`);
     //将份额转换为质押token的数量
-    const myStakedBalance = totalStakedBalance.dividedBy(totalShares).multipliedBy(myShares).dividedBy(Math.pow(10, stakingToken.decimals));
-    logger.info(
-        `my staked - ${myStakedBalance.toNumber().toFixed(6)} ${
-            stakingToken.symbol
-        }`,
-    );
+    const myStakedBalance = totalStakedBalance
+        .dividedBy(totalShares)
+        .multipliedBy(myShares)
+        .dividedBy(Math.pow(10, stakingToken.decimals));
+    logger.info(`my staked - ${myStakedBalance.toNumber().toFixed(6)} ${stakingToken.symbol}`);
     //用户质押的token的解锁时间
     const endingTimestamp = new BigNumber(myUserInfo[3]);
     const endingDatetime = new Date(endingTimestamp.multipliedBy(1000).toNumber());
@@ -204,47 +206,73 @@ const getLPStakingReceipt = async (lpVaultAddress: string, userAddress: string) 
     //获取质押token的地址
     const stakingTokenAddress = await vault.callReadMethod('stakingToken');
     const stakingToken = await swissKnife.syncUpTokenDB(stakingTokenAddress);
-    
+
     //获取目标用户质押的lp token的数量: locked + unlocked
     const myStakedBalance = new BigNumber(await vault.callReadMethod('balanceOf', userAddress));
     logger.info(
-        `my staked - ${myStakedBalance.dividedBy(Math.pow(10, 18)).toNumber().toFixed(6)} ${
-            stakingToken.symbol
-        }`,
+        `my staked - ${myStakedBalance.dividedBy(Math.pow(10, 18)).toNumber().toFixed(6)} ${stakingToken.symbol}`,
     );
-    // 获取锁定部分的LP Token信息    
+    // 获取锁定部分的LP Token信息
     const myLockedBalanceData = await vault.callReadMethod('lockedStakesOf', userAddress);
     console.log(myLockedBalanceData);
     const myLockedBalance = new BigNumber(myLockedBalanceData[0].amount);
     const endingTimestamp = new BigNumber(myLockedBalanceData[0].ending_timestamp);
     const multiplier = new BigNumber(myLockedBalanceData[0].multiplier);
     logger.info(
-        `my locked - ${myLockedBalance.dividedBy(Math.pow(10, 18)).toNumber().toFixed(6)} ${
-            stakingToken.symbol
-        }`,
+        `my locked - ${myLockedBalance.dividedBy(Math.pow(10, 18)).toNumber().toFixed(6)} ${stakingToken.symbol}`,
     );
-    logger.info(
-        `my mutiplier - ${multiplier.dividedBy(Math.pow(10, 6)).toNumber().toFixed(6)}`
-    );
+    logger.info(`my mutiplier - ${multiplier.dividedBy(Math.pow(10, 6)).toNumber().toFixed(6)}`);
     const endingDatetime = new Date(endingTimestamp.multipliedBy(1000).toNumber());
     logger.info(`my locked shares will be avaiable by ${endingDatetime.toLocaleDateString()}`);
-    // 获取已经解锁的LP Token数量    
+    // 获取已经解锁的LP Token数量
     const myUnlockedBalance = new BigNumber(await vault.callReadMethod('unlockedBalanceOf', userAddress));
     logger.info(
-        `my unlocked - ${myUnlockedBalance.dividedBy(Math.pow(10, 18)).toNumber().toFixed(6)} ${
-            stakingToken.symbol
+        `my unlocked - ${myUnlockedBalance.dividedBy(Math.pow(10, 18)).toNumber().toFixed(6)} ${stakingToken.symbol}`,
+    );
+};
+
+const getGenericVaultReceipt = async (vaultAddress: string, userAddress: string) => {
+    const vault = new ContractHelper(vaultAddress, './Adamant/generic.vault.json', network);
+    vault.toggleHiddenExceptionOutput();
+    //奖励reward token
+    const rewardToken = await swissKnife.syncUpTokenDB(ADDY);
+    logger.info(`reward token - ${rewardToken.symbol} : ${rewardToken.address}`);
+    //获取质押token的地址
+    const stakingTokenAddress = await vault.callReadMethod('token');
+    const stakingToken = await swissKnife.syncUpTokenDB(stakingTokenAddress);
+    logger.info(`staking token - ${stakingToken.symbol} : ${stakingToken.address}`);
+    //获取用户质押信息
+    const userInfo = await vault.callReadMethod('userInfo', userAddress);
+    console.log(userInfo);
+    const myStakedShares = userInfo.shares;
+    const myStakedTokenBalance = new BigNumber(userInfo.tokensStaked);
+    logger.info(`my staked shares: ${myStakedShares}`);
+    logger.info(`my staked lp Token balance: ${myStakedTokenBalance.dividedBy(Math.pow(10, 18)).toString()}`);
+    //获取可领取奖励token的数量
+    const pendingReward = new BigNumber(await vault.callReadMethod('getPendingReward', userAddress));
+    logger.info(
+        `pending reward token: ${pendingReward.dividedBy(Math.pow(10, rewardToken.decimals)).toNumber().toFixed(8)} ${
+            rewardToken.symbol
         }`,
     );
-}
+};
 
 const main = async () => {
     await getBasicLockReceipt('0xD2050719eA37325BdB6c18a85F6c442221811FAC');
-    logger.info(`-------------------------------------`)
+    logger.info(`-------------------------------------`);
     await getLockPlusReceipt('0xD2050719eA37325BdB6c18a85F6c442221811FAC');
-    logger.info(`-------------------------------------`)
+    logger.info(`-------------------------------------`);
     await getDemandDepositReceipt('0xD2050719eA37325BdB6c18a85F6c442221811FAC');
-    logger.info(`-------------------------------------`)
-    await getLPStakingReceipt('0xf7661ee874ec599c2b450e0df5c40ce823fef9d3','0xD2050719eA37325BdB6c18a85F6c442221811FAC') // quickswap ADDY/WETH LP
+    logger.info(`-------------------------------------`);
+    await getLPStakingReceipt(
+        '0xf7661ee874ec599c2b450e0df5c40ce823fef9d3',
+        '0xD2050719eA37325BdB6c18a85F6c442221811FAC',
+    ); // quickswap ADDY/WETH LP
+    logger.info(`-------------------------------------`);
+    await getGenericVaultReceipt(
+        '0xc1447a9403aeb2726593727d0d8d2ccba8a6f71c',
+        '0xD2050719eA37325BdB6c18a85F6c442221811FAC',
+    ); // quickswap MAI/USDT LP
 };
 
 main().catch((e) => {

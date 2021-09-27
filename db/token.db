@@ -92,6 +92,20 @@
         },
         "0xa5bf14bb945297447fe96f6cd1b31b40d31175cb": {
             "symbol": "UNI-V2",
+            "decimals": 18,
+            "address": "0xa5BF14BB945297447fE96f6cD1b31b40d31175CB"
+        },
+        "0xe89fae1b4ada2c869f05a0c96c87022dadc7709a": {
+            "symbol": "UNI-V2",
+            "decimals": 18
+        },
+        "0xcb898b0efb084df14dd8e018da37b4d0f06ab26d": {
+            "symbol": "SING",
+            "decimals": 18,
+            "address": "0xCB898b0eFb084Df14dd8E018dA37B4d0f06aB26D"
+        },
+        "0x6046eb198abc5ea4f17027bc00a2aee0420e84ee": {
+            "symbol": "APE-LP",
             "decimals": 18
         }
     }

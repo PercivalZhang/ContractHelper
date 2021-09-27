@@ -3,7 +3,7 @@ import Web3 from 'web3';
 const HECO_TEST = 'https://http-testnet.hecochain.com';
 const HECO_MAIN = 'https://http-mainnet-node.huobichain.com';
 const ETH_MAIN = 'https://mainnet.infura.io/v3/11ae2b7ff4c04391b71dd5a196c21b0d';
-const Polygon = 'https://matic-mainnet.chainstacklabs.com';
+const Polygon = 'https://rpc-mainnet.maticvigil.com/v1/cb3dd265b2e6c6b21996ef67b97183ad9e51a3cc';
 const OKExChain = 'https://exchainrpc.okex.org';
 const BSC = 'https://bsc-dataseed.binance.org';
 // const BSC = 'https://bsc-dataseed1.binance.org/'
