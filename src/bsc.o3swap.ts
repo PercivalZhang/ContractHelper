@@ -121,23 +121,33 @@ const getHUBPoolDetail = async (hubLPAddress: string, userAddress: string) => {
 };
 
 const main = async () => {
-    await getSingleVaultDetail(
-        '0x0423f3b26593db401a3382b483981e619c808dfc',
-        '0xD2050719eA37325BdB6c18a85F6c442221811FAC',
-    ); // get vault - O3 receipt
-    logger.info(`==============================================`);
-    await getSingleVaultDetail(
-        '0x0ee932a6e89619dd865221754813c5627d00adb3',
-        '0xD2050719eA37325BdB6c18a85F6c442221811FAC',
-    ); // get vault - LP-ETH receipt
-    logger.info(`==============================================`);
-    await getLPVaultDetail(
-        '0xee9801669c6138e84bd50deb500827b776777d28',
-        '0x7759283571da8c0928786a96ae601944e10461ff',
-        '0xD2050719eA37325BdB6c18a85F6c442221811FAC',
-    ); // get vault - O3-BUSD LP receipt
+    // await getSingleVaultDetail(
+    //     '0x0423f3b26593db401a3382b483981e619c808dfc',
+    //     '0xD2050719eA37325BdB6c18a85F6c442221811FAC',
+    // ); // get vault - O3 receipt
+    // logger.info(`==============================================`);
+    // await getSingleVaultDetail(
+    //     '0x0ee932a6e89619dd865221754813c5627d00adb3',
+    //     '0xD2050719eA37325BdB6c18a85F6c442221811FAC',
+    // ); // get vault - LP-ETH receipt
+    // logger.info(`==============================================`);
+    // await getLPVaultDetail(
+    //     '0xee9801669c6138e84bd50deb500827b776777d28',
+    //     '0x7759283571da8c0928786a96ae601944e10461ff',
+    //     '0xD2050719eA37325BdB6c18a85F6c442221811FAC',
+    // ); // get vault - O3-BUSD LP receipt
     // logger.info(`==============================================`);
     // await getHUBPoolDetail('0xe27291056858Da9Ac876630FB369BB1878CcB010', '0xD2050719eA37325BdB6c18a85F6c442221811FAC');
+    let token = await swissKnife.syncUpTokenDB('0x014fe4658e416fdf6e955413271b2881dfd6a05a');
+    console.log(token)
+    token = await swissKnife.syncUpTokenDB('0x01543d3d4853a84b88f9217e2b45a09c16f8476a');
+    console.log(token)
+    token = await swissKnife.syncUpTokenDB('0x017e00b42a26316ef8ab19ee48552c92b89162ab');
+    console.log(token)
+    token = await swissKnife.syncUpTokenDB('0x017fe668e4a215a8dd3303693bce8c5caab44219');
+    console.log(token)
+    token = await swissKnife.syncUpTokenDB('0x01828bae3a43d1c5de2f7259ec68a86cb9c5c340');
+    console.log(token)
 };
 
 main().catch((e) => {

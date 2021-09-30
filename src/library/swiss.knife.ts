@@ -37,31 +37,43 @@ export class SwissKnife {
             logger.debug(`chain id: ${chainId}`);
             const token = await this.tokenDB.getData('/' + chainId + '/' + tokenAddress.toLowerCase());
             if (!token) {
-                if (!tokenContract) {
-                    logger.debug(`no contract provided`);
-                    logger.debug(`loading contract by token address: ${tokenAddress}`);
-                    const pathABIFile = path.resolve('abi', 'erc20.json');
-                    logger.debug(`load api from local abi file: ${pathABIFile}`);
-                    const apiInterfaceContract = JSON.parse(fs.readFileSync(pathABIFile).toString());
-                    tokenContract = new this.web3.eth.Contract(apiInterfaceContract, tokenAddress);
+                if(tokenAddress.toLowerCase() === '0x0000000000000000000000000000000000000000') {
+                    switch(chainId) {
+                        case 137:
+                            this.tokenDB.push('/' + chainId + '/' + tokenAddress.toLowerCase(), {
+                                symbol: 'MATIC',
+                                decimals: 18,
+                            });
+                            break;
+                    }
+                } else {
+                    if (!tokenContract) {
+                        logger.debug(`no contract provided`);
+                        logger.debug(`loading contract by token address: ${tokenAddress}`);
+                        const pathABIFile = path.resolve('abi', 'erc20.json');
+                        logger.debug(`load api from local abi file: ${pathABIFile}`);
+                        const apiInterfaceContract = JSON.parse(fs.readFileSync(pathABIFile).toString());
+                        tokenContract = new this.web3.eth.Contract(apiInterfaceContract, tokenAddress);
+                    }
+                    let symbol = await tokenContract.methods.symbol().call();
+                    if (symbol.substr(0, 2) === '0x') {
+                        symbol = Web3.utils.toAscii(symbol);
+                    }
+                    const decimals = Number.parseInt(await tokenContract.methods.decimals().call());
+                    logger.debug(`add new token - ${symbol} into local token db at ${tokenAddress}`);
+                    this.tokenDB.push('/' + chainId + '/' + tokenAddress.toLowerCase(), {
+                        symbol: symbol,
+                        decimals: decimals,
+                    });
                 }
-                let symbol = await tokenContract.methods.symbol().call();
-                if (symbol.substr(0, 2) === '0x') {
-                    symbol = Web3.utils.toAscii(symbol);
-                }
-                const decimals = Number.parseInt(await tokenContract.methods.decimals().call());
-                logger.debug(`add new token - ${symbol} into local token db at ${tokenAddress}`);
-                this.tokenDB.push('/' + chainId + '/' + tokenAddress.toLowerCase(), {
-                    symbol: symbol,
-                    decimals: decimals,
-                });
-
-                return { symbol: symbol, decimals: decimals, address: tokenAddress };
+                const newToken = await this.tokenDB.getData('/' + chainId + '/' + tokenAddress.toLowerCase());
+                newToken['address'] = tokenAddress;
+                return newToken;
             }
             token['address'] = tokenAddress;
             return token;
         } catch (e) {
-            logger.error(`syncUpTokenDB > ${e.toString()}`);
+            logger.error(`syncUpTokenDB(${tokenAddress}) > ${e.toString()}`);
         }
     }
 
