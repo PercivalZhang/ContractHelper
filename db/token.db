@@ -76,6 +76,34 @@
         "0x0298c2b32eae4da002a15f36fdf7615bea3da047": {
             "symbol": "HUSD",
             "decimals": 8
+        },
+        "0x3c961d505b3506ee33dc214148f3fb1860a0d943": {
+            "symbol": "HHBTC",
+            "decimals": 18,
+            "address": "0x3c961d505b3506ee33dc214148f3fb1860a0d943"
+        },
+        "0x66a79d23e58475d2738179ca52cd0b41d73f0bea": {
+            "symbol": "HBTC",
+            "decimals": 18,
+            "address": "0x66a79D23E58475D2738179Ca52cd0b41d73f0BEa"
+        },
+        "0x799c2da6c0a9842e2be82d5cc1f6b06bfece4d4d": {
+            "symbol": "HWHT-USDT LP",
+            "decimals": 18,
+            "address": "0x799c2da6c0a9842e2be82d5cc1f6b06bfece4d4d"
+        },
+        "0x499b6e03749b4baf95f9e70eed5355b138ea6c31": {
+            "symbol": "HMDX",
+            "decimals": 18
+        },
+        "0x6e73cc60cc227f2c019c79d0459411ef2c188a25": {
+            "symbol": "HMDX",
+            "decimals": 18,
+            "address": "0x6e73cc60cc227f2c019c79d0459411ef2c188a25"
+        },
+        "0x25d2e80cb6b86881fd7e07dd263fb79f4abe033c": {
+            "symbol": "MDX",
+            "decimals": 18
         }
     },
     "137": {
@@ -494,6 +522,15 @@
         },
         "0x08232131609fa7ddb2b9942616afee42a88c4565": {
             "symbol": "imxC",
+            "decimals": 18
+        },
+        "0x7dff46370e9ea5f0bad3c4e29711ad50062ea7a4": {
+            "symbol": "SOL",
+            "decimals": 18,
+            "address": "0x7DfF46370e9eA5f0Bad3C4E29711aD50062EA7A4"
+        },
+        "0xc8bcb58caef1be972c0b638b1dd8b0748fdc8a44": {
+            "symbol": "PEAR",
             "decimals": 18
         }
     }

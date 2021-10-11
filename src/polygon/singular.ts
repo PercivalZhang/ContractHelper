@@ -9,16 +9,86 @@ const network = NetworkType.POLYGON;
 const swissKnife = new SwissKnife(network);
 
 const logger = LoggerFactory.getInstance().getLogger('main');
-
+/**
+ *
+ */
 const Config = {
     address: {
         bank: '0xa16abac16965d249c813b56bf8f923be69e4e66f',
+        bank2: '0xc6bc7173dea43dadf3e36e3747f0690e7a0f08e3',
         masterChef: '0x9762fe3ef5502df432de41e7765b0ccc90e02e92',
     },
 };
 
 const SING = '0xCB898b0eFb084Df14dd8E018dA37B4d0f06aB26D';
 
+/**
+ * 获取Bank存款的信息
+ * @param userAddress
+ * Contract： 0xc6bc7173dea43dadf3e36e3747f0690e7a0f08e3
+ * 用户销毁sing，参与多个奖金池的，领取奖励token
+ * 提供compound复投功能：
+ * 一键将多个奖励token转换为sing，然后销毁sing，继续参互多个奖金池；
+ * 如果单次销毁sing token数目超过5个sing，将获取一张lottery抽奖的ticket，
+ * 每周开一次奖，将按照用户累计的ticket进行抽奖；
+ * 
+ */
+const getBankV2Receipt = async (userAddress: string) => {
+    const vault = new ContractHelper(Config.address.bank2, './Singular/bank.v2.json', network);
+    vault.toggleHiddenExceptionOutput();
+
+    //获取质押token的地址
+    const meltedToken = await swissKnife.syncUpTokenDB(SING);
+    logger.info(`melted token - ${meltedToken.symbol} : ${meltedToken.address}`);
+
+    //获取默认参与的USDC奖金池USDC token的地址
+    const usdcAddress = await vault.callReadMethod('USDC');
+    const usdcToken = await swissKnife.syncUpTokenDB(usdcAddress);
+    logger.info(`USDC - ${usdcToken.symbol} : ${usdcToken.address}`);
+
+    //获取总metled token - SING的数量
+    const totalMeltedToken = new BigNumber(await vault.callReadMethod('totalAmount'));
+    logger.info(
+        `total staked - ${totalMeltedToken.dividedBy(Math.pow(10, meltedToken.decimals)).toNumber().toFixed(6)} ${
+            meltedToken.symbol
+        }`,
+    );
+
+    //获取目标用户melted token - SING的数量
+    const userInfo = await vault.callReadMethod('userinfo', userAddress);
+    console.log(userInfo);
+    const myMeltedBalance = new BigNumber(userInfo.amount);
+    logger.info(
+        `my melted token: ${myMeltedBalance.dividedBy(Math.pow(10, meltedToken.decimals)).toNumber().toFixed(6)} ${
+            meltedToken.symbol
+        }`,
+    );
+    //获取用户默认enrolled的USDC奖金池的可领取奖励信息
+    const pendingRewardUSDC = new BigNumber(await vault.callReadMethod('pendingUsdc', userAddress));
+    logger.info(
+        `my default enrolled pool - ${usdcToken.symbol} > pending reward: ${pendingRewardUSDC
+            .dividedBy(Math.pow(10, usdcToken.decimals))
+            .toNumber()
+            .toFixed(6)} ${usdcToken.symbol}`,
+    );
+    //获取用户额外enrolled的其他奖金池以及各自的可领取奖励的信息
+    const myEnrolledPids = userInfo.pids;
+    for (const pid of myEnrolledPids) {
+        //获取奖金池信息
+        const poolInfo = await vault.callReadMethod('poolInfo', pid);
+        //获取奖金池奖励token地址 
+        const rewardTokenAddress = poolInfo.token; 
+        const rewardToken = await swissKnife.syncUpTokenDB(rewardTokenAddress);
+        //获取用户在目标奖金池中可领取奖励token的数量
+        const pendingReward = new BigNumber(await vault.callReadMethod('pendingReward', pid, userAddress));
+        logger.info(
+            `my enrolled pool[${pid}] - ${rewardToken.symbol} > pending reward: ${pendingReward
+                .dividedBy(Math.pow(10, rewardToken.decimals))
+                .toNumber()
+                .toFixed(6)} ${rewardToken.symbol}`,
+        );
+    }
+};
 /**
  * 获取Bank存款的信息
  * @param userAddress
@@ -101,6 +171,8 @@ const getFarmReceipt = async (userAddress: string) => {
 };
 
 const main = async () => {
+    await getBankV2Receipt('0xD2050719eA37325BdB6c18a85F6c442221811FAC');
+    logger.info(`----------------------------------------------------`);
     await getBankReceipt('0xD2050719eA37325BdB6c18a85F6c442221811FAC');
     logger.info(`----------------------------------------------------`);
     await getFarmReceipt('0xD2050719eA37325BdB6c18a85F6c442221811FAC');
