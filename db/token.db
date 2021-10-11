@@ -532,6 +532,24 @@
         "0xc8bcb58caef1be972c0b638b1dd8b0748fdc8a44": {
             "symbol": "PEAR",
             "decimals": 18
+        },
+        "0x1f1e4c845183ef6d50e9609f16f6f9cae43bc9cb": {
+            "symbol": "UNI-V2",
+            "decimals": 18,
+            "address": "0x1F1E4c845183EF6d50E9609F16f6f9cAE43BC9Cb"
+        },
+        "0x3bb367f673d52d1a5f0812c4d8c9030e5876ad44": {
+            "symbol": "UNI-V2",
+            "decimals": 18
+        },
+        "0x7f426f6dc648e50464a0392e60e1bb465a67e9cf": {
+            "symbol": "PAUTO",
+            "decimals": 18,
+            "address": "0x7f426F6Dc648e50464a0392E60E1BB465a67E9cf"
+        },
+        "0x4c4bf319237d98a30a929a96112effa8da3510eb": {
+            "symbol": "WEXpoly",
+            "decimals": 18
         }
     }
 }
