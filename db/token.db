@@ -61,6 +61,15 @@
         "0x01828bae3a43d1c5de2f7259ec68a86cb9c5c340": {
             "symbol": "MONSTER",
             "decimals": 9
+        },
+        "0xc6370f91a3896cf7850b463c2f4f6ccef02ac579": {
+            "symbol": "USDT",
+            "decimals": 6,
+            "address": "0xc6370f91a3896cF7850B463c2F4F6CceF02Ac579"
+        },
+        "0x880baf7c965a43998b8632b870fb2f5e7efacb04": {
+            "symbol": "USDC",
+            "decimals": 6
         }
     },
     "128": {
@@ -549,6 +558,28 @@
         },
         "0x4c4bf319237d98a30a929a96112effa8da3510eb": {
             "symbol": "WEXpoly",
+            "decimals": 18
+        },
+        "0xb5106a3277718ecad2f20ab6b86ce0fee7a21f09": {
+            "symbol": "pBREW",
+            "decimals": 18,
+            "address": "0xb5106A3277718eCaD2F20aB6b86Ce0Fee7A21F09"
+        },
+        "0x4f03233c742ea20e73b46d5e33242b7770274ab8": {
+            "symbol": "Cafe-LP",
+            "decimals": 18
+        },
+        "0x845e76a8691423fbc4ecb8dd77556cb61c09ee25": {
+            "symbol": "pWINGS",
+            "decimals": 18
+        },
+        "0xc711e8dec1c44efc3fa43463eba3c62d67efd4a0": {
+            "symbol": "fQUICK",
+            "decimals": 18,
+            "address": "0xc711e8DeC1c44EFC3fA43463eBA3c62d67efd4A0"
+        },
+        "0xf330b39f74e7f71ab9604a5307690872b8125ac8": {
+            "symbol": "fUSDC",
             "decimals": 18
         }
     }

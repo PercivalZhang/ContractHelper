@@ -18,7 +18,7 @@ const Config = {
     },
 };
 
-const SING = '0xCB898b0eFb084Df14dd8E018dA37B4d0f06aB26D';
+// const SING = '0xCB898b0eFb084Df14dd8E018dA37B4d0f06aB26D';
 
 /**
  * 获取用户参与的所有vaults的存款信息
@@ -39,6 +39,8 @@ const getVaultReceipts = async (userAddress: string) => {
             const poolInfo = await masterChef.callReadMethod('poolInfo', i);
             const stakedTokenAddress = poolInfo.want;
             const isLPToken = await swissKnife.isLPToken(stakedTokenAddress);
+            const pendingAuto = await masterChef.callReadMethod('pendingAuto', i, userAddress);
+            console.log(pendingAuto);
             if (isLPToken) {
                 const lpToken = await swissKnife.getLPTokenDetails(stakedTokenAddress);
                 logger.info(
