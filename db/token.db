@@ -581,6 +581,63 @@
         "0xf330b39f74e7f71ab9604a5307690872b8125ac8": {
             "symbol": "fUSDC",
             "decimals": 18
+        },
+        "0xe4f621719d6b9f1c392da83e8d766d55b5663805": {
+            "symbol": "fvETH-USDC-Q",
+            "decimals": 18,
+            "address": "0xe4F621719D6b9f1C392DA83e8d766D55b5663805"
+        },
+        "0x4fc494bda14eb91b5208f945e4b76ef8120ce516": {
+            "symbol": "vETH-USDC-Q",
+            "decimals": 18,
+            "address": "0x4Fc494bDA14eb91b5208F945e4B76ef8120ce516"
+        },
+        "0xee65f5ed0767d935318cba04d68e7931ad0b508b": {
+            "symbol": "fvFOR-QUICK-Q",
+            "decimals": 18,
+            "address": "0xEe65F5eD0767D935318CBA04D68e7931Ad0B508b"
+        },
+        "0x098d788c5bf5560470d05f6470a7b7f8af7a1d29": {
+            "symbol": "vFOR-QUICK-Q",
+            "decimals": 18,
+            "address": "0x098D788C5bf5560470d05f6470a7B7F8AF7a1D29"
+        },
+        "0x5f6ffee82666db203d89fcf5ea730113455503cb": {
+            "symbol": "fvMATIC-USDC-Q",
+            "decimals": 18,
+            "address": "0x5f6ffEE82666Db203d89fcf5ea730113455503Cb"
+        },
+        "0x27ca6b1c96b1a9a662249a1f15d4a57783f3f83e": {
+            "symbol": "vMATIC-USDC-Q",
+            "decimals": 18,
+            "address": "0x27cA6B1c96b1A9A662249A1F15D4A57783f3F83E"
+        },
+        "0xe64fccb328cdd89d90534c9ebc2f6ea13f530741": {
+            "symbol": "fvUSDC-QUICK-Q",
+            "decimals": 18,
+            "address": "0xe64fccB328cDD89d90534C9ebc2F6EA13F530741"
+        },
+        "0x55838f18e79cfd3ea22eea08bd3ec18d67f314ed": {
+            "symbol": "vUSDC-QUICK-Q",
+            "decimals": 18,
+            "address": "0x55838F18e79cFd3EA22Eea08Bd3Ec18d67f314ed"
+        },
+        "0xe2272a850188b43e94ed6df5b75f1a2fdcd5ac26": {
+            "symbol": "fUSDT",
+            "decimals": 18
+        },
+        "0x853ee4b2a13f8a742d64c8f088be7ba2131f670d": {
+            "symbol": "UNI-V2",
+            "decimals": 18,
+            "address": "0x853Ee4b2A13f8a742d64C8F088bE7bA2131f670d"
+        },
+        "0xb7ff4eeab22f78425fa8dbecc64efa9d6c91db03": {
+            "symbol": "UNI-V2",
+            "decimals": 18
+        },
+        "0x546b4c391520e6652897c65153074088bfc0a909": {
+            "symbol": "FOR",
+            "decimals": 18
         }
     }
 }
