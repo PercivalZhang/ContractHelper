@@ -29,6 +29,7 @@ const isvLPToken = async (address: string) => {
     }
 };
 const getVaultPairedLPTokenReceipt = async (vLPTAddress: string, userAddress: string, isBorrow = false) => {
+    logger.info(`vault lp Token: ${vLPTAddress}`);
     const vLPTokenHelper = new ContractHelper(vLPTAddress, './ForTube/vLPToken.json', network);
     vLPTokenHelper.toggleHiddenExceptionOutput();
 
@@ -72,11 +73,12 @@ const getReceipts = async (userAddress: string) => {
         await getDepositReceipts(assetAddress, userAddress);
     }
 };
-const getDepositReceipts = async (assetAddress: string, userAddress: string) => {
-    const fTokenHelper = new ContractHelper(assetAddress, './ForTube/fToken.json', network);
+const getDepositReceipts = async (fTokenAddress: string, userAddress: string) => {
+    console.log(fTokenAddress);
+    const fTokenHelper = new ContractHelper(fTokenAddress, './ForTube/fToken.json', network);
     fTokenHelper.toggleHiddenExceptionOutput();
 
-    const fToken = await swissKnife.syncUpTokenDB(assetAddress);
+    const fToken = await swissKnife.syncUpTokenDB(fTokenAddress);
 
     const underlyingTokenAddress = await fTokenHelper.callReadMethod('underlying');
     const underlyingToken = await swissKnife.syncUpTokenDB(underlyingTokenAddress);

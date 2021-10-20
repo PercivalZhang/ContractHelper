@@ -638,6 +638,15 @@
         "0x546b4c391520e6652897c65153074088bfc0a909": {
             "symbol": "FOR",
             "decimals": 18
+        },
+        "0x9d373d22fd091d7f9a6649eb067557cc12fb1a0a": {
+            "symbol": "HOP-LP-USDC",
+            "decimals": 18,
+            "address": "0x9D373d22FD091d7f9A6649EB067557cc12Fb1A0A"
+        },
+        "0x9ec9551d4a1a1593b0ee8124d98590cc71b3b09d": {
+            "symbol": "hUSDC",
+            "decimals": 6
         }
     }
 }
