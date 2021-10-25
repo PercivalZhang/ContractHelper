@@ -24,7 +24,11 @@ const Config = {
             lpToken: 'lpToken',
         },
     },
-    vaults: ['0x992Ae1912CE6b608E0c0d2BF66259ab1aE62A657', '0xC2c5a92E4dA9052aF406c0b97f09378C51a7E767'],
+    vaults: [
+        '0x992Ae1912CE6b608E0c0d2BF66259ab1aE62A657',
+        '0xC2c5a92E4dA9052aF406c0b97f09378C51a7E767',
+        '0x4a93d6b394da4c1e6e436e9370e5df08a45377a8', // curve USDC-USDT-DAI
+    ],
 };
 
 const masterChef = new MasterChefHelper(network, Config.farmChef, './KogeFarm/master.chef.farm.json');
@@ -43,7 +47,16 @@ const getVaultReceipt = async (vaultAddress: string, userAddress: string) => {
         .multipliedBy(exchangeRate)
         .dividedBy(Math.pow(10, 18))
         .dividedBy(Math.pow(10, underlyingToken.decimals));
-    logger.info(`my staked: ${myUnderlyingTokens.toNumber().toFixed(10)} ${underlyingToken.symbol}`);
+
+    const isPariedLPT = await swissKnife.isLPToken(underlyingTokenAddress);
+    if (isPariedLPT) {
+        const lpt = await swissKnife.getLPTokenDetails(underlyingTokenAddress);
+        logger.info(
+            `my staked: ${myUnderlyingTokens.toNumber().toFixed(10)} ${lpt.token0.symbol}-${lpt.token1.symbol} LP`,
+        );
+    } else {
+        logger.info(`my staked: ${myUnderlyingTokens.toNumber().toFixed(10)} ${underlyingToken.symbol}`);
+    }
 };
 
 const main = async () => {

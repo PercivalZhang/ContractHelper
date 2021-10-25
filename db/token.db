@@ -70,6 +70,10 @@
         "0x880baf7c965a43998b8632b870fb2f5e7efacb04": {
             "symbol": "USDC",
             "decimals": 6
+        },
+        "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c": {
+            "symbol": "WBNB",
+            "decimals": 18
         }
     },
     "128": {
@@ -163,7 +167,8 @@
         },
         "0xe89fae1b4ada2c869f05a0c96c87022dadc7709a": {
             "symbol": "UNI-V2",
-            "decimals": 18
+            "decimals": 18,
+            "address": "0xE89faE1B4AdA2c869f05a0C96C87022DaDC7709a"
         },
         "0xcb898b0efb084df14dd8e018da37b4d0f06ab26d": {
             "symbol": "SING",
@@ -650,7 +655,12 @@
         },
         "0x13748d548d95d78a3c83fe3f32604b4796cffa23": {
             "symbol": "KOGECOIN",
-            "decimals": 9
+            "decimals": 9,
+            "address": "0x13748d548D95D78a3c83fe3F32604B4796CFfa23"
+        },
+        "0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171": {
+            "symbol": "am3CRV",
+            "decimals": 18
         }
     }
 }

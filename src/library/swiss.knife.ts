@@ -2,7 +2,7 @@ import * as path from 'path';
 import Web3 from 'web3';
 import fs from 'fs';
 import { Contract } from 'web3-eth-contract';
-
+import BigNumber from 'bignumber.js';
 import { LoggerFactory } from './LoggerFactory';
 import { JSONDBBuilder } from './db.json';
 import { NetworkType, Web3Factory } from './web3.factory';
@@ -14,10 +14,13 @@ export interface Token {
     symbol: string;
     decimals: number;
 }
-
+1;
 export interface LPToken {
     token0: Token;
     token1: Token;
+    reserve0: BigNumber;
+    reserve1: BigNumber;
+    totalSupply: BigNumber;
 }
 
 export class SwissKnife {
@@ -37,8 +40,8 @@ export class SwissKnife {
             logger.debug(`chain id: ${chainId}`);
             const token = await this.tokenDB.getData('/' + chainId + '/' + tokenAddress.toLowerCase());
             if (!token) {
-                if(tokenAddress.toLowerCase() === '0x0000000000000000000000000000000000000000') {
-                    switch(chainId) {
+                if (tokenAddress.toLowerCase() === '0x0000000000000000000000000000000000000000') {
+                    switch (chainId) {
                         case 137:
                             this.tokenDB.push('/' + chainId + '/' + tokenAddress.toLowerCase(), {
                                 symbol: 'MATIC',
@@ -104,9 +107,15 @@ export class SwissKnife {
             const token0 = await this.syncUpTokenDB(token0Address);
             const token1 = await this.syncUpTokenDB(token1Address);
 
+            const reserves = await lpContract.methods.getReserves().call();
+            const totalSupply = await lpContract.methods.totalSupply().call();
+
             const lpt: LPToken = {
                 token0,
                 token1,
+                reserve0: new BigNumber(reserves[0]),
+                reserve1: new BigNumber(reserves[1]),
+                totalSupply: new BigNumber(totalSupply),
             };
             return lpt;
         } catch (e) {

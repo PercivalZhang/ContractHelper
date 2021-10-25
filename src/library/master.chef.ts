@@ -35,11 +35,7 @@ export class MasterChefHelper {
      * 对应UI： Farm（双币LP）和Pool（单币LP）
      * @param userAddress 目标用户地址
      */
-    public async getFarmingReceipts(userAddress: string, chefMetadata: MasterChefMetadata) {
-        //获取奖励token的地址
-        const rewardTokenAAddress = await this.chef.callReadMethod(chefMetadata.methods.rewardToken);
-        const rewardToken = await this.swissKnife.syncUpTokenDB(rewardTokenAAddress);
-        logger.info(`reward token - ${rewardToken.symbol} : ${rewardToken.address}`);
+    public async getFarmingReceipts(userAddress: string, chefMetadata: MasterChefMetadata, callback = null) {
         //获取质押池的数量
         const poolLength = await this.chef.callReadMethod(chefMetadata.methods.poolLength);
         logger.info(`total ${poolLength} pools`);
@@ -72,15 +68,27 @@ export class MasterChefHelper {
                     );
                 }
                 //获取目标用户在当前质押池可领取的奖励token数量
-                const pendingReward = new BigNumber(
-                    await this.chef.callReadMethod(chefMetadata.methods.pendingReward, pid, userAddress),
+                const pendingReward = await this.chef.callReadMethod(
+                    chefMetadata.methods.pendingReward,
+                    pid,
+                    userAddress,
                 );
-                logger.info(
-                    `pool[${pid}] > my pending reward: ${pendingReward
-                        .dividedBy(Math.pow(10, rewardToken.decimals))
-                        .toNumber()
-                        .toFixed(8)} ${rewardToken.symbol}`,
-                );
+                //callback是一个函数，用于处理奖励token的特殊案例，比如多个奖励token
+                if (callback) {
+                    callback(pendingReward);
+                } else {
+                    // 奖励token单币
+                    //获取奖励token的地址
+                    const rewardTokenAAddress = await this.chef.callReadMethod(chefMetadata.methods.rewardToken);
+                    const rewardToken = await this.swissKnife.syncUpTokenDB(rewardTokenAAddress);
+                    logger.info(`reward token - ${rewardToken.symbol} : ${rewardToken.address}`);
+                    logger.info(
+                        `pool[${pid}] > my pending reward: ${pendingReward
+                            .dividedBy(Math.pow(10, rewardToken.decimals))
+                            .toNumber()
+                            .toFixed(8)} ${rewardToken.symbol}`,
+                    );
+                }
             }
         }
     }
