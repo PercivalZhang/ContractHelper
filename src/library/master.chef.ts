@@ -39,6 +39,7 @@ export class MasterChefHelper {
         //获取质押池的数量
         const poolLength = await this.chef.callReadMethod(chefMetadata.methods.poolLength);
         logger.info(`total ${poolLength} pools`);
+        let rewardToken = null;
         //遍历质押池
         for (let pid = 0; pid < poolLength; pid++) {
             //获取目标用户在质押池的质押信息
@@ -77,13 +78,15 @@ export class MasterChefHelper {
                 if (callback) {
                     callback(pendingReward);
                 } else {
-                    // 奖励token单币
-                    //获取奖励token的地址
-                    const rewardTokenAAddress = await this.chef.callReadMethod(chefMetadata.methods.rewardToken);
-                    const rewardToken = await this.swissKnife.syncUpTokenDB(rewardTokenAAddress);
-                    logger.info(`reward token - ${rewardToken.symbol} : ${rewardToken.address}`);
+                    if (!rewardToken) {
+                        // 奖励token单币
+                        //获取奖励token的地址
+                        const rewardTokenAAddress = await this.chef.callReadMethod(chefMetadata.methods.rewardToken);
+                        rewardToken = await this.swissKnife.syncUpTokenDB(rewardTokenAAddress);
+                        logger.info(`reward token - ${rewardToken.symbol} : ${rewardToken.address}`);
+                    }
                     logger.info(
-                        `pool[${pid}] > my pending reward: ${pendingReward
+                        `pool[${pid}] > my pending reward: ${new BigNumber(pendingReward)
                             .dividedBy(Math.pow(10, rewardToken.decimals))
                             .toNumber()
                             .toFixed(8)} ${rewardToken.symbol}`,
