@@ -50,7 +50,7 @@ export class ERC721Helper {
             // logger.info(`${tokenId} : ${tokenURI}`);
 
             if (callback) {
-                callback(tokenId, this.erc721);
+                await callback(tokenId, this.erc721);
             }
         }
     }
