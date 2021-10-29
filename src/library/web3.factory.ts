@@ -6,6 +6,7 @@ const ETH_MAIN = 'https://mainnet.infura.io/v3/11ae2b7ff4c04391b71dd5a196c21b0d'
 const Polygon = 'https://rpc-mainnet.maticvigil.com/v1/cb3dd265b2e6c6b21996ef67b97183ad9e51a3cc';
 const OKExChain = 'https://exchainrpc.okex.org';
 const BSC = 'https://bsc-dataseed.binance.org';
+const FANTOM = 'https://rpc.ftm.tools/';
 // const BSC = 'https://bsc-dataseed1.binance.org/'
 export enum NetworkType {
     ETH_MAIN,
@@ -14,6 +15,7 @@ export enum NetworkType {
     BSC,
     POLYGON,
     OKEXChain,
+    FANTOM,
 }
 
 export class Web3Factory {
@@ -42,6 +44,8 @@ export class Web3Factory {
                 return new Web3(OKExChain);
             case NetworkType.BSC:
                 return new Web3(BSC);
+            case NetworkType.FANTOM:
+                return new Web3(FANTOM);
             default:
                 return new Web3(ETH_MAIN);
         }

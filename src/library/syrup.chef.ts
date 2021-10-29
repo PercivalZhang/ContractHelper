@@ -1,7 +1,7 @@
 import { ContractHelper } from './contract.helper';
 import { LoggerFactory } from './LoggerFactory';
 import { NetworkType } from './web3.factory';
-import { SwissKnife } from './swiss.knife';
+import { SwissKnife, Token } from './swiss.knife';
 import BigNumber from 'bignumber.js';
 
 export interface ChefMethods {
@@ -9,32 +9,34 @@ export interface ChefMethods {
     userInfo: string;
     poolInfo: string;
     pendingReward: string;
-    rewardToken: string;
+    stakeToken: string;
 }
 export interface ChefPool {
-    lpToken: string;
+    rewardToken: string;
 }
-export interface MasterChefMetadata {
+export interface SyrupChefMetadata {
     address: string;
     methods: ChefMethods;
     pool: ChefPool;
 }
 
 const logger = LoggerFactory.getInstance().getLogger('master.chef');
-
-export class MasterChefHelper {
+/**
+ * syrup pool/lauchpad pool
+ * 质押一种token，通常是平台token，获取其他各种合作项目的token
+ */
+export class SyrupChefHelper {
     protected swissKnife: SwissKnife;
     protected chef: ContractHelper;
-    protected chefMetadata: MasterChefMetadata;
-    public constructor(network: NetworkType, chefMetadata: MasterChefMetadata, pathABIFile: string) {
+    protected chefMetadata: SyrupChefMetadata;
+    public constructor(network: NetworkType, chefMetadata: SyrupChefMetadata, pathABIFile: string) {
         this.chef = new ContractHelper(chefMetadata.address, pathABIFile, network);
         this.chef.toggleHiddenExceptionOutput();
         this.chefMetadata = chefMetadata;
         this.swissKnife = new SwissKnife(network);
     }
     /**
-     * 获取用户master chef挖矿的详情
-     * 对应UI： Farm（双币LP）和Pool（单币LP）
+     * 获取用户syrup poo挖矿的详情
      * @param userAddress 目标用户地址
      */
     public async getFarmingReceipts(userAddress: string, callback = null) {
@@ -47,29 +49,29 @@ export class MasterChefHelper {
             //获取目标用户在质押池的质押信息
             const userInfo = await this.chef.callReadMethod(this.chefMetadata.methods.userInfo, pid, userAddress);
             const myStakedBalance = new BigNumber(userInfo.amount);
+            //质押Token
+            let stakeToken: Token = null;
             if (myStakedBalance.gt(0)) {
-                const poolInfo = await this.chef.callReadMethod(this.chefMetadata.methods.poolInfo, pid);
-                const lpTokenAddress = poolInfo[this.chefMetadata.pool.lpToken];
-                const isPairedLPToken = await this.swissKnife.isLPToken(lpTokenAddress);
-                //质押token是UNI paired lp token
-                if (isPairedLPToken) {
-                    const lpToken = await this.swissKnife.getLPTokenDetails(lpTokenAddress);
-                    logger.info(
-                        `pool[${pid}] > my staked token: ${myStakedBalance
-                            .dividedBy(Math.pow(10, 18))
-                            .toNumber()
-                            .toFixed(10)} ${lpToken.token0.symbol}/${lpToken.token1.symbol} LP`,
-                    );
-                } else {
-                    //质押token是单币erc20质押
-                    const erc20Token = await this.swissKnife.syncUpTokenDB(lpTokenAddress);
-                    logger.info(
-                        `pool[${pid}] > my staked token: ${myStakedBalance
-                            .dividedBy(Math.pow(10, erc20Token.decimals))
-                            .toNumber()
-                            .toFixed(10)} ${erc20Token.symbol}`,
-                    );
+                //获取质押Token信息
+                if (stakeToken == null) {
+                    const stakeTokenAddress = await this.chef.callReadMethod(this.chefMetadata.methods.stakeToken);
+                    stakeToken = await this.swissKnife.syncUpTokenDB(stakeTokenAddress);
+                    logger.info(`syrup pool: staking token - ${stakeToken.symbol}`);
                 }
+                //打印用户质押Token数量
+                logger.info(
+                    `pool[${pid}] > my staked token: ${myStakedBalance
+                        .dividedBy(Math.pow(10, stakeToken.decimals))
+                        .toNumber()
+                        .toFixed(10)} ${stakeToken.symbol}`,
+                );
+                //获取质押池信息
+                const poolInfo = await this.chef.callReadMethod(this.chefMetadata.methods.poolInfo, pid);
+                // 奖励token单币
+                //获取奖励token的地址
+                const rewardTokenAddress = poolInfo[this.chefMetadata.pool.rewardToken];
+                rewardToken = await this.swissKnife.syncUpTokenDB(rewardTokenAddress);
+                logger.info(`pool[${pid}] > reward token - ${rewardToken.symbol} : ${rewardToken.address}`);
                 //获取目标用户在当前质押池可领取的奖励token数量
                 const pendingReward = await this.chef.callReadMethod(
                     this.chefMetadata.methods.pendingReward,
@@ -80,15 +82,6 @@ export class MasterChefHelper {
                 if (callback) {
                     callback(pendingReward);
                 } else {
-                    if (!rewardToken) {
-                        // 奖励token单币
-                        //获取奖励token的地址
-                        const rewardTokenAddress = await this.chef.callReadMethod(
-                            this.chefMetadata.methods.rewardToken,
-                        );
-                        rewardToken = await this.swissKnife.syncUpTokenDB(rewardTokenAddress);
-                        logger.info(`reward token - ${rewardToken.symbol} : ${rewardToken.address}`);
-                    }
                     logger.info(
                         `pool[${pid}] > my pending reward: ${new BigNumber(pendingReward)
                             .dividedBy(Math.pow(10, rewardToken.decimals))

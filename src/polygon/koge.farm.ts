@@ -61,7 +61,7 @@ const getVaultReceipt = async (vaultAddress: string, userAddress: string) => {
 };
 
 const main = async () => {
-    await masterChef.getFarmingReceipts('0xD2050719eA37325BdB6c18a85F6c442221811FAC', Config.farmChef);
+    await masterChef.getFarmingReceipts('0xD2050719eA37325BdB6c18a85F6c442221811FAC');
     console.log(`\n-------------------------------------------------------------------------\n`);
     for (const vaultAddress of Config.vaults) {
         await getVaultReceipt(vaultAddress, '0xD2050719eA37325BdB6c18a85F6c442221811FAC');
