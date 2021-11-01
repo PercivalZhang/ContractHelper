@@ -9,8 +9,9 @@ const network = NetworkType.FANTOM;
 
 const swissKnife = new SwissKnife(network);
 const logger = LoggerFactory.getInstance().getLogger('main');
-
+//UniswapV2 Factory： https://ftmscan.com/address/0x152ee697f2e276fa89e96742e9bb9ab1f2e61be3#readContract
 const Config = {
+    //LP挖矿
     farmChef: {
         address: '0x2b2929e785374c651a81a63878ab22742656dcdd',
         methods: {
@@ -24,6 +25,7 @@ const Config = {
             lpToken: 'lpToken',
         },
     },
+    //BOO单币质押挖矿，BOO->xBOO
     syrupChef: {
         address: '0x2352b745561e7e6fcd03c093ce7220e3e126ace0',
         methods: {
@@ -42,7 +44,7 @@ const Config = {
 const masterChef = new MasterChefHelper(network, Config.farmChef, './SpookySwap/master.chef.json');
 const syrupChef = new SyrupChefHelper(network, Config.syrupChef, './SpookySwap/syrup.chef.json');
 const main = async () => {
-    //await masterChef.getFarmingReceipts('0xb97ebF6Ff02D23D141cB1676097cab9921A6226b', Config.farmChef);
+    await masterChef.getFarmingReceipts('0xb97ebF6Ff02D23D141cB1676097cab9921A6226b');
     await syrupChef.getFarmingReceipts('0xb97ebF6Ff02D23D141cB1676097cab9921A6226b');
 };
 

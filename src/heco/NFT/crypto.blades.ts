@@ -24,6 +24,7 @@ const Config = {
             balanceOf: 'balanceOf',
             tokenOfOwnerByIndex: 'tokenOfOwnerByIndex',
             tokenURI: 'tokenURI',
+            ownerOf: 'ownerOf',
         },
     },
     weapon: {
@@ -32,6 +33,7 @@ const Config = {
             balanceOf: 'balanceOf',
             tokenOfOwnerByIndex: 'tokenOfOwnerByIndex',
             tokenURI: 'tokenURI',
+            ownerOf: 'ownerOf',
         },
     },
     shield: {
@@ -40,6 +42,7 @@ const Config = {
             balanceOf: 'balanceOf',
             tokenOfOwnerByIndex: 'tokenOfOwnerByIndex',
             tokenURI: 'tokenURI',
+            ownerOf: 'ownerOf',
         },
     },
 };

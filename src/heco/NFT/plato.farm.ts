@@ -17,6 +17,7 @@ const Config = {
             balanceOf: 'balanceOf',
             tokenOfOwnerByIndex: 'tokenOfOwnerByIndex',
             tokenURI: 'tokenURI',
+            ownerOf: 'ownerOf',
         },
     },
 };

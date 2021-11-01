@@ -691,6 +691,25 @@
         "0xa48d959ae2e88f1daa7d5f611e01908106de7598": {
             "symbol": "xBOO",
             "decimals": 18
+        },
+        "0x04068da6c83afcfa0e13ba15a6696662335d5b75": {
+            "symbol": "USDC",
+            "decimals": 6,
+            "address": "0x04068DA6C83AFCFA0e13ba15A6696662335D5B75"
+        },
+        "0x5cc61a78f164885776aa610fb0fe1257df78e59b": {
+            "symbol": "SPIRIT",
+            "decimals": 18,
+            "address": "0x5Cc61A78F164885776AA610fb0FE1257df78E59B"
+        },
+        "0x30748322b6e34545dbe0788c421886aeb5297789": {
+            "symbol": "SPIRIT-LP",
+            "decimals": 18,
+            "address": "0x30748322B6E34545DBe0788C421886AEB5297789"
+        },
+        "0x2fbff41a9efaeae77538bd63f1ea489494acdc08": {
+            "symbol": "inSpirit",
+            "decimals": 18
         }
     }
 }

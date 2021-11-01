@@ -8,6 +8,7 @@ export interface MethodMap {
     balanceOf: string;
     tokenOfOwnerByIndex: string;
     tokenURI: string;
+    ownerOf: string;
 }
 
 export interface NFTContractMetadata {
@@ -53,5 +54,19 @@ export class ERC721Helper {
                 await callback(tokenId, this.erc721);
             }
         }
+    }
+    public async getOwnerOf(tokenId: number): Promise<string> {
+        const owner = await this.erc721.callReadMethod(this.metadata.methods.ownerOf, tokenId);
+        return owner;
+    }
+    public async tokenOfOwnerByIndex(owner: string, index: number): Promise<number> {
+        const tokenId = await this.erc721.callReadMethod(this.metadata.methods.tokenOfOwnerByIndex, owner, index);
+        return tokenId;
+    }
+    public async tokenURI(tokenId: number): Promise<string> {
+        return await this.erc721.callReadMethod(this.metadata.methods.tokenURI, tokenId);
+    }
+    public async balanceOf(userAddress: string): Promise<number> {
+        return await this.erc721.callReadMethod(this.metadata.methods.balanceOf, userAddress);
     }
 }
