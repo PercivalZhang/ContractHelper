@@ -1,4 +1,15 @@
 {
+    "1": {
+        "0xbe1c71c94febca2673db2e9bd610e2cc80b950fc": {
+            "symbol": "bUSDT",
+            "decimals": 6,
+            "address": "0xBe1c71c94FebcA2673DB2E9BD610E2Cc80b950FC"
+        },
+        "0xdac17f958d2ee523a2206206994597c13d831ec7": {
+            "symbol": "USDT",
+            "decimals": 6
+        }
+    },
     "56": {
         "0x899e2a220cbc6eb1ab154211353eded74bc1e266": {
             "symbol": "FILST",
@@ -709,6 +720,10 @@
         },
         "0x2fbff41a9efaeae77538bd63f1ea489494acdc08": {
             "symbol": "inSpirit",
+            "decimals": 18
+        },
+        "0x2787bea3366335068bf8b4a253044d09ea4e1c96": {
+            "symbol": "GINSPIRIT",
             "decimals": 18
         }
     }

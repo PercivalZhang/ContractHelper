@@ -9,7 +9,7 @@ const network = NetworkType.FANTOM;
 
 const swissKnife = new SwissKnife(network);
 const logger = LoggerFactory.getInstance().getLogger('main');
-//UniswapV2 Factory： https://ftmscan.com/address/0x152ee697f2e276fa89e96742e9bb9ab1f2e61be3#readContract
+//UniswapV2 Factory：https://ftmscan.com/address/0xef45d134b73241eda7703fa787148d9c9f4950b0#readContract
 const Config = {
     //LP挖矿
     farmChef: {
@@ -34,7 +34,6 @@ const Config = {
 const getBoostedFarmReceipt = async (gaugeAddress: string, userAddress: string) => {
     const gauge = new ContractHelper(gaugeAddress, './SpiritSwap/gauge.json', network);
     gauge.toggleHiddenExceptionOutput();
-
     //获取质押token的地址
     const stakingTokenAddress = await gauge.callReadMethod('TOKEN');
     const stakingToken = await swissKnife.syncUpTokenDB(stakingTokenAddress);
@@ -45,7 +44,6 @@ const getBoostedFarmReceipt = async (gaugeAddress: string, userAddress: string) 
     //获取奖励token 的地址
     const rewardTokenAddress = await gauge.callReadMethod('SPIRIT');
     const rewardToken = await swissKnife.syncUpTokenDB(rewardTokenAddress);
-
     //获取目标用户质押的token - ADDY的数量
     const myStakedBalance = new BigNumber(await gauge.callReadMethod('balanceOf', userAddress));
     logger.info(
@@ -54,7 +52,6 @@ const getBoostedFarmReceipt = async (gaugeAddress: string, userAddress: string) 
             .toNumber()
             .toFixed(6)} ${lpt.token0.symbol}-${lpt.token1.symbol} LP`,
     );
-
     //获取目标用户可领取的奖励token的数量
     const pendingReward = new BigNumber(await gauge.callReadMethod('rewards', userAddress));
     logger.info(
@@ -71,9 +68,11 @@ const getInSpiritReceipt = async (userAddress: string) => {
     const spiritTokenAddress = await inSpirit.callReadMethod('token');
     const spiritToken = await swissKnife.syncUpTokenDB(spiritTokenAddress);
 
-    //获取目标用户质押的token - ADDY的数量
+    //获取目标用户质押锁定的token - Spirit的数量
     const myLockedInfo = await inSpirit.callReadMethod('locked', userAddress);
+    //锁定的token数量
     const myLockedBalance = new BigNumber(myLockedInfo[0]);
+    //锁定解锁的时间戳
     const myLockedEndAt = new BigNumber(myLockedInfo[1]);
     logger.info(
         `my locked balance - ${myLockedBalance.dividedBy(Math.pow(10, spiritToken.decimals)).toNumber().toFixed(6)} ${
@@ -83,14 +82,16 @@ const getInSpiritReceipt = async (userAddress: string) => {
     const myLockedEndingDatetime = new Date(myLockedEndAt.multipliedBy(1000).toNumber());
     logger.info(`my locked spirits will be avaiable by ${myLockedEndingDatetime.toLocaleDateString()}`);
 };
+
 const masterChef = new MasterChefHelper(network, Config.farmChef, './SpiritSwap/master.chef.json');
-//const syrupChef = new SyrupChefHelper(network, Config.syrupChef, './SpookySwap/syrup.chef.json');
+
 const main = async () => {
-    //await masterChef.getFarmingReceipts('0x228f23A962D1ACabB1775E31FAF7D1B5bfa85B5E');
+    // pid - 47对应界面中的Staking > GINSPIRIT/SPIRIT LP
+    await masterChef.getFarmingReceipts('0x228f23A962D1ACabB1775E31FAF7D1B5bfa85B5E');
     // for (const gauge of Config.boostedFarms) {
     //     await getBoostedFarmReceipt(gauge, '0x228f23A962D1ACabB1775E31FAF7D1B5bfa85B5E');
     // }
-    await getInSpiritReceipt('0x228f23A962D1ACabB1775E31FAF7D1B5bfa85B5E');
+    //await getInSpiritReceipt('0x228f23A962D1ACabB1775E31FAF7D1B5bfa85B5E');
 };
 
 main().catch((e) => {
