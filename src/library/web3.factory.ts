@@ -6,7 +6,8 @@ const ETH_MAIN = 'https://mainnet.infura.io/v3/11ae2b7ff4c04391b71dd5a196c21b0d'
 const Polygon = 'https://polygon-rpc.com';
 const OKExChain = 'https://exchainrpc.okex.org';
 const BSC = 'https://bsc-dataseed.binance.org';
-const FANTOM = 'https://rpc.ftm.tools/';
+//const FANTOM = 'https://rpc.ftm.tools/';
+const FANTOM = 'Https://rpc.fantom.network';
 // const BSC = 'https://bsc-dataseed1.binance.org/'
 export enum NetworkType {
     ETH_MAIN,

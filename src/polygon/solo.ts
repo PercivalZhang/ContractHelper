@@ -49,7 +49,7 @@ const handlePendingReward = async (pendingRewardData: any) => {
 const masterChef = new MasterChefHelper(network, Config.farmChef, './Solo/master.chef.json');
 
 const main = async () => {
-    await masterChef.getFarmingReceipts('0xc2d54b0da70e29ab733780594e267cebcccc9b71', handlePendingReward);
+    await masterChef.getFarmingReceipts('0x03804136efb84fefec92d03ced4eaa10006d80bf', handlePendingReward);
     console.log(`\n-------------------------------------------------------------------------\n`);
 };
 
