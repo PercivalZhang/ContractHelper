@@ -13,11 +13,9 @@ const logger = LoggerFactory.getInstance().getLogger('main');
  *
  */
 const Config = {
-    swap: {
-        usdc: '0x5c32143c8b198f392d01f8446b754c181224ac26',
-    },
     vault: {
         usdc: '0x2c2ab81cf235e86374468b387e241df22459a265',
+        matic: '0x7deebcad1416110022f444b03aeb1d20eb4ea53f',
     },
 };
 const getSwapTokens = async (swapAddress: string, userAddress: string, lptBalance: BigNumber) => {
@@ -74,6 +72,7 @@ const getVaultReceipt = async (vaultAddress: string, userAddress: string) => {
 const main = async () => {
     // tester address: 0x4d3c30b365dccecceaa3ba367494ff7f7b7a0222   // lp asset
     await getVaultReceipt(Config.vault.usdc, '0xD2050719eA37325BdB6c18a85F6c442221811FAC');
+    await getVaultReceipt(Config.vault.matic, '0xD2050719eA37325BdB6c18a85F6c442221811FAC');
 };
 
 main().catch((e) => {

@@ -32,12 +32,19 @@ export class MasterChefHelper {
         this.chefMetadata = chefMetadata;
         this.swissKnife = new SwissKnife(network);
     }
+    public async getFarmingReceipts(userAddress: string) {
+        return await this.getFarmingReceiptsWithCallbacks(userAddress, null, null);
+    }
     /**
      * 获取用户master chef挖矿的详情
      * 对应UI： Farm（双币LP）和Pool（单币LP）
      * @param userAddress 目标用户地址
      */
-    public async getFarmingReceipts(userAddress: string, callback = null) {
+    public async getFarmingReceiptsWithCallbacks(
+        userAddress: string,
+        callbackLPTHandler,
+        callbackRewardHandler = null,
+    ) {
         //获取质押池的数量
         const poolLength = await this.chef.callReadMethod(this.chefMetadata.methods.poolLength);
         logger.info(`total ${poolLength} pools`);
@@ -60,6 +67,8 @@ export class MasterChefHelper {
                             .toNumber()
                             .toFixed(10)} ${lpToken.token0.symbol}/${lpToken.token1.symbol} LP`,
                     );
+                } else if (callbackLPTHandler) {
+                    await callbackLPTHandler(lpTokenAddress, myStakedBalance);
                 } else {
                     //质押token是单币erc20质押
                     const erc20Token = await this.swissKnife.syncUpTokenDB(lpTokenAddress);
@@ -77,8 +86,8 @@ export class MasterChefHelper {
                     userAddress,
                 );
                 //callback是一个函数，用于处理奖励token的特殊案例，比如多个奖励token
-                if (callback) {
-                    callback(pendingReward);
+                if (callbackRewardHandler) {
+                    await callbackRewardHandler(pendingReward);
                 } else {
                     if (!rewardToken) {
                         // 奖励token单币

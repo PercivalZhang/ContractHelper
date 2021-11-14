@@ -17,6 +17,19 @@
         "0x92d6c1e31e14520e676a687f0a93788b716beff5": {
             "symbol": "DYDX",
             "decimals": 18
+        },
+        "0x090185f2135308bad17527004364ebcc2d37e5f6": {
+            "symbol": "SPELL",
+            "decimals": 18,
+            "address": "0x090185f2135308bad17527004364ebcc2d37e5f6"
+        },
+        "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2": {
+            "symbol": "WETH",
+            "decimals": 18
+        },
+        "0x26fa3fffb6efe8c1e69103acb4044c26b9a106a9": {
+            "symbol": "sSPELL",
+            "decimals": 18
         }
     },
     "56": {
@@ -671,7 +684,8 @@
         },
         "0x9ec9551d4a1a1593b0ee8124d98590cc71b3b09d": {
             "symbol": "hUSDC",
-            "decimals": 6
+            "decimals": 6,
+            "address": "0x9ec9551d4A1a1593b0ee8124D98590CC71b3B09D"
         },
         "0x13748d548d95d78a3c83fe3f32604b4796cffa23": {
             "symbol": "KOGECOIN",
@@ -680,6 +694,15 @@
         },
         "0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171": {
             "symbol": "am3CRV",
+            "decimals": 18
+        },
+        "0xbc4fb4ed825c65ff48163af7e59d49e32edb5269": {
+            "symbol": "HOP-LP-MATIC",
+            "decimals": 18,
+            "address": "0xbc4FB4ED825C65fF48163AF7E59d49e32edb5269"
+        },
+        "0x712f0cf37bdb8299d0666727f73a5caba7c1c24c": {
+            "symbol": "hMATIC",
             "decimals": 18
         }
     },
