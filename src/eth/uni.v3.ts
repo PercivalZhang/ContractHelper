@@ -72,7 +72,7 @@ const getTokensAmountOfPosition = async (poolAddress: string, position: Position
     const tickLower = position.tickLower;
     const tickUpper = position.tickUpper;
     const liquidity = position.liquidity;
-
+    // calculate token 0 amount
     let token0Amount: JSBI;
     if (tickCurrent < tickLower) {
         token0Amount = SqrtPriceMath.getAmount0Delta(
@@ -95,7 +95,7 @@ const getTokensAmountOfPosition = async (poolAddress: string, position: Position
     const token0 = await swissKnife.syncUpTokenDB(token0Address);
     const intToken0Amount = token0.readableAmount(String(token0Amount));
     logger.info(`token 0: ${intToken0Amount.toFixed(6)} ${token0.symbol}`);
-
+    // calculate token 1 amount
     let token1Amount: JSBI;
     if (tickCurrent < tickLower) {
         token1Amount = JSBI.BigInt(0);
@@ -118,48 +118,6 @@ const getTokensAmountOfPosition = async (poolAddress: string, position: Position
     const token1 = await swissKnife.syncUpTokenDB(token1Address);
     const intToken1Amount = token1.readableAmount(String(token1Amount));
     logger.info(`token 1: ${intToken1Amount.toFixed(6)} ${token1.symbol}`);
-};
-
-const getToken1AmountOfPosition = async (poolAddress: string, positionId: number): Promise<number> => {
-    const pool = new ContractHelper(poolAddress, './Uniswap/v3/pool.json', network);
-    const slot0 = await pool.callReadMethod('slot0');
-    const tickCurrent = Number.parseInt(slot0.tick);
-    const sqrtPriceX96 = JSBI.BigInt(slot0.sqrtPriceX96);
-
-    const positionManager = new ContractHelper(
-        Config.positionManager.address,
-        './Uniswap/v3/position.manager.json',
-        network,
-    );
-    const position = await positionManager.callReadMethod('positions', positionId);
-
-    const tickLower = Number.parseInt(position.tickLower);
-    const tickUpper = Number.parseInt(position.tickUpper);
-    const liquidity = JSBI.BigInt(position.liquidity);
-
-    let token1Amount: JSBI;
-    if (tickCurrent < tickLower) {
-        token1Amount = JSBI.BigInt(0);
-    } else if (tickCurrent < tickUpper) {
-        token1Amount = SqrtPriceMath.getAmount1Delta(
-            sqrtPriceX96,
-            TickMath.getSqrtRatioAtTick(tickLower),
-            liquidity,
-            false,
-        );
-    } else {
-        token1Amount = SqrtPriceMath.getAmount1Delta(
-            TickMath.getSqrtRatioAtTick(tickLower),
-            TickMath.getSqrtRatioAtTick(tickUpper),
-            liquidity,
-            false,
-        );
-    }
-    const token1Address = await pool.callReadMethod('token1');
-    const token1 = await swissKnife.syncUpTokenDB(token1Address);
-    const intToken1Amount = token1.readableAmount(String(token1Amount));
-    logger.info(`token 1: ${intToken1Amount.toFixed(6)} ${token1.symbol}`);
-    return intToken1Amount;
 };
 
 const positionHelper = new ERC721Helper(network, Config.positionManager, './Uniswap/v3/position.manager.json');
@@ -169,8 +127,8 @@ const callbackPosition = async (tokenId: number, helper: ContractHelper) => {
         './Uniswap/v3/position.manager.json',
         network,
     );
+    // 获取position信息
     const position = await positionManager.callReadMethod('positions', tokenId);
-
     const tickLower = Number.parseInt(position.tickLower);
     const tickUpper = Number.parseInt(position.tickUpper);
     const liquidity = JSBI.BigInt(position.liquidity);
@@ -196,9 +154,6 @@ const main = async () => {
     // user: 0x469bbafeb93480ee4c2cbff806bc504188335499
     // pool(GALA/WETH): https://etherscan.io/address/0xf8a95b2409c27678a6d18d950c5d913d5c38ab03#readContract
     // position/tokenId: 157606
-    //const token0Amount = await getToken0AmountOfPosition('0xf8a95b2409c27678a6d18d950c5d913d5c38ab03', 157606);
-    //const token1Amount = await getToken1AmountOfPosition('0xf8a95b2409c27678a6d18d950c5d913d5c38ab03', 157606);
-
     positionHelper.getMyNFTReceipts('0x469bbafeb93480ee4c2cbff806bc504188335499', callbackPosition);
 };
 
