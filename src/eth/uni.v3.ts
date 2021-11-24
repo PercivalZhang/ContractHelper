@@ -17,8 +17,8 @@ const logger = LoggerFactory.getInstance().getLogger('main');
 const Config = {
     factory: '0x1f98431c8ad98523631ae4a59f267346ea31f984',
     positionManager: {
-        address: '0xc36442b4a4522e871399cd717abdd847ab11fe88', // heco
-        //address: '0xc6f252c2cdd4087e30608a35c022ce490b58179b', // bsc
+        address: '0xc36442b4a4522e871399cd717abdd847ab11fe88', 
+        //address: '0xc6f252c2cdd4087e30608a35c022ce490b58179b', 
         methods: {
             balanceOf: 'balanceOf',
             tokenOfOwnerByIndex: 'tokenOfOwnerByIndex',
@@ -31,6 +31,7 @@ const Config = {
 import { defaultAbiCoder } from '@ethersproject/abi';
 import { getCreate2Address } from '@ethersproject/address';
 import { keccak256 } from '@ethersproject/solidity';
+import BigNumber from 'bignumber.js';
 
 /**
  * Computes a pool address
@@ -152,14 +153,20 @@ const callbackPosition = async (tokenId: number, helper: ContractHelper) => {
     const tickUpper = Number.parseInt(position.tickUpper);
     const token0Address = position.token0;
     const token1Address = position.token1;
+    
     const fee = Number.parseInt(position.fee);
     const liquidity = JSBI.BigInt(position.liquidity);
 
     if (JSBI.GT(liquidity, 0)) {
+        const token0 = await swissKnife.syncUpTokenDB(token0Address)
+        const token1 = await swissKnife.syncUpTokenDB(token1Address)
         const poolAddress = computePoolAddress(Config.factory, token0Address, token1Address, fee);
         logger.info(`pool: ${poolAddress}`);
         await getToken0AmountOfPosition(poolAddress, tokenId);
         await getToken1AmountOfPosition(poolAddress, tokenId);
+        const fees = await positionManager.callReadMethod('collect', [tokenId, '0x469bbafeb93480ee4c2cbff806bc504188335499', '9007199254740990000000', '9007199254740990000000'])
+        logger.info(`fee reward token0: ${token0.readableAmount(fees.amount0).toFixed(6)} ${token0.symbol}`)
+        logger.info(`fee reward token1: ${token1.readableAmount(fees.amount1).toFixed(6)} ${token1.symbol}`)
     }
 };
 
