@@ -25,11 +25,30 @@
         },
         "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2": {
             "symbol": "WETH",
-            "decimals": 18
+            "decimals": 18,
+            "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
         },
         "0x26fa3fffb6efe8c1e69103acb4044c26b9a106a9": {
             "symbol": "sSPELL",
             "decimals": 18
+        },
+        "0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0": {
+            "symbol": "MATIC",
+            "decimals": 18
+        },
+        "0x15d4c048f83bd7e37d49ea4c83a07267ec4203da": {
+            "symbol": "GALA",
+            "decimals": 8,
+            "address": "0x15D4c048F83bd7e37d49eA4C83a07267Ec4203dA"
+        },
+        "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984": {
+            "symbol": "UNI",
+            "decimals": 18,
+            "address": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
+        },
+        "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599": {
+            "symbol": "WBTC",
+            "decimals": 8
         }
     },
     "56": {

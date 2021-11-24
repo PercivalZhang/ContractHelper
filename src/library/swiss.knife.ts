@@ -6,7 +6,7 @@ import BigNumber from 'bignumber.js';
 import { LoggerFactory } from './LoggerFactory';
 import { JSONDBBuilder } from './db.json';
 import { NetworkType, Web3Factory } from './web3.factory';
-
+import { ERC20Token } from './erc20.token';
 const logger = LoggerFactory.getInstance().getLogger('Helper');
 
 export interface Token {
@@ -14,7 +14,7 @@ export interface Token {
     symbol: string;
     decimals: number;
 }
-1;
+
 export interface LPToken {
     token0: Token;
     token1: Token;
@@ -32,7 +32,7 @@ export class SwissKnife {
         this.tokenDB = new JSONDBBuilder(path.resolve('db/token.db'), true, true, '/');
     }
 
-    public async syncUpTokenDB(tokenAddress: string, contract?: Contract): Promise<Token> {
+    public async syncUpTokenDB(tokenAddress: string, contract?: Contract): Promise<ERC20Token> {
         logger.debug(`syncUpTokenDB(${tokenAddress})`);
         let tokenContract = contract;
         try {
@@ -71,10 +71,12 @@ export class SwissKnife {
                 }
                 const newToken = await this.tokenDB.getData('/' + chainId + '/' + tokenAddress.toLowerCase());
                 newToken['address'] = tokenAddress;
-                return newToken;
+                const erc20Token = new ERC20Token(newToken['address'], newToken['symbol'], newToken['decimals']);
+                return erc20Token;
             }
             token['address'] = tokenAddress;
-            return token;
+            const erc20Token = new ERC20Token(token['address'], token['symbol'], token['decimals']);
+            return erc20Token;
         } catch (e) {
             logger.error(`syncUpTokenDB(${tokenAddress}) > ${e.toString()}`);
         }
