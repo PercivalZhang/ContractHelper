@@ -33,6 +33,12 @@ import { getCreate2Address } from '@ethersproject/address';
 import { keccak256 } from '@ethersproject/solidity';
 import BigNumber from 'bignumber.js';
 
+interface Position {
+    tickLower: number;
+    tickUpper: number;
+    liquidity: JSBI;
+}
+
 /**
  * Computes a pool address
  * @param factoryAddress The Uniswap V3 factory address
@@ -57,22 +63,15 @@ const computePoolAddress = (
     );
 };
 
-const getToken0AmountOfPosition = async (poolAddress: string, positionId: number): Promise<number> => {
+const getTokensAmountOfPosition = async (poolAddress: string, position: Position) => {
     const pool = new ContractHelper(poolAddress, './Uniswap/v3/pool.json', network);
     const slot0 = await pool.callReadMethod('slot0');
     const tickCurrent = Number.parseInt(slot0.tick);
     const sqrtPriceX96 = JSBI.BigInt(slot0.sqrtPriceX96);
 
-    const positionManager = new ContractHelper(
-        Config.positionManager.address,
-        './Uniswap/v3/position.manager.json',
-        network,
-    );
-    const position = await positionManager.callReadMethod('positions', positionId);
-
-    const tickLower = Number.parseInt(position.tickLower);
-    const tickUpper = Number.parseInt(position.tickUpper);
-    const liquidity = JSBI.BigInt(position.liquidity);
+    const tickLower = position.tickLower;
+    const tickUpper = position.tickUpper;
+    const liquidity = position.liquidity;
 
     let token0Amount: JSBI;
     if (tickCurrent < tickLower) {
@@ -96,8 +95,31 @@ const getToken0AmountOfPosition = async (poolAddress: string, positionId: number
     const token0 = await swissKnife.syncUpTokenDB(token0Address);
     const intToken0Amount = token0.readableAmount(String(token0Amount));
     logger.info(`token 0: ${intToken0Amount.toFixed(6)} ${token0.symbol}`);
-    return intToken0Amount;
+
+    let token1Amount: JSBI;
+    if (tickCurrent < tickLower) {
+        token1Amount = JSBI.BigInt(0);
+    } else if (tickCurrent < tickUpper) {
+        token1Amount = SqrtPriceMath.getAmount1Delta(
+            sqrtPriceX96,
+            TickMath.getSqrtRatioAtTick(tickLower),
+            liquidity,
+            false,
+        );
+    } else {
+        token1Amount = SqrtPriceMath.getAmount1Delta(
+            TickMath.getSqrtRatioAtTick(tickLower),
+            TickMath.getSqrtRatioAtTick(tickUpper),
+            liquidity,
+            false,
+        );
+    }
+    const token1Address = await pool.callReadMethod('token1');
+    const token1 = await swissKnife.syncUpTokenDB(token1Address);
+    const intToken1Amount = token1.readableAmount(String(token1Amount));
+    logger.info(`token 1: ${intToken1Amount.toFixed(6)} ${token1.symbol}`);
 };
+
 const getToken1AmountOfPosition = async (poolAddress: string, positionId: number): Promise<number> => {
     const pool = new ContractHelper(poolAddress, './Uniswap/v3/pool.json', network);
     const slot0 = await pool.callReadMethod('slot0');
@@ -151,22 +173,22 @@ const callbackPosition = async (tokenId: number, helper: ContractHelper) => {
 
     const tickLower = Number.parseInt(position.tickLower);
     const tickUpper = Number.parseInt(position.tickUpper);
+    const liquidity = JSBI.BigInt(position.liquidity);
+    
     const token0Address = position.token0;
     const token1Address = position.token1;
     
     const fee = Number.parseInt(position.fee);
-    const liquidity = JSBI.BigInt(position.liquidity);
-
     if (JSBI.GT(liquidity, 0)) {
         const token0 = await swissKnife.syncUpTokenDB(token0Address)
         const token1 = await swissKnife.syncUpTokenDB(token1Address)
         const poolAddress = computePoolAddress(Config.factory, token0Address, token1Address, fee);
-        logger.info(`pool: ${poolAddress}`);
-        await getToken0AmountOfPosition(poolAddress, tokenId);
-        await getToken1AmountOfPosition(poolAddress, tokenId);
+        logger.info(`pool - ${token0.symbol}/${token1.symbol}: ${poolAddress}`);
+        await getTokensAmountOfPosition(poolAddress, {tickLower, tickUpper, liquidity});
+        
         const fees = await positionManager.callReadMethod('collect', [tokenId, '0x469bbafeb93480ee4c2cbff806bc504188335499', '9007199254740990000000', '9007199254740990000000'])
-        logger.info(`fee reward token0: ${token0.readableAmount(fees.amount0).toFixed(6)} ${token0.symbol}`)
-        logger.info(`fee reward token1: ${token1.readableAmount(fees.amount1).toFixed(6)} ${token1.symbol}`)
+        logger.info(`[reward] token0: ${token0.readableAmount(fees.amount0).toFixed(6)} ${token0.symbol}`)
+        logger.info(`[reward] token1: ${token1.readableAmount(fees.amount1).toFixed(6)} ${token1.symbol}`)
     }
 };
 
