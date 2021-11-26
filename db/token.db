@@ -49,6 +49,19 @@
         "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599": {
             "symbol": "WBTC",
             "decimals": 8
+        },
+        "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2": {
+            "symbol": "MKR",
+            "decimals": 18
+        },
+        "0xed1480d12be41d92f36f5f7bdd88212e381a3677": {
+            "symbol": "FDT",
+            "decimals": 18,
+            "address": "0xed1480d12be41d92f36f5f7bdd88212e381a3677"
+        },
+        "0xca76543cf381ebbb277be79574059e32108e3e65": {
+            "symbol": "wsOHM",
+            "decimals": 18
         }
     },
     "56": {

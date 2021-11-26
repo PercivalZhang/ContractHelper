@@ -53,12 +53,27 @@ export class SwissKnife {
                     if (!tokenContract) {
                         logger.debug(`no contract provided`);
                         logger.debug(`loading contract by token address: ${tokenAddress}`);
-                        const pathABIFile = path.resolve('abi', 'erc20.json');
-                        logger.debug(`load api from local abi file: ${pathABIFile}`);
-                        const apiInterfaceContract = JSON.parse(fs.readFileSync(pathABIFile).toString());
-                        tokenContract = new this.web3.eth.Contract(apiInterfaceContract, tokenAddress);
+                        try {
+                            const pathABIFile = path.resolve('abi', 'erc20.json');
+                            logger.debug(`load api from local abi file: ${pathABIFile}`);
+                            const apiInterfaceContract = JSON.parse(fs.readFileSync(pathABIFile).toString());
+                            tokenContract = new this.web3.eth.Contract(apiInterfaceContract, tokenAddress);
+                            /**
+                             * 部分erc20 token的symbol返回bytes，而不是string
+                             * 该行代码验证symbol是否不是string
+                             * 如果不是捕获错误，重新加载bytes的ABI文件
+                             */
+                            await tokenContract.methods.symbol().call();
+                        } catch(e) {
+                            logger.warn(`detected non-standard erc20 token, try loading erc20.1 ABI...`)
+                            const pathABIFile = path.resolve('abi', 'erc20.1.json');
+                            logger.debug(`load api from local abi file: ${pathABIFile}`);
+                            const apiInterfaceContract = JSON.parse(fs.readFileSync(pathABIFile).toString());
+                            tokenContract = new this.web3.eth.Contract(apiInterfaceContract, tokenAddress);
+                        }
                     }
                     let symbol = await tokenContract.methods.symbol().call();
+                    symbol = symbol.replace(/0+$/, '');
                     if (symbol.substr(0, 2) === '0x') {
                         symbol = Web3.utils.toAscii(symbol);
                     }
@@ -78,6 +93,7 @@ export class SwissKnife {
             const erc20Token = new ERC20Token(token['address'], token['symbol'], token['decimals']);
             return erc20Token;
         } catch (e) {
+            logger.error('upper catch errors.....')
             logger.error(`syncUpTokenDB(${tokenAddress}) > ${e.toString()}`);
         }
     }
