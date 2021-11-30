@@ -1,7 +1,7 @@
 import { ContractHelper } from './contract.helper';
 import { LoggerFactory } from './LoggerFactory';
 import { NetworkType } from './web3.factory';
-import { SwissKnife, Token } from './swiss.knife';
+import { SwissKnife } from './swiss.knife';
 import BigNumber from 'bignumber.js';
 
 export interface ChefMethods {
@@ -50,7 +50,7 @@ export class SyrupChefHelper {
             const userInfo = await this.chef.callReadMethod(this.chefMetadata.methods.userInfo, pid, userAddress);
             const myStakedBalance = new BigNumber(userInfo.amount);
             //质押Token
-            let stakeToken: Token = null;
+            let stakeToken = null;
             if (myStakedBalance.gt(0)) {
                 //获取质押Token信息
                 if (stakeToken == null) {

@@ -13,4 +13,7 @@ export class ERC20Token {
         const bgAmount = new BigNumber(amount);
         return bgAmount.dividedBy(Math.pow(10, this.decimals)).toNumber();
     }
+    public readableAmountFromBN(amount: BigNumber): number {
+        return amount.dividedBy(Math.pow(10, this.decimals)).toNumber();
+    }
 }

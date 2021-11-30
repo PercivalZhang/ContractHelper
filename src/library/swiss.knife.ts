@@ -9,15 +9,15 @@ import { NetworkType, Web3Factory } from './web3.factory';
 import { ERC20Token } from './erc20.token';
 const logger = LoggerFactory.getInstance().getLogger('Helper');
 
-export interface Token {
-    address: string;
-    symbol: string;
-    decimals: number;
-}
+// export interface Token {
+//     address: string;
+//     symbol: string;
+//     decimals: number;
+// }
 
 export interface LPToken {
-    token0: Token;
-    token1: Token;
+    token0: ERC20Token;
+    token1: ERC20Token;
     reserve0: BigNumber;
     reserve1: BigNumber;
     totalSupply: BigNumber;
@@ -139,5 +139,9 @@ export class SwissKnife {
         } catch (e) {
             logger.error(`syncUpTokenDB > ${e.toString()}`);
         }
+    }
+
+    public getWeb3() {
+        return this.web3;
     }
 }

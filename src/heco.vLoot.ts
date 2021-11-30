@@ -1,7 +1,7 @@
 import { ContractHelper } from './library/contract.helper';
 import { LoggerFactory } from './library/LoggerFactory';
 import { NetworkType } from './library/web3.factory';
-import { SwissKnife, Token } from './library/swiss.knife';
+import { SwissKnife } from './library/swiss.knife';
 import BigNumber from 'bignumber.js';
 
 interface LootMetadata {
