@@ -60,6 +60,7 @@ const getPositionReceipts = async (userAddress: string) => {
             if(collateralInETH.gt(0)) {
                 const reserveItems = await reserveDB.getData('/');
                 for (const [reserve, reserveData] of Object.entries(reserveItems)) {
+                    logger.info(`searching reserve - ${reserve} ...`)
                     const aTokenHelper = new ContractHelper(reserveData['aToken'], './Fodl/aToken.json', network);
                     const aToken = await swissKnife.syncUpTokenDB(reserveData['aToken']);
                     const aTokenBalance = new BigNumber(await aTokenHelper.callReadMethod('balanceOf', fodlAccount));
@@ -137,8 +138,8 @@ const main = async () => {
     //     await getSLPFarmingReceipts('0x872c67dd383db7b7e9bc1800546f1ae715a0bc0c', poolAddress);
     // }
     // searchAllMarkets('0xfc87d702139be505715a79c636a80fc092c4d9dc');
-    getPositionReceipts('0x40c839b831c90173dc7fbce49a25274a4688ddd9');
-    //getPositionReceipts('0xfc87d702139be505715a79c636a80fc092c4d9dc');
+    //getPositionReceipts('0x40c839b831c90173dc7fbce49a25274a4688ddd9');
+    getPositionReceipts('0xfc87d702139be505715a79c636a80fc092c4d9dc');
     
  //const web3 = Web3Factory.getInstance().getWeb3(network);
  //console.log(web3.utils.toHex('545181540290502656211188641723802732230064173358'))
