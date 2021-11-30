@@ -199,7 +199,207 @@
         },
         "0x9ff58f4ffb29fa2266ab25e75e2a8b3503311656": {
             "symbol": "aWBTC",
-            "decimals": 8
+            "decimals": 8,
+            "address": "0x9ff58f4fFB29fA2266Ab25e75e2A8b3503311656"
+        },
+        "0x030ba81f1c18d280636f32af80b9aad02cf0854e": {
+            "symbol": "aWETH",
+            "decimals": 18,
+            "address": "0x030bA81f1c18d280636F32af80b9AAd02Cf0854e"
+        },
+        "0x5165d24277cd063f5ac44efd447b27025e888f37": {
+            "symbol": "aYFI",
+            "decimals": 18,
+            "address": "0x5165d24277cD063F5ac44Efd447B27025e888f37"
+        },
+        "0xdf7ff54aacacbff42dfe29dd6144a69b629f8c9e": {
+            "symbol": "aZRX",
+            "decimals": 18,
+            "address": "0xDf7FF54aAcAcbFf42dfe29DD6144A69b629f8C9e"
+        },
+        "0xb9d7cb55f463405cdfbe4e90a6d2df01c2b92bf1": {
+            "symbol": "aUNI",
+            "decimals": 18,
+            "address": "0xB9D7CB55f463405CDfBe4E90a6D2Df01C2B92BF1"
+        },
+        "0xffc97d72e13e01096502cb8eb52dee56f74dad7b": {
+            "symbol": "aAAVE",
+            "decimals": 18,
+            "address": "0xFFC97d72E13E01096502Cb8Eb52dEe56f74DAD7B"
+        },
+        "0x05ec93c0365baaeabf7aeffb0972ea7ecdd39cf1": {
+            "symbol": "aBAT",
+            "decimals": 18,
+            "address": "0x05Ec93c0365baAeAbF7AefFb0972ea7ECdD39CF1"
+        },
+        "0xa361718326c15715591c299427c62086f69923d9": {
+            "symbol": "aBUSD",
+            "decimals": 18,
+            "address": "0xA361718326c15715591c299427c62086F69923D9"
+        },
+        "0x028171bca77440897b824ca71d1c56cac55b68a3": {
+            "symbol": "aDAI",
+            "decimals": 18,
+            "address": "0x028171bCA77440897B824Ca71D1c56caC55b68A3"
+        },
+        "0xac6df26a590f08dcc95d5a4705ae8abbc88509ef": {
+            "symbol": "aENJ",
+            "decimals": 18,
+            "address": "0xaC6Df26a590F08dcC95D5a4705ae8abbc88509Ef"
+        },
+        "0x39c6b3e42d6a679d7d776778fe880bc9487c2eda": {
+            "symbol": "aKNC",
+            "decimals": 18,
+            "address": "0x39C6b3e42d6A679d7D776778Fe880BC9487C2EDA"
+        },
+        "0xa06bc25b5805d5f8d82847d191cb4af5a3e873e0": {
+            "symbol": "aLINK",
+            "decimals": 18,
+            "address": "0xa06bC25B5805d5F8d82847D191Cb4Af5A3e873E0"
+        },
+        "0xa685a61171bb30d4072b338c80cb7b2c865c873e": {
+            "symbol": "aMANA",
+            "decimals": 18,
+            "address": "0xa685a61171bb30d4072B338c80Cb7b2c865c873E"
+        },
+        "0xc713e5e149d5d0715dcd1c156a020976e7e56b88": {
+            "symbol": "aMKR",
+            "decimals": 18,
+            "address": "0xc713e5E149D5D0715DcD1c156a020976e7E56B88"
+        },
+        "0xcc12abe4ff81c9378d670de1b57f8e0dd228d77a": {
+            "symbol": "aREN",
+            "decimals": 18,
+            "address": "0xCC12AbE4ff81c9378D670De1b57F8e0Dd228D77a"
+        },
+        "0x531842cebbdd378f8ee36d171d6cc9c4fcf475ec": {
+            "symbol": "variableDebtUSDT",
+            "decimals": 6,
+            "address": "0x531842cEbbdD378f8ee36D171d6cC9C4fcf475Ec"
+        },
+        "0x9c39809dec7f95f5e0713634a4d0701329b3b4d2": {
+            "symbol": "variableDebtWBTC",
+            "decimals": 8,
+            "address": "0x9c39809Dec7F95F5e0713634a4D0701329B3b4d2"
+        },
+        "0xf63b34710400cad3e044cffdcab00a0f32e33ecf": {
+            "symbol": "variableDebtWETH",
+            "decimals": 18,
+            "address": "0xF63B34710400CAd3e044cFfDcAb00a0f32E33eCf"
+        },
+        "0x7ebd09022be45ad993baa1cec61166fcc8644d97": {
+            "symbol": "variableDebtYFI",
+            "decimals": 18,
+            "address": "0x7EbD09022Be45AD993BAA1CEc61166Fcc8644d97"
+        },
+        "0x85791d117a392097590bded3bd5abb8d5a20491a": {
+            "symbol": "variableDebtZRX",
+            "decimals": 18,
+            "address": "0x85791D117A392097590bDeD3bD5abB8d5A20491A"
+        },
+        "0x5bdb050a92cadccfcdcccbfc17204a1c9cc0ab73": {
+            "symbol": "variableDebtUNI",
+            "decimals": 18,
+            "address": "0x5BdB050A92CADcCfCDcCCBFC17204a1C9cC0Ab73"
+        },
+        "0xf7dba49d571745d9d7fcb56225b05bea803ebf3c": {
+            "symbol": "variableDebtAAVE",
+            "decimals": 18,
+            "address": "0xF7DBA49d571745D9d7fcb56225B05BEA803EBf3C"
+        },
+        "0xfc218a6dfe6901cb34b1a5281fc6f1b8e7e56877": {
+            "symbol": "variableDebtBAT",
+            "decimals": 18,
+            "address": "0xfc218A6Dfe6901CB34B1a5281FC6f1b8e7E56877"
+        },
+        "0xba429f7011c9fa04cdd46a2da24dc0ff0ac6099c": {
+            "symbol": "variableDebtBUSD",
+            "decimals": 18,
+            "address": "0xbA429f7011c9fa04cDd46a2Da24dc0FF0aC6099c"
+        },
+        "0x6c3c78838c761c6ac7be9f59fe808ea2a6e4379d": {
+            "symbol": "variableDebtDAI",
+            "decimals": 18,
+            "address": "0x6C3c78838c761c6Ac7bE9F59fe808ea2A6E4379d"
+        },
+        "0x38995f292a6e31b78203254fe1cdd5ca1010a446": {
+            "symbol": "variableDebtENJ",
+            "decimals": 18,
+            "address": "0x38995F292a6E31b78203254fE1cdd5Ca1010A446"
+        },
+        "0x6b05d1c608015ccb8e205a690cb86773a96f39f1": {
+            "symbol": "variableDebtKNC",
+            "decimals": 18,
+            "address": "0x6B05D1c608015Ccb8e205A690cB86773A96F39f1"
+        },
+        "0x0b8f12b1788bfde65aa1ca52e3e9f3ba401be16d": {
+            "symbol": "variableDebtLINK",
+            "decimals": 18,
+            "address": "0x0b8f12b1788BFdE65Aa1ca52E3e9F3Ba401be16D"
+        },
+        "0x0a68976301e46ca6ce7410db28883e309ea0d352": {
+            "symbol": "variableDebtMANA",
+            "decimals": 18,
+            "address": "0x0A68976301e46Ca6Ce7410DB28883E309EA0D352"
+        },
+        "0xba728ead5e496be00dcf66f650b6d7758ecb50f8": {
+            "symbol": "variableDebtMKR",
+            "decimals": 18,
+            "address": "0xba728eAd5e496BE00DCF66F650b6d7758eCB50f8"
+        },
+        "0xcd9d82d33bd737de215cdac57fe2f7f04df77fe0": {
+            "symbol": "variableDebtREN",
+            "decimals": 18,
+            "address": "0xcd9D82d33bd737De215cDac57FE2F7f04DF77FE0"
+        },
+        "0x35f6b052c598d933d69a4eec4d04c73a191fe6c2": {
+            "symbol": "aSNX",
+            "decimals": 18,
+            "address": "0x35f6B052C598d933D69A4EEC4D04c73A191fE6c2"
+        },
+        "0x267eb8cf715455517f9bd5834aeae3cea1ebdbd8": {
+            "symbol": "variableDebtSNX",
+            "decimals": 18,
+            "address": "0x267EB8Cf715455517F9BD5834AeAE3CeA1EBdbD8"
+        },
+        "0x6c5024cd4f8a59110119c56f8933403a539555eb": {
+            "symbol": "aSUSD",
+            "decimals": 18,
+            "address": "0x6C5024Cd4F8A59110119C56f8933403A539555EB"
+        },
+        "0xdc6a3ab17299d9c2a412b0e0a4c1f55446ae0817": {
+            "symbol": "variableDebtSUSD",
+            "decimals": 18,
+            "address": "0xdC6a3Ab17299D9C2A412B0e0a4C1f55446AE0817"
+        },
+        "0x101cc05f4a51c0319f570d5e146a8c625198e636": {
+            "symbol": "aTUSD",
+            "decimals": 18,
+            "address": "0x101cc05f4A51C0319f570d5E146a8C625198e636"
+        },
+        "0x01c0eb1f8c6f1c1bf74ae028697ce7aa2a8b0e92": {
+            "symbol": "variableDebtTUSD",
+            "decimals": 18,
+            "address": "0x01C0eb1f8c6F1C1bF74ae028697ce7AA2a8b0E92"
+        },
+        "0xbcca60bb61934080951369a648fb03df4f96263c": {
+            "symbol": "aUSDC",
+            "decimals": 6,
+            "address": "0xBcca60bB61934080951369a648Fb03DF4F96263C"
+        },
+        "0x619beb58998ed2278e08620f97007e1116d5d25b": {
+            "symbol": "variableDebtUSDC",
+            "decimals": 6,
+            "address": "0x619beb58998eD2278e08620f97007e1116D5D25b"
+        },
+        "0x8dae6cb04688c62d939ed9b68d32bc62e49970b1": {
+            "symbol": "aCRV",
+            "decimals": 18,
+            "address": "0x8dAE6Cb04688C62d939ed9B68d32Bc62e49970b1"
+        },
+        "0x00ad8ebf64f141f1c81e9f8f792d3d1631c6c684": {
+            "symbol": "variableDebtCRV",
+            "decimals": 18
         }
     },
     "56": {

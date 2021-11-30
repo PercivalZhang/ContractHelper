@@ -67,6 +67,13 @@ const getPositionReceipts = async (userAddress: string) => {
                     if(aTokenBalance.gt(0)) {
                         logger.info(`my collateral balance: ${aToken.readableAmountFromBN(aTokenBalance).toFixed(6)} ${aToken.symbol}`);
                     }
+
+                    const vDebtTokenHelper = new ContractHelper(reserveData['variableDebtTokenAddress'], './Fodl/variable.debt.token.json', network);
+                    const vDebtToken = await swissKnife.syncUpTokenDB(reserveData['variableDebtTokenAddress']);
+                    const vDebtTokenBalance = new BigNumber(await vDebtTokenHelper.callReadMethod('balanceOf', fodlAccount));
+                    if(vDebtTokenBalance.gt(0)) {
+                        logger.info(`my borrowed balance: ${vDebtToken.readableAmountFromBN(vDebtTokenBalance).toFixed(6)} ${vDebtToken.symbol}`);
+                    }
                 }
             }
 
