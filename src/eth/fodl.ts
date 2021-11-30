@@ -12,6 +12,15 @@ import Web3 from 'web3';
 import { JSONDBBuilder } from '../library/db.json';
 // betaBank: https://cn.etherscan.com/address/0x972a785b390d05123497169a04c72de652493be1#readProxyContract
 
+interface AssetInfo {
+    balance: BigNumber;
+    token: ERC20Token;
+}
+interface Position {
+    collateral: AssetInfo;
+    borrow: AssetInfo;
+}
+
 const network = NetworkType.ETH_MAIN;
 
 const swissKnife = new SwissKnife(network);
@@ -34,11 +43,11 @@ const fetchAllReservesToDB = async () => {
     const reserves = await pool.callReadMethod('getReservesList');
     logger.info(`detected total ${reserves.length} reserves`);
     for (const reserve of reserves) {
-        const reserveData = await pool.callReadMethod('getReserveData', reserve)
+        const reserveData = await pool.callReadMethod('getReserveData', reserve);
         reserveDB.push('/' + reserve.toLowerCase(), {
             aToken: reserveData['7'],
             stableDebtTokenAddress: reserveData['8'],
-            variableDebtTokenAddress: reserveData['9']
+            variableDebtTokenAddress: reserveData['9'],
         });
         logger.info(`added reserve - ${reserve} data into db`);
     }
@@ -57,26 +66,89 @@ const getPositionReceipts = async (userAddress: string) => {
             const userAccountData = await pool.callReadMethod('getUserAccountData', fodlAccount);
             const collateralInETH = new BigNumber(userAccountData['totalCollateralETH']);
             const healthFactor = userAccountData['healthFactor'];
-            if(collateralInETH.gt(0)) {
+            if (collateralInETH.gt(0)) {
                 const reserveItems = await reserveDB.getData('/');
+                let isDone = true;
+                let position: Position = null;
                 for (const [reserve, reserveData] of Object.entries(reserveItems)) {
-                    logger.info(`searching reserve - ${reserve} ...`)
+                    logger.info(`searching reserve - ${reserve} ...`);
                     const aTokenHelper = new ContractHelper(reserveData['aToken'], './Fodl/aToken.json', network);
                     const aToken = await swissKnife.syncUpTokenDB(reserveData['aToken']);
                     const aTokenBalance = new BigNumber(await aTokenHelper.callReadMethod('balanceOf', fodlAccount));
-                    if(aTokenBalance.gt(0)) {
-                        logger.info(`my collateral balance: ${aToken.readableAmountFromBN(aTokenBalance).toFixed(6)} ${aToken.symbol}`);
+                    if (aTokenBalance.gt(0)) {
+                        const underlyingTokenAddress = await aTokenHelper.callReadMethod('UNDERLYING_ASSET_ADDRESS');
+                        const underlyingToken = await swissKnife.syncUpTokenDB(underlyingTokenAddress);
+                        position = {
+                            collateral: {
+                                balance: aTokenBalance,
+                                token: underlyingToken,
+                            },
+                            borrow: {
+                                balance: new BigNumber(0),
+                                token: null,
+                            },
+                        };
                     }
 
-                    const vDebtTokenHelper = new ContractHelper(reserveData['variableDebtTokenAddress'], './Fodl/variable.debt.token.json', network);
+                    const vDebtTokenHelper = new ContractHelper(
+                        reserveData['variableDebtTokenAddress'],
+                        './Fodl/variable.debt.token.json',
+                        network,
+                    );
                     const vDebtToken = await swissKnife.syncUpTokenDB(reserveData['variableDebtTokenAddress']);
-                    const vDebtTokenBalance = new BigNumber(await vDebtTokenHelper.callReadMethod('balanceOf', fodlAccount));
-                    if(vDebtTokenBalance.gt(0)) {
-                        logger.info(`my borrowed balance: ${vDebtToken.readableAmountFromBN(vDebtTokenBalance).toFixed(6)} ${vDebtToken.symbol}`);
+                    const vDebtTokenBalance = new BigNumber(
+                        await vDebtTokenHelper.callReadMethod('balanceOf', fodlAccount),
+                    );
+                    if (vDebtTokenBalance.gt(0)) {
+                        const underlyingTokenAddress = await vDebtTokenHelper.callReadMethod(
+                            'UNDERLYING_ASSET_ADDRESS',
+                        );
+                        const underlyingToken = await swissKnife.syncUpTokenDB(underlyingTokenAddress);
+                        position.borrow = {
+                            balance: vDebtTokenBalance,
+                            token: underlyingToken,
+                        };
+                        break;
+                    }
+
+                    const sDebtTokenHelper = new ContractHelper(
+                        reserveData['stableDebtTokenAddress'],
+                        './Fodl/stable.debt.token.json',
+                        network,
+                    );
+                    const sDebtToken = await swissKnife.syncUpTokenDB(reserveData['stableDebtTokenAddress']);
+                    const sDebtTokenBalance = new BigNumber(
+                        await sDebtTokenHelper.callReadMethod('balanceOf', fodlAccount),
+                    );
+                    if (sDebtTokenBalance.gt(0)) {
+                        const underlyingTokenAddress = await sDebtTokenHelper.callReadMethod(
+                            'UNDERLYING_ASSET_ADDRESS',
+                        );
+                        const underlyingToken = await swissKnife.syncUpTokenDB(underlyingTokenAddress);
+                        position.borrow = {
+                            balance: sDebtTokenBalance,
+                            token: underlyingToken,
+                        };
+                        break;
                     }
                 }
+                if (position) {
+                    logger.info(
+                        `position[+${position.collateral.token.symbol}-${
+                            position.borrow.token.symbol
+                        }] > + ${position.collateral.token
+                            .readableAmountFromBN(position.collateral.balance)
+                            .toFixed(6)} ${position.collateral.token.symbol}`,
+                    );
+                    logger.info(
+                        `position[+${position.collateral.token.symbol}-${
+                            position.borrow.token.symbol
+                        }] > - ${position.borrow.token.readableAmountFromBN(position.borrow.balance).toFixed(6)} ${
+                            position.borrow.token.symbol
+                        }`,
+                    );
+                }
             }
-
         }
     }
 };
@@ -145,12 +217,11 @@ const main = async () => {
     //     await getSLPFarmingReceipts('0x872c67dd383db7b7e9bc1800546f1ae715a0bc0c', poolAddress);
     // }
     // searchAllMarkets('0xfc87d702139be505715a79c636a80fc092c4d9dc');
-    //getPositionReceipts('0x40c839b831c90173dc7fbce49a25274a4688ddd9');
-    getPositionReceipts('0xfc87d702139be505715a79c636a80fc092c4d9dc');
-    
- //const web3 = Web3Factory.getInstance().getWeb3(network);
- //console.log(web3.utils.toHex('545181540290502656211188641723802732230064173358'))
+    getPositionReceipts('0x40c839b831c90173dc7fbce49a25274a4688ddd9');
+    //getPositionReceipts('0xfc87d702139be505715a79c636a80fc092c4d9dc');
 
+    //const web3 = Web3Factory.getInstance().getWeb3(network);
+    //console.log(web3.utils.toHex('545181540290502656211188641723802732230064173358'))
 };
 
 main().catch((e) => {
