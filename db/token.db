@@ -1329,6 +1329,10 @@
         "0x712f0cf37bdb8299d0666727f73a5caba7c1c24c": {
             "symbol": "hMATIC",
             "decimals": 18
+        },
+        "0xdad97f7713ae9437fa9249920ec8507e5fbb23d3": {
+            "symbol": "crvUSDBTCETH",
+            "decimals": 18
         }
     },
     "250": {

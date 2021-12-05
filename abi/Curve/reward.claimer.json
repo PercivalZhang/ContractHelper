@@ -1,0 +1,82 @@
+[
+    {
+        "stateMutability": "nonpayable",
+        "type": "constructor",
+        "inputs": [
+            { "name": "_owner", "type": "address" },
+            { "name": "_reward_receiver", "type": "address" }
+        ],
+        "outputs": []
+    },
+    {
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "get_reward",
+        "inputs": [],
+        "outputs": [],
+        "gas": 60808
+    },
+    {
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "set_reward_data",
+        "inputs": [
+            { "name": "_idx", "type": "uint256" },
+            { "name": "_claim", "type": "address" },
+            { "name": "_reward", "type": "address" }
+        ],
+        "outputs": [],
+        "gas": 72916
+    },
+    {
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "commit_transfer_ownership",
+        "inputs": [{ "name": "_owner", "type": "address" }],
+        "outputs": [],
+        "gas": 37605
+    },
+    {
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "accept_transfer_ownership",
+        "inputs": [],
+        "outputs": [],
+        "gas": 37550
+    },
+    {
+        "stateMutability": "view",
+        "type": "function",
+        "name": "owner",
+        "inputs": [],
+        "outputs": [{ "name": "", "type": "address" }],
+        "gas": 2508
+    },
+    {
+        "stateMutability": "view",
+        "type": "function",
+        "name": "future_owner",
+        "inputs": [],
+        "outputs": [{ "name": "", "type": "address" }],
+        "gas": 2538
+    },
+    {
+        "stateMutability": "view",
+        "type": "function",
+        "name": "reward_receiver",
+        "inputs": [],
+        "outputs": [{ "name": "", "type": "address" }],
+        "gas": 2568
+    },
+    {
+        "stateMutability": "view",
+        "type": "function",
+        "name": "reward_data",
+        "inputs": [{ "name": "arg0", "type": "uint256" }],
+        "outputs": [
+            { "name": "claim", "type": "address" },
+            { "name": "reward", "type": "address" }
+        ],
+        "gas": 5241
+    }
+]
