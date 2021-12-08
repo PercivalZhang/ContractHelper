@@ -22,7 +22,7 @@ const main = async() => {
    
     // 从字符串私钥（先进行base58解码）加载账号
     const fromWallet = web3.Keypair.fromSecretKey(bs58.decode(myPK))
-    logger.info(`my account public key: ${wallet.publicKey.toString()}`);
+    logger.info(`my account public key: ${fromWallet.publicKey.toString()}`);
 
     const airdropSignature = await connection.requestAirdrop(
         fromWallet.publicKey,
@@ -34,23 +34,38 @@ const main = async() => {
     // get account info
     // account data is bytecode that needs to be deserialized
     // serialization and deserialization is program specic
-    const account = await connection.getAccountInfo(wallet.publicKey);
+    const account = await connection.getAccountInfo(fromWallet.publicKey);
     console.log(account);
 
     // Create new token mint
     const token = await splToken.Token.createMint(
         connection,
-        fromWallet,                     // signer for paying fee
-        fromWallet.publicKey,           // mint authority
+        fromWallet,                 // signer for paying fee
+        fromWallet.publicKey,       // mint authority
         null,                       // freeze authority
         9,                          // decimals
         splToken.TOKEN_PROGRAM_ID,  // program id
     );
     
+    
     // 为目标sol地址创建关联的token账户, if it does not exist, create it
     const fromTokenAccount = await token.getOrCreateAssociatedAccountInfo(
         fromWallet.publicKey,
     );
+
+    // Minting 1 new token to the "fromTokenAccount" account we just returned/created
+    await token.mintTo(
+        fromTokenAccount.address,
+        fromWallet.publicKey,
+        [],
+        10000000000,
+    );
+
+    const fromTokenAccountInfo = await token.getAccountInfo(fromTokenAccount.address);
+    console.log(fromTokenAccountInfo)   
+    
+    const myTokenAccountInfo = await connection.getAccountInfo(fromTokenAccount.address);
+    console.log(myTokenAccountInfo) 
 }
 
 main().catch(e => {
