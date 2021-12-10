@@ -25,6 +25,9 @@ export const solToken: ERC20Token = Object.freeze({
     mint: new PublicKey('So11111111111111111111111111111111111111112'),
     scale: 9,
 });
-export const readableAmount = (amount: BigNumber, scale: number): number => {
+export const readableAmount = (amount: BigNumber, scale: number, decimals?: number): number => {
+    if(decimals) {
+        return Number.parseFloat(amount.dividedBy(Math.pow(10, scale)).toNumber().toFixed(decimals));
+    }
     return Number.parseFloat(amount.dividedBy(Math.pow(10, scale)).toNumber().toFixed(6));
 };

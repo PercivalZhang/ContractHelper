@@ -66,22 +66,24 @@ export class OrcaPool {
         return new BigNumber(context.value.amount);
     }
 
-    public async getBalanceOfTokens() {
-        let result = new Map<string, number>();
-
+    public async getBalanceOfTokens(): Promise<Map<ERC20Token, BigNumber>> {
+        let result = new Map<ERC20Token, BigNumber>();
         for (const vault of this.poolParams.vaults) {
             const accountInfo = await this.connection.getAccountInfo(vault.tokenAccount);
             // User does not have a balance for this account
             if (accountInfo == undefined) {
-                return new BigNumber(0);
+                result.set(
+                    vault.token,
+                    new BigNumber(0),
+                );
             }
             const accountData = deserializeAccount(accountInfo?.data);
             if (accountData == undefined) {
                 throw new Error('Failed to parse user account for LP token.');
             }
             result.set(
-                vault.tokenAccount.toString(),
-                readableAmount(new BigNumber(accountData.amount.toString()), vault.token.scale),
+                vault.token,
+                new BigNumber(accountData.amount.toString()),
             );
         }
         return result;

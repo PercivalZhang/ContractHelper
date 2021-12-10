@@ -36,30 +36,24 @@ const main = async () => {
     logger.info(`my token - USDC account: ${myUSDCAddress.toString()}`);
 
     const lpToken = tokenMap.get(orcFarm.farmParams.farmTokenMint.toString());
+    //获取用户lp token的数量
     const myLPTokens = await orcFarm.getFarmBalance(myAccount);
-    logger.info(`my lp token - ${lpToken.symbol} balance: ${readableAmount(myLPTokens, lpToken.decimals)}`);
-
+    logger.info(`pool[${lpToken.symbol}] > my lp token - ${lpToken.symbol} balance: ${readableAmount(myLPTokens, lpToken.decimals)}`);
+    //获取lp token的总量
     const totalLPTokens = await orcPool.getLPSupply();
-    logger.info(`total lp token - ${lpToken.symbol} balance: ${readableAmount(totalLPTokens, lpToken.decimals)}`);
-
+    logger.info(`pool[${lpToken.symbol}] > total lp token - ${lpToken.symbol} balance: ${readableAmount(totalLPTokens, lpToken.decimals)}`);
+    //获取用户lp的占比
     const myRatio = myLPTokens.dividedBy(totalLPTokens);
-    logger.info(`pool[${lpToken.symbol}] ratio: ${myRatio.multipliedBy(100).toNumber().toFixed(8)}%`);
-
+    logger.info(`pool[${lpToken.symbol}] > my ratio: ${myRatio.multipliedBy(100).toNumber().toFixed(8)}%`);
+    //获取池子两种token的数量
     const balanceOfTokens = await orcPool.getBalanceOfTokens();
     console.log(balanceOfTokens);
-    // const poolUSDCAddress = await findAssociatedTokenAddress(poolAddress, usdcToken.mint);
-
-    // const poolSOLAccountInfo = await connection.getAccountInfo(new PublicKey('ANP74VNsHwSrq9uUSjiSNyNWvf6ZPrKTmE4gHoNd13Lg'));
-    // console.log(poolSOLAccountInfo)
-    // const result = deserializeAccount(poolSOLAccountInfo?.data);
-    // console.log(result.amount.toString())
-    //logger.info(`pool SOL balance: ${poolSOLBalance}`);
-
-    //const poolUSDCBalance = await connection.getBalance(poolUSDCAddress);
-    // logger.info(`pool USDC balance: ${poolUSDCBalance}`);
-    // // get farm data
-    // const lptData = await connection.getAccountInfo(new web3.PublicKey(solUsdcAqFarm.address));
-    // console.log(lptData);
+    for(const [ercToken, balance] of balanceOfTokens.entries()) {
+        console.log(myRatio.multipliedBy(balance).dividedBy(Math.pow(10, ercToken.scale)).toNumber().toFixed(6))
+        //得到用户每种代币的数量
+        const myTokenBalance = readableAmount(myRatio.multipliedBy(balance), ercToken.scale);
+        logger.info(`pool[${lpToken.symbol}] > my ${ercToken.name} balance: ${myTokenBalance}`);
+    }
 };
 
 main().catch((e) => {
