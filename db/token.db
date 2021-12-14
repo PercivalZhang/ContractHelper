@@ -665,7 +665,16 @@
         },
         "0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23": {
             "symbol": "WCRO",
+            "decimals": 18,
+            "address": "0x5C7F8A570d578ED84E63fdFA7b1eE72dEae1AE23"
+        },
+        "0xe6801928061cdbe32ac5ad0634427e140efd05f9": {
+            "symbol": "BIFI",
             "decimals": 18
+        },
+        "0xc21223249ca28397b4b6541dffaecc539bff0c59": {
+            "symbol": "USDC",
+            "decimals": 6
         }
     },
     "56": {

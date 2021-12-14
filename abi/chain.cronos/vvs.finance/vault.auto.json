@@ -1,0 +1,26 @@
+[
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [{ "type": "uint256", "name": "totalShares", "internalType": "uint256" }],
+        "name": "totalShares",
+        "inputs": []
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [
+            { "type": "uint256", "name": "amount", "internalType": "uint256" },
+            { "type": "uint256", "name": "rewardDebt", "internalType": "uint256" }
+        ],
+        "name": "userInfo",
+        "inputs": [{ "type": "address", "name": "", "internalType": "address" }]
+    },
+    {
+        "type": "function",
+        "stateMutability": "view",
+        "outputs": [{ "type": "uint256", "name": "pricePerFullShare", "internalType": "uint256" }],
+        "name": "getPricePerFullShare",
+        "inputs": []
+    }
+]

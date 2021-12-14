@@ -26,7 +26,9 @@ export class MasterChefHelper {
     protected swissKnife: SwissKnife;
     protected chef: ContractHelper;
     protected chefMetadata: MasterChefMetadata;
+    protected network: NetworkType;
     public constructor(network: NetworkType, chefMetadata: MasterChefMetadata, pathABIFile: string) {
+        this.network = network;
         this.chef = new ContractHelper(chefMetadata.address, pathABIFile, network);
         this.chef.toggleHiddenExceptionOutput();
         this.chefMetadata = chefMetadata;
@@ -61,13 +63,22 @@ export class MasterChefHelper {
                 //质押token是UNI paired lp token
                 if (isPairedLPToken) {
                     logger.info(`detected paired LP Token - ${lpTokenAddress}`);
-                    const lpToken = await this.swissKnife.getLPTokenDetails(lpTokenAddress);
+                    const lpTokenDetails = await this.swissKnife.getLPTokenDetails(lpTokenAddress);
+                    const token0 = lpTokenDetails.token0;
+                    const token1 = lpTokenDetails.token1;
+                    const lpt = new ContractHelper(lpTokenAddress, './pair.json', this.network);
+                    const totalStakedLPT = await lpt.callReadMethod('balanceOf', this.chefMetadata.address);
+                    const myRatio = myStakedBalance.dividedBy(totalStakedLPT);
+                    const myToken0 = token0.readableAmountFromBN(lpTokenDetails.reserve0.multipliedBy(myRatio));
+                    const myToken1 = token1.readableAmountFromBN(lpTokenDetails.reserve1.multipliedBy(myRatio));
                     logger.info(
-                        `pool[${pid}] > my staked token: ${myStakedBalance
+                        `pool[${pid}] > my staked LP Token: ${myStakedBalance
                             .dividedBy(Math.pow(10, 18))
                             .toNumber()
-                            .toFixed(10)} ${lpToken.token0.symbol}/${lpToken.token1.symbol} LP`,
+                            .toFixed(10)} ${token0.symbol}/${token1.symbol} LP Token`,
                     );
+                    logger.info(`pool[${pid}] > my staked token0: ${myToken0} ${token0.symbol}`);
+                    logger.info(`pool[${pid}] > my staked token1: ${myToken1} ${token1.symbol}`);
                 } else if (callbackLPTHandler) {
                     await callbackLPTHandler(lpTokenAddress, myStakedBalance);
                 } else {
