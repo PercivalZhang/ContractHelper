@@ -657,6 +657,17 @@
             "decimals": 18
         }
     },
+    "25": {
+        "0x2d03bece6747adc00e1a131bba1469c15fd11e03": {
+            "symbol": "VVS",
+            "decimals": 18,
+            "address": "0x2D03bECE6747ADC00E1a131BBA1469C15fD11e03"
+        },
+        "0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23": {
+            "symbol": "WCRO",
+            "decimals": 18
+        }
+    },
     "56": {
         "0x899e2a220cbc6eb1ab154211353eded74bc1e266": {
             "symbol": "FILST",

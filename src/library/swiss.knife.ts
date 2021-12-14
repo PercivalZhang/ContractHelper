@@ -64,8 +64,8 @@ export class SwissKnife {
                              * 如果不是捕获错误，重新加载bytes的ABI文件
                              */
                             await tokenContract.methods.symbol().call();
-                        } catch(e) {
-                            logger.warn(`detected non-standard erc20 token, try loading erc20.1 ABI...`)
+                        } catch (e) {
+                            logger.warn(`detected non-standard erc20 token, try loading erc20.1 ABI...`);
                             const pathABIFile = path.resolve('abi', 'erc20.1.json');
                             logger.debug(`load api from local abi file: ${pathABIFile}`);
                             const apiInterfaceContract = JSON.parse(fs.readFileSync(pathABIFile).toString());
@@ -93,7 +93,7 @@ export class SwissKnife {
             const erc20Token = new ERC20Token(token['address'], token['symbol'], token['decimals']);
             return erc20Token;
         } catch (e) {
-            logger.error('upper catch errors.....')
+            logger.error('upper catch errors.....');
             logger.error(`syncUpTokenDB(${tokenAddress}) > ${e.toString()}`);
         }
     }
@@ -105,9 +105,11 @@ export class SwissKnife {
             const apiInterfaceContract = JSON.parse(fs.readFileSync(pathABIFile).toString());
             const lpContract = new this.web3.eth.Contract(apiInterfaceContract, address);
 
-            await lpContract.methods.token0().call();
+            const token0 = await lpContract.methods.token0().call();
+            console.log(token0);
             return true;
         } catch (e) {
+            logger.warn(e.message);
             return false;
         }
     }

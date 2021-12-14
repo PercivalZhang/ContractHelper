@@ -60,6 +60,7 @@ export class MasterChefHelper {
                 const isPairedLPToken = await this.swissKnife.isLPToken(lpTokenAddress);
                 //质押token是UNI paired lp token
                 if (isPairedLPToken) {
+                    logger.info(`detected paired LP Token - ${lpTokenAddress}`);
                     const lpToken = await this.swissKnife.getLPTokenDetails(lpTokenAddress);
                     logger.info(
                         `pool[${pid}] > my staked token: ${myStakedBalance
