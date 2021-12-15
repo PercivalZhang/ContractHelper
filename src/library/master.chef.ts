@@ -55,7 +55,7 @@ export class MasterChefHelper {
         for (let pid = 0; pid < poolLength; pid++) {
             //获取目标用户在质押池的质押信息
             const userInfo = await this.chef.callReadMethod(this.chefMetadata.methods.userInfo, pid, userAddress);
-            const myStakedBalance = new BigNumber(userInfo.amount);
+            const myStakedBalance = new BigNumber(userInfo['0']);
             if (myStakedBalance.gt(0)) {
                 const poolInfo = await this.chef.callReadMethod(this.chefMetadata.methods.poolInfo, pid);
                 const lpTokenAddress = poolInfo[this.chefMetadata.pool.lpToken];

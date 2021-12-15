@@ -675,6 +675,15 @@
         "0xc21223249ca28397b4b6541dffaecc539bff0c59": {
             "symbol": "USDC",
             "decimals": 6
+        },
+        "0x66e428c3f67a68878562e79a0234c1f83c208770": {
+            "symbol": "USDT",
+            "decimals": 6,
+            "address": "0x66e428c3f67a68878562e79A0234c1F83c208770"
+        },
+        "0xadbd1231fb360047525bedf962581f3eee7b49fe": {
+            "symbol": "CRONA",
+            "decimals": 18
         }
     },
     "56": {
