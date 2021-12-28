@@ -48,7 +48,15 @@ export class MasterChefHelper {
         callbackRewardHandler = null,
     ) {
         //获取质押池的数量
-        const poolLength = await this.chef.callReadMethod(this.chefMetadata.methods.poolLength);
+        // 配置文件指定了poolLength的数值，而不是合约方法名字
+        const sizeRe = /:(\d+)/g;
+        const sizeData = sizeRe.exec(this.chefMetadata.methods.poolLength);
+        let poolLength = 0;
+        if(sizeData != null) {
+            poolLength = Number.parseInt(sizeData[1]);
+        } else {        
+            poolLength = await this.chef.callReadMethod(this.chefMetadata.methods.poolLength);
+        }
         logger.info(`total ${poolLength} pools`);
         let rewardToken = null;
         //遍历质押池

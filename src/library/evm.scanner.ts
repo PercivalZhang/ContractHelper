@@ -18,6 +18,7 @@ export class ChainScanner {
     public async fetchData(uri: string): Promise<JSON> {
         try {
             const res = await axios.get(uri);
+            console.log(res);
             logger.debug(`http status: ${res.status}`);
             if (res.status === 200) {
                 return JSON.parse(res.data.result);

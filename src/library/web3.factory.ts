@@ -10,6 +10,7 @@ const BSC = 'https://bsc-dataseed.binance.org';
 const FANTOM = 'Https://rpc.fantom.network';
 // const BSC = 'https://bsc-dataseed1.binance.org/'
 const CRONOS = 'https://rpc.vvs.finance'; // chain id = 25
+const AVALANCHE = 'https://api.avax.network/ext/bc/C/rpc'; // chain id = 25
 export enum NetworkType {
     ETH_MAIN,
     HECO,
@@ -19,6 +20,7 @@ export enum NetworkType {
     OKEXChain,
     FANTOM,
     CRONOS,
+    AVALANCHE
 }
 
 export class Web3Factory {
@@ -51,6 +53,8 @@ export class Web3Factory {
                 return new Web3(FANTOM);
             case NetworkType.CRONOS:
                 return new Web3(CRONOS);
+            case NetworkType.AVALANCHE:
+                return new Web3(AVALANCHE);    
             default:
                 return new Web3(ETH_MAIN);
         }

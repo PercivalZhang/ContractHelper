@@ -655,6 +655,19 @@
         "0xd89cf9e8a858f8b4b31faf793505e112d6c17449": {
             "symbol": "stableDebtFEI",
             "decimals": 18
+        },
+        "0xd586e7f844cea2f87f50152665bcbc2c279d8d70": {
+            "symbol": "DAI.e",
+            "decimals": 18,
+            "address": "0xd586e7f844cea2f87f50152665bcbc2c279d8d70"
+        },
+        "0xc7198437980c041c805a1edcba50c1ce5db95118": {
+            "symbol": "USDT.e",
+            "decimals": 6
+        },
+        "0x685b570cfa3bf4889ce077f70b8a33a9b1c2e2c8": {
+            "symbol": "kmWAVAX/DAI.e-LINK",
+            "decimals": 18
         }
     },
     "25": {
@@ -683,6 +696,11 @@
         },
         "0xadbd1231fb360047525bedf962581f3eee7b49fe": {
             "symbol": "CRONA",
+            "decimals": 18,
+            "address": "0xadbd1231fb360047525BEdF962581F3eee7b49fe"
+        },
+        "0x09ad12552ec45f82be90b38dfe7b06332a680864": {
+            "symbol": "CADDY",
             "decimals": 18
         }
     },
@@ -760,6 +778,10 @@
         },
         "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c": {
             "symbol": "WBNB",
+            "decimals": 18
+        },
+        "0xea3d9d00de6c14bf8507f46c46c29292bbfa8d25": {
+            "symbol": "kmBUSD/WBNB-LINK",
             "decimals": 18
         }
     },
@@ -1379,7 +1401,7 @@
         "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83": {
             "symbol": "WFTM",
             "decimals": 18,
-            "address": "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83"
+            "address": "0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83"
         },
         "0xd67de0e0a0fd7b15dc8348bb9be742f3c5850454": {
             "symbol": "BNB",
@@ -1434,6 +1456,15 @@
         },
         "0xe105621721d1293c27be7718e041a4ce0ebb227e": {
             "symbol": "FEUR",
+            "decimals": 18
+        },
+        "0x6c021ae822bea943b2e66552bde1d2696a53fbb7": {
+            "symbol": "TOMB",
+            "decimals": 18,
+            "address": "0x6c021Ae822BEa943b2E66552bDe1D2696a53fbB7"
+        },
+        "0x4cdf39285d7ca8eb3f090fda0c069ba5f4145b37": {
+            "symbol": "TSHARE",
             "decimals": 18
         }
     }
