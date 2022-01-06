@@ -50,9 +50,9 @@ const getLendBorrowReceipt = async (kashiPairMediumAddress: string, userAddress:
     // 获取抵押token的数量
     const totalCollateralTokens = await kashiPairMedium.callReadMethod('totalCollateralShare');
     logger.info(
-        `${kashiTag} > total collateral token balance: ${collateralToken.readableAmount(totalCollateralTokens).toFixed(6)} ${
-            collateralToken.symbol
-        }`,
+        `${kashiTag} > total collateral token balance: ${collateralToken
+            .readableAmount(totalCollateralTokens)
+            .toFixed(6)} ${collateralToken.symbol}`,
     );
     const totalBorrow = await kashiPairMedium.callReadMethod('totalBorrow');
     const totalAsset = await kashiPairMedium.callReadMethod('totalAsset');
@@ -66,10 +66,14 @@ const getLendBorrowReceipt = async (kashiPairMediumAddress: string, userAddress:
         true,
     );
     logger.info(
-        `${kashiTag} > total borrowed asset: ${assetToken.readableAmount(totalBorrowAssets).toFixed(6)} ${assetToken.symbol}`,
+        `${kashiTag} > total borrowed asset: ${assetToken.readableAmount(totalBorrowAssets).toFixed(6)} ${
+            assetToken.symbol
+        }`,
     );
     // 获取未被借出的资产token的数量
-    logger.info(`${kashiTag} > available asset: ${assetToken.readableAmount(totalAsset['elastic'])} ${assetToken.symbol}`);
+    logger.info(
+        `${kashiTag} > available asset: ${assetToken.readableAmount(totalAsset['elastic'])} ${assetToken.symbol}`,
+    );
     // 计算资产token总的数量：未被借出的token + 借出的token
     const totalAssets = new BigNumber(totalAsset['elastic']).plus(totalBorrowAssets);
     logger.info(
@@ -89,6 +93,29 @@ const getLendBorrowReceipt = async (kashiPairMediumAddress: string, userAddress:
         const myReadableAssets = assetToken.readableAmountFromBN(myAssets);
         logger.info(`${kashiTag} > my lended asset balance: ${myReadableAssets.toFixed(6)} ${assetToken.symbol}`);
     }
+    // 获取用户抵押token的数量
+    const userCollateralShares = new BigNumber(
+        await kashiPairMedium.callReadMethod('userCollateralShare', userAddress),
+    );
+    if (userCollateralShares.gt(0)) {
+        logger.info(
+            `${kashiTag} > my collateral token balance: ${collateralToken
+                .readableAmountFromBN(userCollateralShares)
+                .toFixed(6)} ${collateralToken.symbol}`,
+        );
+    }
+    // 获取用户借出token的数量
+    const userBorrowPart = new BigNumber(await kashiPairMedium.callReadMethod('userBorrowPart', userAddress));
+    // extra borrow fee - 0.0005 收取借出数量的0.0005，额外计入到你的借出账单中，因此要将此部分去除掉
+    const userBorrowAssets = userBorrowPart
+        .multipliedBy(totalBorrow['elastic'])
+        .dividedBy(totalBorrow['base'])
+        .dividedBy(1.0005); 
+    logger.info(
+        `${kashiTag} > my borrowed asset token balance: ${assetToken
+            .readableAmountFromBN(userBorrowAssets)
+            .toFixed(7)} ${assetToken.symbol}`,
+    );
 };
 
 const main = async () => {

@@ -24,13 +24,31 @@ const Config = {
         pool: {
             lpToken: 'token',
         },
-    }
+    },
+    masonry: '0x8764DE60236C5843D9faEB1B638fbCE962773B67' // 质押TShare，奖励Tomb
 };
+const getMasonryReceipt = async (userAddress: string) => {
+    const masonry = new ContractHelper(Config.masonry, './Fantom/Tomb/masonry.json', network);
+    masonry.toggleHiddenExceptionOutput();
 
-const masterChef = new MasterChefHelper(network, Config.farmChef, './Tomb/master.chef.json');
+    const shareAddress = await masonry.callReadMethod('share');
+    const shareToken = await swissKnife.syncUpTokenDB(shareAddress);
+
+    const tombAddress = await masonry.callReadMethod('tomb');
+    const tombToken = await swissKnife.syncUpTokenDB(tombAddress);
+
+    const myShares = await masonry.callReadMethod('balanceOf', userAddress);
+    logger.info(`Masonry > my shares balance: ${shareToken.readableAmount(myShares)} ${shareToken.symbol}`);
+
+    const rewardData = await masonry.callReadMethod('masons', userAddress);
+    const pendingRewards = rewardData['rewardEarned'];
+    logger.info(`Masonry > my pending rewards: ${tombToken.readableAmount(pendingRewards)} ${tombToken.symbol}`);
+
+}
+const masterChef = new MasterChefHelper(network, Config.farmChef, './Fantom/Tomb/master.chef.json');
 const main = async () => {
-    await masterChef.getFarmingReceipts('0x881897b1FC551240bA6e2CAbC7E59034Af58428a');
-    //await syrupChef.getFarmingReceipts('0xb97ebF6Ff02D23D141cB1676097cab9921A6226b');
+    // await masterChef.getFarmingReceipts('0x881897b1FC551240bA6e2CAbC7E59034Af58428a');
+    await getMasonryReceipt('0x881897b1FC551240bA6e2CAbC7E59034Af58428a');
 };
 
 main().catch((e) => {
