@@ -2,8 +2,8 @@
     {
         "name": "Deposit",
         "inputs": [
-            { "type": "address", "name": "provider", "indexed": true },
-            { "type": "uint256", "name": "value", "indexed": false }
+            { "name": "provider", "type": "address", "indexed": true },
+            { "name": "value", "type": "uint256", "indexed": false }
         ],
         "anonymous": false,
         "type": "event"
@@ -11,8 +11,8 @@
     {
         "name": "Withdraw",
         "inputs": [
-            { "type": "address", "name": "provider", "indexed": true },
-            { "type": "uint256", "name": "value", "indexed": false }
+            { "name": "provider", "type": "address", "indexed": true },
+            { "name": "value", "type": "uint256", "indexed": false }
         ],
         "anonymous": false,
         "type": "event"
@@ -20,298 +20,481 @@
     {
         "name": "UpdateLiquidityLimit",
         "inputs": [
-            { "type": "address", "name": "user", "indexed": false },
-            { "type": "uint256", "name": "original_balance", "indexed": false },
-            { "type": "uint256", "name": "original_supply", "indexed": false },
-            { "type": "uint256", "name": "working_balance", "indexed": false },
-            { "type": "uint256", "name": "working_supply", "indexed": false }
+            { "name": "user", "type": "address", "indexed": false },
+            { "name": "original_balance", "type": "uint256", "indexed": false },
+            { "name": "original_supply", "type": "uint256", "indexed": false },
+            { "name": "working_balance", "type": "uint256", "indexed": false },
+            { "name": "working_supply", "type": "uint256", "indexed": false }
         ],
         "anonymous": false,
         "type": "event"
     },
     {
         "name": "CommitOwnership",
-        "inputs": [{ "type": "address", "name": "admin", "indexed": false }],
+        "inputs": [{ "name": "admin", "type": "address", "indexed": false }],
         "anonymous": false,
         "type": "event"
     },
     {
         "name": "ApplyOwnership",
-        "inputs": [{ "type": "address", "name": "admin", "indexed": false }],
+        "inputs": [{ "name": "admin", "type": "address", "indexed": false }],
         "anonymous": false,
         "type": "event"
     },
     {
-        "outputs": [],
+        "name": "Transfer",
         "inputs": [
-            { "type": "address", "name": "lp_addr" },
-            { "type": "address", "name": "_minter" },
-            { "type": "address", "name": "_admin" }
+            { "name": "_from", "type": "address", "indexed": true },
+            { "name": "_to", "type": "address", "indexed": true },
+            { "name": "_value", "type": "uint256", "indexed": false }
         ],
-        "stateMutability": "nonpayable",
-        "type": "constructor"
+        "anonymous": false,
+        "type": "event"
     },
     {
-        "name": "user_checkpoint",
-        "outputs": [{ "type": "bool", "name": "" }],
-        "inputs": [{ "type": "address", "name": "addr" }],
-        "stateMutability": "nonpayable",
-        "type": "function",
-        "gas": 2070408
-    },
-    {
-        "name": "claimable_tokens",
-        "outputs": [{ "type": "uint256", "name": "" }],
-        "inputs": [{ "type": "address", "name": "addr" }],
-        "stateMutability": "nonpayable",
-        "type": "function",
-        "gas": 1989612
-    },
-    {
-        "name": "kick",
-        "outputs": [],
-        "inputs": [{ "type": "address", "name": "addr" }],
-        "stateMutability": "nonpayable",
-        "type": "function",
-        "gas": 2075769
-    },
-    {
-        "name": "set_approve_deposit",
-        "outputs": [],
+        "name": "Approval",
         "inputs": [
-            { "type": "address", "name": "addr" },
-            { "type": "bool", "name": "can_deposit" }
+            { "name": "_owner", "type": "address", "indexed": true },
+            { "name": "_spender", "type": "address", "indexed": true },
+            { "name": "_value", "type": "uint256", "indexed": false }
         ],
-        "stateMutability": "nonpayable",
-        "type": "function",
-        "gas": 35801
+        "anonymous": false,
+        "type": "event"
     },
     {
-        "name": "deposit",
-        "outputs": [],
-        "inputs": [{ "type": "uint256", "name": "_value" }],
         "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "name": "deposit",
-        "outputs": [],
+        "type": "constructor",
         "inputs": [
-            { "type": "uint256", "name": "_value" },
-            { "type": "address", "name": "addr" }
+            { "name": "_lp_token", "type": "address" },
+            { "name": "_factory", "type": "address" }
         ],
-        "stateMutability": "nonpayable",
-        "type": "function"
+        "outputs": []
     },
     {
-        "name": "withdraw",
-        "outputs": [],
-        "inputs": [{ "type": "uint256", "name": "_value" }],
-        "stateMutability": "nonpayable",
+        "stateMutability": "view",
         "type": "function",
-        "gas": 2199513
+        "name": "decimals",
+        "inputs": [],
+        "outputs": [{ "name": "", "type": "uint256" }],
+        "gas": 288
     },
     {
+        "stateMutability": "view",
+        "type": "function",
         "name": "integrate_checkpoint",
-        "outputs": [{ "type": "uint256", "name": "" }],
         "inputs": [],
-        "stateMutability": "view",
-        "type": "function",
-        "gas": 2207
+        "outputs": [{ "name": "", "type": "uint256" }],
+        "gas": 4560
     },
     {
-        "name": "kill_me",
-        "outputs": [],
-        "inputs": [],
         "stateMutability": "nonpayable",
         "type": "function",
-        "gas": 37188
+        "name": "user_checkpoint",
+        "inputs": [{ "name": "addr", "type": "address" }],
+        "outputs": [{ "name": "", "type": "bool" }],
+        "gas": 3123796
     },
     {
-        "name": "commit_transfer_ownership",
-        "outputs": [],
-        "inputs": [{ "type": "address", "name": "addr" }],
         "stateMutability": "nonpayable",
         "type": "function",
-        "gas": 37868
+        "name": "claimable_tokens",
+        "inputs": [{ "name": "addr", "type": "address" }],
+        "outputs": [{ "name": "", "type": "uint256" }],
+        "gas": 3038616
     },
     {
-        "name": "apply_transfer_ownership",
-        "outputs": [],
-        "inputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function",
-        "gas": 38707
-    },
-    {
-        "name": "minter",
-        "outputs": [{ "type": "address", "name": "" }],
-        "inputs": [],
         "stateMutability": "view",
         "type": "function",
-        "gas": 1421
-    },
-    {
-        "name": "crv_token",
-        "outputs": [{ "type": "address", "name": "" }],
-        "inputs": [],
-        "stateMutability": "view",
-        "type": "function",
-        "gas": 1451
-    },
-    {
-        "name": "lp_token",
-        "outputs": [{ "type": "address", "name": "" }],
-        "inputs": [],
-        "stateMutability": "view",
-        "type": "function",
-        "gas": 1481
-    },
-    {
-        "name": "controller",
-        "outputs": [{ "type": "address", "name": "" }],
-        "inputs": [],
-        "stateMutability": "view",
-        "type": "function",
-        "gas": 1511
-    },
-    {
-        "name": "voting_escrow",
-        "outputs": [{ "type": "address", "name": "" }],
-        "inputs": [],
-        "stateMutability": "view",
-        "type": "function",
-        "gas": 1541
-    },
-    {
-        "name": "balanceOf",
-        "outputs": [{ "type": "uint256", "name": "" }],
-        "inputs": [{ "type": "address", "name": "arg0" }],
-        "stateMutability": "view",
-        "type": "function",
-        "gas": 1786
-    },
-    {
-        "name": "totalSupply",
-        "outputs": [{ "type": "uint256", "name": "" }],
-        "inputs": [],
-        "stateMutability": "view",
-        "type": "function",
-        "gas": 1601
-    },
-    {
-        "name": "future_epoch_time",
-        "outputs": [{ "type": "uint256", "name": "" }],
-        "inputs": [],
-        "stateMutability": "view",
-        "type": "function",
-        "gas": 1631
-    },
-    {
-        "name": "approved_to_deposit",
-        "outputs": [{ "type": "bool", "name": "" }],
+        "name": "claimed_reward",
         "inputs": [
-            { "type": "address", "name": "arg0" },
-            { "type": "address", "name": "arg1" }
+            { "name": "_addr", "type": "address" },
+            { "name": "_token", "type": "address" }
         ],
-        "stateMutability": "view",
-        "type": "function",
-        "gas": 2091
+        "outputs": [{ "name": "", "type": "uint256" }],
+        "gas": 3006
     },
     {
+        "stateMutability": "view",
+        "type": "function",
+        "name": "claimable_reward",
+        "inputs": [
+            { "name": "_user", "type": "address" },
+            { "name": "_reward_token", "type": "address" }
+        ],
+        "outputs": [{ "name": "", "type": "uint256" }],
+        "gas": 20225
+    },
+    {
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "set_rewards_receiver",
+        "inputs": [{ "name": "_receiver", "type": "address" }],
+        "outputs": [],
+        "gas": 35643
+    },
+    { "stateMutability": "nonpayable", "type": "function", "name": "claim_rewards", "inputs": [], "outputs": [] },
+    {
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "claim_rewards",
+        "inputs": [{ "name": "_addr", "type": "address" }],
+        "outputs": []
+    },
+    {
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "claim_rewards",
+        "inputs": [
+            { "name": "_addr", "type": "address" },
+            { "name": "_receiver", "type": "address" }
+        ],
+        "outputs": []
+    },
+    {
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "kick",
+        "inputs": [{ "name": "addr", "type": "address" }],
+        "outputs": [],
+        "gas": 3137887
+    },
+    {
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "deposit",
+        "inputs": [{ "name": "_value", "type": "uint256" }],
+        "outputs": []
+    },
+    {
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "deposit",
+        "inputs": [
+            { "name": "_value", "type": "uint256" },
+            { "name": "_addr", "type": "address" }
+        ],
+        "outputs": []
+    },
+    {
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "deposit",
+        "inputs": [
+            { "name": "_value", "type": "uint256" },
+            { "name": "_addr", "type": "address" },
+            { "name": "_claim_rewards", "type": "bool" }
+        ],
+        "outputs": []
+    },
+    {
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "withdraw",
+        "inputs": [{ "name": "_value", "type": "uint256" }],
+        "outputs": []
+    },
+    {
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "withdraw",
+        "inputs": [
+            { "name": "_value", "type": "uint256" },
+            { "name": "_claim_rewards", "type": "bool" }
+        ],
+        "outputs": []
+    },
+    {
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "transfer",
+        "inputs": [
+            { "name": "_to", "type": "address" },
+            { "name": "_value", "type": "uint256" }
+        ],
+        "outputs": [{ "name": "", "type": "bool" }],
+        "gas": 18062406
+    },
+    {
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "transferFrom",
+        "inputs": [
+            { "name": "_from", "type": "address" },
+            { "name": "_to", "type": "address" },
+            { "name": "_value", "type": "uint256" }
+        ],
+        "outputs": [{ "name": "", "type": "bool" }],
+        "gas": 18100356
+    },
+    {
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "approve",
+        "inputs": [
+            { "name": "_spender", "type": "address" },
+            { "name": "_value", "type": "uint256" }
+        ],
+        "outputs": [{ "name": "", "type": "bool" }],
+        "gas": 38121
+    },
+    {
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "increaseAllowance",
+        "inputs": [
+            { "name": "_spender", "type": "address" },
+            { "name": "_added_value", "type": "uint256" }
+        ],
+        "outputs": [{ "name": "", "type": "bool" }],
+        "gas": 40665
+    },
+    {
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "decreaseAllowance",
+        "inputs": [
+            { "name": "_spender", "type": "address" },
+            { "name": "_subtracted_value", "type": "uint256" }
+        ],
+        "outputs": [{ "name": "", "type": "bool" }],
+        "gas": 40689
+    },
+    {
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "add_reward",
+        "inputs": [
+            { "name": "_reward_token", "type": "address" },
+            { "name": "_distributor", "type": "address" }
+        ],
+        "outputs": [],
+        "gas": 115384
+    },
+    {
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "set_reward_distributor",
+        "inputs": [
+            { "name": "_reward_token", "type": "address" },
+            { "name": "_distributor", "type": "address" }
+        ],
+        "outputs": [],
+        "gas": 43149
+    },
+    {
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "deposit_reward_token",
+        "inputs": [
+            { "name": "_reward_token", "type": "address" },
+            { "name": "_amount", "type": "uint256" }
+        ],
+        "outputs": [],
+        "gas": 1540007
+    },
+    {
+        "stateMutability": "nonpayable",
+        "type": "function",
+        "name": "set_killed",
+        "inputs": [{ "name": "_is_killed", "type": "bool" }],
+        "outputs": [],
+        "gas": 40499
+    },
+    {
+        "stateMutability": "view",
+        "type": "function",
+        "name": "lp_token",
+        "inputs": [],
+        "outputs": [{ "name": "", "type": "address" }],
+        "gas": 2988
+    },
+    {
+        "stateMutability": "view",
+        "type": "function",
+        "name": "future_epoch_time",
+        "inputs": [],
+        "outputs": [{ "name": "", "type": "uint256" }],
+        "gas": 3018
+    },
+    {
+        "stateMutability": "view",
+        "type": "function",
+        "name": "balanceOf",
+        "inputs": [{ "name": "arg0", "type": "address" }],
+        "outputs": [{ "name": "", "type": "uint256" }],
+        "gas": 3263
+    },
+    {
+        "stateMutability": "view",
+        "type": "function",
+        "name": "totalSupply",
+        "inputs": [],
+        "outputs": [{ "name": "", "type": "uint256" }],
+        "gas": 3078
+    },
+    {
+        "stateMutability": "view",
+        "type": "function",
+        "name": "allowance",
+        "inputs": [
+            { "name": "arg0", "type": "address" },
+            { "name": "arg1", "type": "address" }
+        ],
+        "outputs": [{ "name": "", "type": "uint256" }],
+        "gas": 3538
+    },
+    {
+        "stateMutability": "view",
+        "type": "function",
+        "name": "name",
+        "inputs": [],
+        "outputs": [{ "name": "", "type": "string" }],
+        "gas": 13368
+    },
+    {
+        "stateMutability": "view",
+        "type": "function",
+        "name": "symbol",
+        "inputs": [],
+        "outputs": [{ "name": "", "type": "string" }],
+        "gas": 11121
+    },
+    {
+        "stateMutability": "view",
+        "type": "function",
         "name": "working_balances",
-        "outputs": [{ "type": "uint256", "name": "" }],
-        "inputs": [{ "type": "address", "name": "arg0" }],
-        "stateMutability": "view",
-        "type": "function",
-        "gas": 1906
+        "inputs": [{ "name": "arg0", "type": "address" }],
+        "outputs": [{ "name": "", "type": "uint256" }],
+        "gas": 3413
     },
     {
+        "stateMutability": "view",
+        "type": "function",
         "name": "working_supply",
-        "outputs": [{ "type": "uint256", "name": "" }],
         "inputs": [],
-        "stateMutability": "view",
-        "type": "function",
-        "gas": 1721
+        "outputs": [{ "name": "", "type": "uint256" }],
+        "gas": 3228
     },
     {
+        "stateMutability": "view",
+        "type": "function",
         "name": "period",
-        "outputs": [{ "type": "int128", "name": "" }],
         "inputs": [],
-        "stateMutability": "view",
-        "type": "function",
-        "gas": 1751
+        "outputs": [{ "name": "", "type": "int128" }],
+        "gas": 3258
     },
     {
+        "stateMutability": "view",
+        "type": "function",
         "name": "period_timestamp",
-        "outputs": [{ "type": "uint256", "name": "" }],
-        "inputs": [{ "type": "uint256", "name": "arg0" }],
-        "stateMutability": "view",
-        "type": "function",
-        "gas": 1890
+        "inputs": [{ "name": "arg0", "type": "uint256" }],
+        "outputs": [{ "name": "", "type": "uint256" }],
+        "gas": 3333
     },
     {
+        "stateMutability": "view",
+        "type": "function",
         "name": "integrate_inv_supply",
-        "outputs": [{ "type": "uint256", "name": "" }],
-        "inputs": [{ "type": "uint256", "name": "arg0" }],
-        "stateMutability": "view",
-        "type": "function",
-        "gas": 1920
+        "inputs": [{ "name": "arg0", "type": "uint256" }],
+        "outputs": [{ "name": "", "type": "uint256" }],
+        "gas": 3363
     },
     {
+        "stateMutability": "view",
+        "type": "function",
         "name": "integrate_inv_supply_of",
-        "outputs": [{ "type": "uint256", "name": "" }],
-        "inputs": [{ "type": "address", "name": "arg0" }],
-        "stateMutability": "view",
-        "type": "function",
-        "gas": 2056
+        "inputs": [{ "name": "arg0", "type": "address" }],
+        "outputs": [{ "name": "", "type": "uint256" }],
+        "gas": 3563
     },
     {
+        "stateMutability": "view",
+        "type": "function",
         "name": "integrate_checkpoint_of",
-        "outputs": [{ "type": "uint256", "name": "" }],
-        "inputs": [{ "type": "address", "name": "arg0" }],
-        "stateMutability": "view",
-        "type": "function",
-        "gas": 2086
+        "inputs": [{ "name": "arg0", "type": "address" }],
+        "outputs": [{ "name": "", "type": "uint256" }],
+        "gas": 3593
     },
     {
+        "stateMutability": "view",
+        "type": "function",
         "name": "integrate_fraction",
-        "outputs": [{ "type": "uint256", "name": "" }],
-        "inputs": [{ "type": "address", "name": "arg0" }],
-        "stateMutability": "view",
-        "type": "function",
-        "gas": 2116
+        "inputs": [{ "name": "arg0", "type": "address" }],
+        "outputs": [{ "name": "", "type": "uint256" }],
+        "gas": 3623
     },
     {
+        "stateMutability": "view",
+        "type": "function",
         "name": "inflation_rate",
-        "outputs": [{ "type": "uint256", "name": "" }],
         "inputs": [],
-        "stateMutability": "view",
-        "type": "function",
-        "gas": 1931
+        "outputs": [{ "name": "", "type": "uint256" }],
+        "gas": 3438
     },
     {
-        "name": "admin",
-        "outputs": [{ "type": "address", "name": "" }],
-        "inputs": [],
         "stateMutability": "view",
         "type": "function",
-        "gas": 1961
+        "name": "reward_count",
+        "inputs": [],
+        "outputs": [{ "name": "", "type": "uint256" }],
+        "gas": 3468
     },
     {
-        "name": "future_admin",
-        "outputs": [{ "type": "address", "name": "" }],
-        "inputs": [],
         "stateMutability": "view",
         "type": "function",
-        "gas": 1991
+        "name": "reward_tokens",
+        "inputs": [{ "name": "arg0", "type": "uint256" }],
+        "outputs": [{ "name": "", "type": "address" }],
+        "gas": 3543
     },
     {
+        "stateMutability": "view",
+        "type": "function",
+        "name": "reward_data",
+        "inputs": [{ "name": "arg0", "type": "address" }],
+        "outputs": [
+            { "name": "token", "type": "address" },
+            { "name": "distributor", "type": "address" },
+            { "name": "period_finish", "type": "uint256" },
+            { "name": "rate", "type": "uint256" },
+            { "name": "last_update", "type": "uint256" },
+            { "name": "integral", "type": "uint256" }
+        ],
+        "gas": 14973
+    },
+    {
+        "stateMutability": "view",
+        "type": "function",
+        "name": "rewards_receiver",
+        "inputs": [{ "name": "arg0", "type": "address" }],
+        "outputs": [{ "name": "", "type": "address" }],
+        "gas": 3773
+    },
+    {
+        "stateMutability": "view",
+        "type": "function",
+        "name": "reward_integral_for",
+        "inputs": [
+            { "name": "arg0", "type": "address" },
+            { "name": "arg1", "type": "address" }
+        ],
+        "outputs": [{ "name": "", "type": "uint256" }],
+        "gas": 4018
+    },
+    {
+        "stateMutability": "view",
+        "type": "function",
         "name": "is_killed",
-        "outputs": [{ "type": "bool", "name": "" }],
         "inputs": [],
+        "outputs": [{ "name": "", "type": "bool" }],
+        "gas": 3618
+    },
+    {
         "stateMutability": "view",
         "type": "function",
-        "gas": 2021
+        "name": "factory",
+        "inputs": [],
+        "outputs": [{ "name": "", "type": "address" }],
+        "gas": 3648
     }
 ]

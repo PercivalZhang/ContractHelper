@@ -2,8 +2,6 @@ import { ContractHelper } from '../library/contract.helper';
 import { LoggerFactory } from '../library/LoggerFactory';
 import { NetworkType } from '../library/web3.factory';
 import { SwissKnife,  } from '../library/swiss.knife';
-import { MasterChefHelper } from '../library/master.chef';
-import { SyrupChefHelper } from '../library/syrup.chef';
 import BigNumber from 'bignumber.js';
 import * as fs from 'fs';
 import path from 'path';
@@ -13,46 +11,69 @@ const network = NetworkType.ETH_MAIN;
 
 const swissKnife = new SwissKnife(network);
 const logger = LoggerFactory.getInstance().getLogger('main');
-
-interface Reward {
+type Gauge = {
+    address: string
+    relativeWeight: string
+}
+type Reward = {
     token: ERC20Token
     rate: string
+    price: string
 }
-interface Coin {
+type Coin = {
     token: ERC20Token;
     amount: string;
     totalUSD: string;
     ratio: string;
+    price: string;
     priceOracle: string;
     priceScale: string;
 }
-interface PoolInfo {
+type PoolV1Info = {
     poolAddress: string;
     poolName: string;
     totalUSD: string;
     lpToken: string;
-    gauge: string;
+    gauge: Gauge;
     adminFee: string;
     fee: string;
-    a: number;
-    gamma: number;
+    a: string;
+    gamma: string;
     coins: Coin[];
     rewards: Reward[];
 }
-
-export interface PoolParams {
+type PoolV2Info = {
+    poolAddress: string;
+    poolName: string;
+    totalUSD: string;
+    lpToken: string;
+    gauge: Gauge;
+    adminFee: string;
+    fee: string;
+    a: string;
+    futureA: string;
+    coins: Coin[];
+    rewards: Reward[];
+}
+type PoolV1Params = {
+    version: number;
     coinSize: number;
     coinPriceMap: Map<number, number>;
     gauge: string;
 }
-
+type PoolV2Params = {
+    version: number;
+    coinSize: number;
+    gauge: string;
+}
 const Config = {
     crv: '0xD533a949740bb3306d119CC777fa900bA034cd52',
     stableCoin: '0xdac17f958d2ee523a2206206994597c13d831ec7',
     gaugeController: '0x2f50d538606fa9edd2b11e2446beb18c9d5846bb',
     pools: {
-        plain: {
+        v1: {
             '0xD51a44d3FaE010294C616388b506AcdA1bfAAE46': {
+                version: 1,
                 coinSize: 3,
                 coinPriceMap: new Map([
                     [1, 0],
@@ -60,6 +81,13 @@ const Config = {
                 ]),
                 gauge: '0xDeFd8FdD20e0f34115C7018CCfb655796F6B2168'
             },
+        },
+        v2: {
+            '0x5a6A4D54456819380173272A5E8E9B9904BdF41B': {
+                version: 2,
+                coinSize: 2,
+                gauge: '0xd8b712d29381748dB89c36BCa0138d7c75866ddF'
+            }
         },
     },
 };
@@ -76,26 +104,29 @@ const syncupGauges = async () => {
     }
 
 };
-const getPlainPoolInfo = async (poolAddress: string, poolParams: PoolParams) => {
-    let poolInfo: PoolInfo = {
+const getPoolV1Info = async (poolAddress: string, poolParams: PoolV1Params) => {
+    if(poolParams.version !== 1) {
+        logger.warn(`require v1 pool`);
+        return;
+    }
+    let poolInfo: PoolV1Info = {
         poolAddress: '',
         poolName: '',
         totalUSD: '',
         lpToken: '',
-        gauge: '',
+        gauge: null,
         adminFee: '',
         fee: '',
-        a: 0,
-        gamma: 0,
+        a: '',
+        gamma: '',
         coins: [],
         rewards: []
     }
     poolInfo.poolAddress = poolAddress;
-    const USD = await swissKnife.syncUpTokenDB(Config.stableCoin);
     const CRV = new ContractHelper(Config.crv, './ETH/Curve/token.crv.json', network);
     const crvInflationRate = await CRV.callReadMethod('rate');
     const crvERC20 = await swissKnife.syncUpTokenDB(Config.crv);
-    const pool = new ContractHelper(poolAddress, './ETH/Curve/pool.json', network);
+    const pool = new ContractHelper(poolAddress, './ETH/Curve/pool.v1.json', network);
     const lptAddress = await pool.callReadMethod('token');
     poolInfo.lpToken = lptAddress;
     const lptERC20 = await swissKnife.syncUpTokenDB(lptAddress);
@@ -109,7 +140,8 @@ const getPlainPoolInfo = async (poolAddress: string, poolParams: PoolParams) => 
             amount: '',
             totalUSD: '',
             priceOracle: '',
-            priceScale: ''
+            priceScale: '',
+            price: ''
         }
         let coinUSDValue = new BigNumber(0);
         const coinAddress = await pool.callReadMethod('coins', i);
@@ -177,44 +209,150 @@ const getPlainPoolInfo = async (poolAddress: string, poolParams: PoolParams) => 
     // 1 / A, A越大，滑点承受能力越强
     const paramA = await pool.callReadMethod('A');
     logger.info(`pool - ${lptERC20.symbol} > param - A: ${paramA}`);
+    poolInfo.a = paramA;
     const paramGamma = await pool.callReadMethod('gamma');
     logger.info(`pool - ${lptERC20.symbol} > param - Gamma: ${paramGamma}`);
+    poolInfo.gamma = paramGamma;
 
-    const gauge = new ContractHelper(poolParams.gauge, './ETH/Curve/gauge.json', network);
-    poolInfo.gauge = poolParams.gauge;
-
-    poolInfo.rewards.push({token: crvERC20, rate: crvInflationRate});
-    const extraRewards = await getExtraRewards(poolParams.gauge);
-    if(extraRewards.length > 0) {
-        poolInfo.rewards.concat(extraRewards);
-    }        
-    //const gController = new ContractHelper(Config.gaugeController, './ETH/Curve/gauge.controller.json', network);
-
+    poolInfo.rewards.push({token: crvERC20, rate: crvInflationRate, price: ''});
+    // 获取gauge自身及额外奖励相关的信息
+    const gaugeInfo = await getGaugeInfo(poolParams.gauge);
+    poolInfo.lpToken = gaugeInfo.lptAddress;
+    if(gaugeInfo.rewards.length > 0) {
+        poolInfo.rewards.push(...gaugeInfo.rewards);
+    } 
+    poolInfo.gauge = {
+        address: gaugeInfo.address,
+        relativeWeight: gaugeInfo.relativeWeight
+    }
     return poolInfo;
-
 };
 
-const getExtraRewards = async(gaugeAddress: string) => {
+const getPoolV2Info = async (poolAddress: string, poolParams: PoolV2Params) => {
+    if(poolParams.version !== 2) {
+        logger.warn(`require v2 pool`);
+        return;
+    }
+    let poolInfo: PoolV2Info = {
+        poolAddress: '',
+        poolName: '',
+        totalUSD: '',
+        lpToken: '',
+        gauge: null,
+        adminFee: '',
+        fee: '',
+        a: '',
+        futureA: '',
+        coins: [],
+        rewards: []
+    }
+    poolInfo.poolAddress = poolAddress;
+    const CRV = new ContractHelper(Config.crv, './ETH/Curve/token.crv.json', network);
+    const crvInflationRate = await CRV.callReadMethod('rate');
+    const crvERC20 = await swissKnife.syncUpTokenDB(Config.crv);
+    const pool = new ContractHelper(poolAddress, './ETH/Curve/pool.v2.json', network);
+    poolInfo.poolName = await pool.callReadMethod('symbol');
+    for (let i = 0; i < poolParams.coinSize; i++) {
+        const coin : Coin = {
+            token: undefined,
+            ratio: '',
+            amount: '0',
+            totalUSD: '0',
+            priceOracle: '0',
+            priceScale: '0',
+            price: '0'
+        }
+        const coinAddress = await pool.callReadMethod('coins', i);
+        const coinToken = await swissKnife.syncUpTokenDB(coinAddress);
+        logger.info(`pool - ${poolInfo.poolName} > coin - ${coinToken.symbol}: ${coinToken.address}`);
+        const coinBalance = await pool.callReadMethod('balances', i);  
+        coin.token = coinToken;
+        coin.amount = coinToken.readableAmount(coinBalance).toFixed(6);
+        poolInfo.coins.push(coin)
+    }
+    // pool的swap费率，精度1e10
+    const fee = new BigNumber(await pool.callReadMethod('fee'));
+    poolInfo.fee = fee.dividedBy(1e10).multipliedBy(100).toFixed(3) + '%';
+    logger.info(`pool - ${poolInfo.poolName} > fee: ${fee.dividedBy(1e10).multipliedBy(100).toFixed(3)}%`);
+    // pool的管理费率，从交易费中扣除的比例，精度1e10
+    // 管理费支付给veCRV的持有者
+    const adminFee = new BigNumber(await pool.callReadMethod('admin_fee'));
+    poolInfo.adminFee = adminFee.dividedBy(1e10).multipliedBy(100).toFixed(3) + '%';
+    logger.info(
+        `pool - ${poolInfo.poolName} > admin fee: ${adminFee
+            .dividedBy(1e10)
+            .multipliedBy(100)
+            .toFixed(3)}% of ${fee.dividedBy(1e8).toFixed(3)}%`,
+    );
+    // a pool’s tolerance for imbalance between the assets within it
+    // 1 / A, A越大，滑点承受能力越强
+    const paramA = await pool.callReadMethod('A');
+    logger.info(`pool - ${poolInfo.poolName} > param - A: ${paramA}`);
+    poolInfo.a = paramA;
+    // pool的future_A, 精度100
+    const futureA = new BigNumber(await pool.callReadMethod('future_A'));
+    poolInfo.futureA = futureA.dividedBy(100).toString();
+    logger.info(`pool - ${poolInfo.poolName} > future_A: ${poolInfo.futureA}`);
+    // 添加默认奖励CRV Token        
+    poolInfo.rewards.push({token: crvERC20, rate: crvInflationRate, price: ''});
+    // 获取gauge自身及额外奖励相关的信息
+    const gaugeInfo = await getGaugeInfo(poolParams.gauge);
+    poolInfo.lpToken = gaugeInfo.lptAddress;
+    if(gaugeInfo.rewards.length > 0) {
+        poolInfo.rewards.push(...gaugeInfo.rewards);
+    }        
+    poolInfo.gauge = {
+        address: gaugeInfo.address,
+        relativeWeight: gaugeInfo.relativeWeight
+    }
+    return poolInfo;
+}
+
+type GaugeInfo = {
+    address: string;
+    relativeWeight: string;
+    lptAddress: string;
+    rewards: Reward[];
+  };
+const getGaugeInfo = async(gaugeAddress: string): Promise<GaugeInfo> => {
+    const gaugeInfo : GaugeInfo = {
+        address: '',
+        relativeWeight: '',
+        lptAddress: '',
+        rewards: []
+    };
+    gaugeInfo.address = gaugeAddress;
     const rewards: Reward[] = [];
     const gauge = new ContractHelper(gaugeAddress, './ETH/Curve/gauge.json', network);
+    const lptAddress = await gauge.callReadMethod('lp_token');
+    gaugeInfo.lptAddress = lptAddress;
     try {
         const rewardCount = Number.parseInt(await gauge.callReadMethod('reward_count'));
+        logger.info(`getGaugeInfo > detected ${rewardCount} reward tokens`);
         for(let i = 0; i < rewardCount; i++) {
             const rewardTokenAddress = await gauge.callReadMethod('reward_tokens', i);
             const rewardToken = await swissKnife.syncUpTokenDB(rewardTokenAddress);
             const reward_data = await gauge.callReadMethod('reward_data', rewardTokenAddress);
             const reward_rate = reward_data['rate'];
-            rewards.push({token: rewardToken, rate: reward_rate});
+            rewards.push({token: rewardToken, rate: reward_rate, price: ''});
         }
+        gaugeInfo.rewards = rewards;
     } catch(e) {
         logger.warn(`no extra reward tokens`);
     }
-    return rewards;
+    const gController = new ContractHelper(Config.gaugeController, './ETH/Curve/gauge.controller.json', network);
+    const relativeWeight = await gController.callReadMethod('gauge_relative_weight', gaugeAddress);
+    gaugeInfo.relativeWeight = relativeWeight;
+    return gaugeInfo;
 }
 
 const main = async () => {
-    for (const [poolAddress, poolParams] of Object.entries(Config.pools.plain)) {
-        const poolInfo = await getPlainPoolInfo(poolAddress, poolParams);
+    // for (const [poolAddress, poolParams] of Object.entries(Config.pools.v1)) {
+    //     const poolInfo = await getPoolV1Info(poolAddress, poolParams);
+    //     console.log(JSON.stringify(poolInfo))
+    // }
+    for (const [poolAddress, poolParams] of Object.entries(Config.pools.v2)) {
+        const poolInfo = await getPoolV2Info(poolAddress, poolParams);
         console.log(JSON.stringify(poolInfo))
     }
     //await syncupGauges();
