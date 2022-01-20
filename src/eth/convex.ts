@@ -81,6 +81,41 @@ const network = NetworkType.ETH_MAIN;
 const swissKnife = new SwissKnife(network);
 const logger = LoggerFactory.getInstance().getLogger('main');
 
+/**
+ * 计算奖励CVX Token的数量
+ * @param inputAmount - 奖励CRV Token数量，通过baseReward合约的方法earned(_user)获取
+ * @returns
+ */
+
+const calculateCVXRewards = async (inputAmount: BigNumber): Promise<BigNumber> => {
+    let amount = inputAmount;
+    const cvx = new ContractHelper(Config.CVX, './ETH/Convex/cvx.json', network);
+    const supply = new BigNumber(await cvx.callReadMethod('totalSupply'));
+    if (supply.eq(0)) {
+        return amount;
+    }
+    logger.info(`cvx supply is not ZERO`);
+    const reductionPerCliff = await cvx.callReadMethod('reductionPerCliff');
+    const totalCliffs = new BigNumber(await cvx.callReadMethod('totalCliffs'));
+    const maxSupply = new BigNumber(await cvx.callReadMethod('maxSupply'));
+    const cliff = supply.dividedBy(reductionPerCliff);
+    //mint if below total cliffs
+    if (cliff.isLessThan(totalCliffs)) {
+        logger.info(`cliff is less than totalCliffs`);
+        //for reduction% take inverse of current cliff
+        const reduction = totalCliffs.minus(cliff);
+        //reduce
+        amount = amount.multipliedBy(reduction).dividedBy(totalCliffs);
+
+        //supply cap check
+        const amtTillMax = maxSupply.minus(supply);
+        if (amount.isGreaterThan(amtTillMax)) {
+            amount = amtTillMax;
+        }
+        return amount;
+    }
+};
+
 const getCurveLPDetails = async (lpTokenAddress: string, coinSize: number, lptBalance: string) => {
     const coins: Coin[] = [];
     const lpToken = new ContractHelper(lpTokenAddress, './ETH/Curve/lp.token.json', network);
@@ -132,6 +167,7 @@ const getPoolInfo = async (pid: number): Promise<PoolInfo> => {
     poolInfo.coins = coins;
 
     const baseRewards = new ContractHelper(poolData['crvRewards'], './ETH/Convex/base.reward.json', network);
+    // CRV Token地址
     const baseRewardTokenAddress = await baseRewards.callReadMethod('rewardToken');
     const baseRewardToken = await swissKnife.syncUpTokenDB(baseRewardTokenAddress);
     const baseRewardRate = await baseRewards.callReadMethod('rewardRate');
@@ -141,6 +177,20 @@ const getPoolInfo = async (pid: number): Promise<PoolInfo> => {
         rate: baseRewardRate,
         price: '',
     });
+    // demo如何根据base Reward token - CRV的数量，计算奖励CVX token的数量
+    const earned = await baseRewards.callReadMethod('earned', '0x73cae59e9d6e73b43ad32de120b456783f72b7aa');
+    logger.info(
+        `user - 0x73cae59e9d6e73b43ad32de120b456783f72b7aa earned: ${baseRewardToken
+            .readableAmount(earned)
+            .toFixed(4)} ${baseRewardToken.symbol}`,
+    );
+    const cvxRewards = await calculateCVXRewards(new BigNumber(earned));
+    logger.info(
+        `user =  0x73cae59e9d6e73b43ad32de120b456783f72b7aa earned: ${CVX.readableAmountFromBN(cvxRewards).toFixed(
+            4,
+        )} ${CVX.symbol}`,
+    );
+
     const extraRewardsLength = Number.parseInt(await baseRewards.callReadMethod('extraRewardsLength'));
     logger.info(`extra rewards length: ${extraRewardsLength}`);
     if (extraRewardsLength > 0) {
