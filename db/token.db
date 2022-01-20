@@ -690,6 +690,10 @@
         "0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b": {
             "symbol": "CVX",
             "decimals": 18
+        },
+        "0x5a6a4d54456819380173272a5e8e9b9904bdf41b": {
+            "symbol": "MIM-3LP3CRV-f",
+            "decimals": 18
         }
     },
     "25": {
