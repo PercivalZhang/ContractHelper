@@ -39,14 +39,14 @@
         }        
  */
 
-import { ContractHelper } from '../library/contract.helper';
-import { LoggerFactory } from '../library/LoggerFactory';
-import { NetworkType } from '../library/web3.factory';
-import { SwissKnife } from '../library/swiss.knife';
+import { ContractHelper } from '../../library/contract.helper';
+import { LoggerFactory } from '../../library/LoggerFactory';
+import { NetworkType } from '../../library/web3.factory';
+import { SwissKnife } from '../../library/swiss.knife';
 import BigNumber from 'bignumber.js';
 import * as fs from 'fs';
 import path from 'path';
-import { ERC20Token } from '../library/erc20.token';
+import { ERC20Token } from '../../library/erc20.token';
 
 type Reward = {
     token: ERC20Token;
@@ -72,7 +72,14 @@ const Config = {
     CVX: '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b',
     booster: '0xf403c135812408bfbe8713b5a23a04b3d48aae31',
     pools: {
-        '0xc4AD29ba4B3c580e6D59105FFf484999997675Ff': 38, // lp Token -> pool_id
+        '0xc4AD29ba4B3c580e6D59105FFf484999997675Ff': {
+            pid: 38,
+            version: 1,
+        }, // lp Token -> pool_id
+        '0x5a6A4D54456819380173272A5E8E9B9904BdF41B': {
+            pid: 40,
+            version: 2,
+        },
     },
 };
 
@@ -115,8 +122,43 @@ const calculateCVXRewards = async (inputAmount: BigNumber): Promise<BigNumber> =
         return amount;
     }
 };
+/**
+ * V2版本Curve LP Token(类似Uniswap： pool和LP Token两个合约合成一个合约)
+ * - pool(LP Token) -> Gauge 2个合约
+ * @param lpTokenAddress
+ * @param coinSize
+ * @param lptBalance
+ * @returns
+ */
+const getCurveV2LPDetails = async (lpTokenAddress: string, coinSize: number, lptBalance: string) => {
+    const coins: Coin[] = [];
+    const pool = new ContractHelper(lpTokenAddress, './ETH/Curve/pool.v2.json', network);
+    const totalLPT = await pool.callReadMethod('totalSupply');
+    const ratio = new BigNumber(lptBalance).dividedBy(totalLPT);
 
-const getCurveLPDetails = async (lpTokenAddress: string, coinSize: number, lptBalance: string) => {
+    for (let i = 0; i < coinSize; i++) {
+        const coinAddress = await pool.callReadMethod('coins', i);
+        const coinToken = await swissKnife.syncUpTokenDB(coinAddress);
+
+        const coinBalance = await pool.callReadMethod('balances', i);
+        const myCoinBalance = coinToken.readableAmountFromBN(new BigNumber(coinBalance).multipliedBy(ratio)).toFixed(6);
+        coins.push({
+            token: coinToken,
+            amount: myCoinBalance,
+            price: '',
+        });
+    }
+    return coins;
+};
+/**
+ * V1版本Curve LP Token
+ * - pool -> LP Token -> Gauge 3个合约
+ * @param lpTokenAddress
+ * @param coinSize
+ * @param lptBalance
+ * @returns
+ */
+const getCurveV1LPDetails = async (lpTokenAddress: string, coinSize: number, lptBalance: string) => {
     const coins: Coin[] = [];
     const lpToken = new ContractHelper(lpTokenAddress, './ETH/Curve/lp.token.json', network);
     const totalLPT = await lpToken.callReadMethod('totalSupply');
@@ -139,7 +181,7 @@ const getCurveLPDetails = async (lpTokenAddress: string, coinSize: number, lptBa
     return coins;
 };
 
-const getPoolInfo = async (pid: number): Promise<PoolInfo> => {
+const getPoolInfo = async (pid: number, pVersion: number): Promise<PoolInfo> => {
     const poolInfo: PoolInfo = {
         pid: 0,
         lpToken: '',
@@ -163,8 +205,13 @@ const getPoolInfo = async (pid: number): Promise<PoolInfo> => {
     const cTokenTotalSupply = await cToken.callReadMethod('totalSupply');
     poolInfo.totalLPTBalance = cTokenTotalSupply;
 
-    const coins = await getCurveLPDetails(poolInfo.lpToken, 3, poolInfo.totalLPTBalance);
-    poolInfo.coins = coins;
+    if (pVersion === 1) {
+        const coins = await getCurveV1LPDetails(poolInfo.lpToken, 3, poolInfo.totalLPTBalance);
+        poolInfo.coins = coins;
+    } else if (pVersion === 2) {
+        const coins = await getCurveV2LPDetails(poolInfo.lpToken, 2, poolInfo.totalLPTBalance);
+        poolInfo.coins = coins;
+    }
 
     const baseRewards = new ContractHelper(poolData['crvRewards'], './ETH/Convex/base.reward.json', network);
     // CRV Token地址
@@ -177,19 +224,20 @@ const getPoolInfo = async (pid: number): Promise<PoolInfo> => {
         rate: baseRewardRate,
         price: '',
     });
-    // demo如何根据base Reward token - CRV的数量，计算奖励CVX token的数量
-    const earned = await baseRewards.callReadMethod('earned', '0x73cae59e9d6e73b43ad32de120b456783f72b7aa');
-    logger.info(
-        `user - 0x73cae59e9d6e73b43ad32de120b456783f72b7aa earned: ${baseRewardToken
-            .readableAmount(earned)
-            .toFixed(4)} ${baseRewardToken.symbol}`,
-    );
-    const cvxRewards = await calculateCVXRewards(new BigNumber(earned));
-    logger.info(
-        `user =  0x73cae59e9d6e73b43ad32de120b456783f72b7aa earned: ${CVX.readableAmountFromBN(cvxRewards).toFixed(
-            4,
-        )} ${CVX.symbol}`,
-    );
+
+    // // demo如何根据base Reward token - CRV的数量，计算奖励CVX token的数量
+    // const earned = await baseRewards.callReadMethod('earned', '0x73cae59e9d6e73b43ad32de120b456783f72b7aa');
+    // logger.info(
+    //     `user - 0x73cae59e9d6e73b43ad32de120b456783f72b7aa earned: ${baseRewardToken
+    //         .readableAmount(earned)
+    //         .toFixed(4)} ${baseRewardToken.symbol}`,
+    // );
+    // const cvxRewards = await calculateCVXRewards(new BigNumber(earned));
+    // logger.info(
+    //     `user =  0x73cae59e9d6e73b43ad32de120b456783f72b7aa earned: ${CVX.readableAmountFromBN(cvxRewards).toFixed(
+    //         4,
+    //     )} ${CVX.symbol}`,
+    // );
 
     const extraRewardsLength = Number.parseInt(await baseRewards.callReadMethod('extraRewardsLength'));
     logger.info(`extra rewards length: ${extraRewardsLength}`);
@@ -218,8 +266,8 @@ const getPoolInfo = async (pid: number): Promise<PoolInfo> => {
 };
 
 const main = async () => {
-    for (const [poolAddress, pid] of Object.entries(Config.pools)) {
-        const poolInfo = await getPoolInfo(pid);
+    for (const [poolAddress, poolParams] of Object.entries(Config.pools)) {
+        const poolInfo = await getPoolInfo(poolParams.pid, poolParams.version);
         console.log(JSON.stringify(poolInfo));
     }
 };

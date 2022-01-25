@@ -350,7 +350,7 @@ const getGaugeInfo = async (gaugeAddress: string): Promise<GaugeInfo> => {
 const main = async () => {
     // for (const [poolAddress, poolParams] of Object.entries(Config.pools.v1)) {
     //     const poolInfo = await getPoolV1Info(poolAddress, poolParams);
-    //     console.log(JSON.stringify(poolInfo))
+    //     console.log(JSON.stringify(poolInfo));
     // }
     for (const [poolAddress, poolParams] of Object.entries(Config.pools.v2)) {
         const poolInfo = await getPoolV2Info(poolAddress, poolParams);

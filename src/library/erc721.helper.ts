@@ -16,6 +16,11 @@ export interface NFTContractMetadata {
     methods: MethodMap;
 }
 
+export type NFTReceipt = {
+    tokenIds: any[];
+    customizedData: any[];
+};
+
 const logger = LoggerFactory.getInstance().getLogger('erc721');
 
 export class ERC721Helper {
@@ -33,26 +38,39 @@ export class ERC721Helper {
      * 对应UI： Farm（双币LP）和Pool（单币LP）
      * @param userAddress 目标用户地址
      */
-    public async getMyNFTReceipts(userAddress: string, callback = null) {
-        //获取一般信息
-        const symbol = await this.erc721.callReadMethod('symbol');
+    public async getMyNFTReceipts(userAddress: string, callback = null): Promise<NFTReceipt> {
+        try {
+            const receipt: NFTReceipt = {
+                tokenIds: [],
+                customizedData: [],
+            };
+            //获取一般信息
+            const symbol = await this.erc721.callReadMethod('symbol');
 
-        //获取质押池的数量
-        const tLength = await this.erc721.callReadMethod(this.metadata.methods.balanceOf, userAddress);
-        logger.info(`[${userAddress}]: ${tLength} ${symbol} tokens`);
-        //遍历NFT Token
-        for (let index = 0; index < tLength; index++) {
-            const tokenId = await this.erc721.callReadMethod(
-                this.metadata.methods.tokenOfOwnerByIndex,
-                userAddress,
-                index,
-            );
-            // const tokenURI = await this.erc721.callReadMethod(this.metadata.methods.tokenURI, tokenId);
-            // logger.info(`${tokenId} : ${tokenURI}`);
-
-            if (callback) {
-                await callback(tokenId, this.erc721);
+            //获取质押池的数量
+            const tLength = await this.erc721.callReadMethod(this.metadata.methods.balanceOf, userAddress);
+            logger.info(`getMyNFTReceipts > [${userAddress}]: ${tLength} ${symbol} tokens`);
+            //遍历NFT Token
+            for (let index = 0; index < tLength; index++) {
+                const tokenId = await this.erc721.callReadMethod(
+                    this.metadata.methods.tokenOfOwnerByIndex,
+                    userAddress,
+                    index,
+                );
+                receipt.tokenIds.push(tokenId);
+                // const tokenURI = await this.erc721.callReadMethod(this.metadata.methods.tokenURI, tokenId);
+                // logger.info(`${tokenId} : ${tokenURI}`);
+                if (callback) {
+                    logger.info(`getMyNFTReceipts > execute callback function to handle token - ${tokenId}`);
+                    const ret = await callback(tokenId, this.erc721);
+                    if (ret) {
+                        receipt.customizedData.push(ret);
+                    }
+                }
             }
+            return receipt;
+        } catch (e) {
+            logger.error(`getMyNFTReceipts > ${e.message}`);
         }
     }
     public async getOwnerOf(tokenId: number): Promise<string> {
