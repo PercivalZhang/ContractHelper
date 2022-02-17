@@ -77,11 +77,12 @@ const computePoolAddress = (
     initCodeHashManualOverride?: string,
 ): string => {
     //const [token0, token1] = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA]; // does safety checks
-    return getCreate2Address(
-        factoryAddress,
-        keccak256(['bytes'], [defaultAbiCoder.encode(['address', 'address', 'uint24'], [token0, token1, fee])]),
-        initCodeHashManualOverride ?? POOL_INIT_CODE_HASH,
+    const salt = keccak256(
+        ['bytes'],
+        [defaultAbiCoder.encode(['address', 'address', 'uint24'], [token0, token1, fee])],
     );
+    console.log(salt);
+    return getCreate2Address(factoryAddress, salt, initCodeHashManualOverride ?? POOL_INIT_CODE_HASH);
 };
 const getPoolInfo = async (poolAddress: string): Promise<PoolInfo> => {
     const pool = new ContractHelper(poolAddress, './Uniswap/v3/pool.json', network);
@@ -207,6 +208,12 @@ const callbackPosition = async (tokenId: number, helper: ContractHelper): Promis
             token1: token1Address,
             fee: fee,
         };
+        /**
+         * tokenId: position id/NFT tokenId
+         * _user: user address
+         * _amount0Max: 最大值9007199254740990000000
+         * _amount1Max: 最大值9007199254740990000000
+         */
         //const fees = await positionManager.callReadMethod('collect', [tokenId, '0x469bbafeb93480ee4c2cbff806bc504188335499', '9007199254740990000000', '9007199254740990000000'])
         //logger.info(`[reward] token0: ${token0.readableAmount(fees.amount0).toFixed(6)} ${token0.symbol}`)
         //logger.info(`[reward] token1: ${token1.readableAmount(fees.amount1).toFixed(6)} ${token1.symbol}`)
@@ -218,7 +225,8 @@ const main = async () => {
     // pool(GALA/WETH): https://etherscan.io/address/0xf8a95b2409c27678a6d18d950c5d913d5c38ab03#readContract
     // position/tokenId: 157606
     const receipt = await positionHelper.getMyNFTReceipts(
-        '0xecaa8f3636270ee917c5b08d6324722c2c4951c7',
+        //'0xecaa8f3636270ee917c5b08d6324722c2c4951c7',
+        '0xC5E6081E7Fd4FE2C180e670a3c117a3649a9B7C2',
         callbackPosition,
     );
     // Map - 用户保存每个池子对应的用户Position列表

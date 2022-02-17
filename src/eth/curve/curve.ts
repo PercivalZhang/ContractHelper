@@ -53,6 +53,7 @@ type PoolV2Info = {
     a: string;
     futureA: string;
     coins: Coin[];
+    underlyingCoins: Coin[];
     rewards: Reward[];
 };
 type PoolV1Params = {
@@ -67,6 +68,7 @@ type PoolV2Params = {
     gauge: string;
 };
 const Config = {
+    registry: '0x90e00ace148ca3b23ac1bc8c240c2a7dd9c2d7f5', // apply V2 pool(pool=lpT)
     crv: '0xD533a949740bb3306d119CC777fa900bA034cd52',
     stableCoin: '0xdac17f958d2ee523a2206206994597c13d831ec7',
     gaugeController: '0x2f50d538606fa9edd2b11e2446beb18c9d5846bb',
@@ -74,6 +76,7 @@ const Config = {
     pools: {
         v1: {
             '0xD51a44d3FaE010294C616388b506AcdA1bfAAE46': {
+                // WBTC-WETH-USDT
                 version: 1,
                 coinSize: 3,
                 coinPriceMap: new Map([
@@ -86,7 +89,6 @@ const Config = {
         v2: {
             '0x5a6A4D54456819380173272A5E8E9B9904BdF41B': {
                 version: 2,
-                coinSize: 2,
                 gauge: '0xd8b712d29381748dB89c36BCa0138d7c75866ddF',
             },
         },
@@ -246,15 +248,23 @@ const getPoolV2Info = async (poolAddress: string, poolParams: PoolV2Params) => {
         a: '',
         futureA: '',
         coins: [],
+        underlyingCoins: [],
         rewards: [],
     };
     poolInfo.poolAddress = poolAddress;
     const CRV = new ContractHelper(Config.crv, './ETH/Curve/token.crv.json', network);
     const crvInflationRate = await CRV.callReadMethod('rate');
     const crvERC20 = await swissKnife.syncUpTokenDB(Config.crv);
-    const pool = new ContractHelper(poolAddress, './ETH/Curve/pool.v2.json', network);
-    poolInfo.poolName = await pool.callReadMethod('symbol');
-    for (let i = 0; i < poolParams.coinSize; i++) {
+
+    const registry = new ContractHelper(Config.registry, './ETH/Curve/registry.json', network);
+
+    const poolName = await registry.callReadMethod('get_pool_name', poolAddress);
+    const coinAddresses = await registry.callReadMethod('get_coins', poolAddress);
+    const coinBalances = await registry.callReadMethod('get_balances', poolAddress);
+
+    poolInfo.poolName = poolName;
+    let i = 0;
+    for (const coinAddress of coinAddresses) {
         const coin: Coin = {
             token: undefined,
             ratio: '',
@@ -264,14 +274,15 @@ const getPoolV2Info = async (poolAddress: string, poolParams: PoolV2Params) => {
             priceScale: '0',
             price: '0',
         };
-        const coinAddress = await pool.callReadMethod('coins', i);
         const coinToken = await swissKnife.syncUpTokenDB(coinAddress);
         logger.info(`pool - ${poolInfo.poolName} > coin - ${coinToken.symbol}: ${coinToken.address}`);
-        const coinBalance = await pool.callReadMethod('balances', i);
+        const coinBalance = coinBalances[i];
         coin.token = coinToken;
         coin.amount = coinToken.readableAmount(coinBalance).toFixed(6);
         poolInfo.coins.push(coin);
+        i = i + 1;
     }
+    const pool = new ContractHelper(poolAddress, './ETH/Curve/pool.v2.json', network);
     // pool的swap费率，精度1e10
     const fee = new BigNumber(await pool.callReadMethod('fee'));
     poolInfo.fee = fee.dividedBy(1e10).multipliedBy(100).toFixed(3) + '%';

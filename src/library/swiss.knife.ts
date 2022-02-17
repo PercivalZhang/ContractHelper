@@ -7,7 +7,7 @@ import { LoggerFactory } from './LoggerFactory';
 import { JSONDBBuilder } from './db.json';
 import { NetworkType, Web3Factory } from './web3.factory';
 import { ERC20Token } from './erc20.token';
-const logger = LoggerFactory.getInstance().getLogger('Helper');
+const logger = LoggerFactory.getInstance().getLogger('SwissKnife');
 
 // export interface Token {
 //     address: string;
@@ -139,7 +139,7 @@ export class SwissKnife {
             };
             return lpt;
         } catch (e) {
-            logger.error(`syncUpTokenDB > ${e.toString()}`);
+            logger.error(`getLPTokenDetails > ${e.toString()}`);
         }
     }
 

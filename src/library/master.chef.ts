@@ -3,23 +3,31 @@ import { LoggerFactory } from './LoggerFactory';
 import { NetworkType } from './web3.factory';
 import { SwissKnife } from './swiss.knife';
 import BigNumber from 'bignumber.js';
+import { ERC20Token } from './erc20.token';
 
-export interface ChefMethods {
+export type ChefMethods = {
     poolLength: string;
     userInfo: string;
     poolInfo: string;
     pendingReward: string;
     rewardToken: string;
-}
-export interface ChefPool {
+};
+export type ChefPool = {
     lpToken: string;
-}
-export interface MasterChefMetadata {
+};
+export type MasterChefMetadata = {
     address: string;
     methods: ChefMethods;
     pool: ChefPool;
-}
-
+};
+export type TokenReceipt = {
+    token: ERC20Token;
+    balance: number;
+};
+export type PoolReceipt = {
+    myRatio: number;
+    receipts: TokenReceipt[];
+};
 const logger = LoggerFactory.getInstance().getLogger('master.chef');
 
 export class MasterChefHelper {
@@ -52,9 +60,9 @@ export class MasterChefHelper {
         const sizeRe = /:(\d+)/g;
         const sizeData = sizeRe.exec(this.chefMetadata.methods.poolLength);
         let poolLength = 0;
-        if(sizeData != null) {
+        if (sizeData != null) {
             poolLength = Number.parseInt(sizeData[1]);
-        } else {        
+        } else {
             poolLength = await this.chef.callReadMethod(this.chefMetadata.methods.poolLength);
         }
         logger.info(`total ${poolLength} pools`);
@@ -126,6 +134,69 @@ export class MasterChefHelper {
                     );
                 }
             }
+        }
+    }
+
+    public async getUserPoolReceipt(pid: number, userAddress: string, callbackLPTHandler = null): Promise<PoolReceipt> {
+        const poolReceipt: PoolReceipt = {
+            myRatio: 0,
+            receipts: [],
+        };
+        try {
+            //获取目标用户在质押池的质押信息
+            const userInfo = await this.chef.callReadMethod(this.chefMetadata.methods.userInfo, pid, userAddress);
+            console.log(userInfo);
+            const myStakedBalance = new BigNumber(userInfo['0']);
+            if (myStakedBalance.gt(0)) {
+                const poolInfo = await this.chef.callReadMethod(this.chefMetadata.methods.poolInfo, pid);
+                const lpTokenAddress = poolInfo[this.chefMetadata.pool.lpToken];
+                const isPairedLPToken = await this.swissKnife.isLPToken(lpTokenAddress);
+                //质押token是UNI paired lp token
+                if (isPairedLPToken) {
+                    logger.info(`detected paired LP Token - ${lpTokenAddress}`);
+                    const lpTokenDetails = await this.swissKnife.getLPTokenDetails(lpTokenAddress);
+                    console.log(lpTokenDetails);
+                    const token0 = lpTokenDetails.token0;
+                    const token1 = lpTokenDetails.token1;
+                    const lpt = new ContractHelper(lpTokenAddress, './pair.json', this.network);
+                    const totalStakedLPT = await lpt.callReadMethod('balanceOf', this.chefMetadata.address);
+                    const myRatio = myStakedBalance.dividedBy(totalStakedLPT);
+                    const myToken0 = token0.readableAmountFromBN(lpTokenDetails.reserve0.multipliedBy(myRatio));
+                    const myToken1 = token1.readableAmountFromBN(lpTokenDetails.reserve1.multipliedBy(myRatio));
+                    logger.info(
+                        `pool[${pid}] > my staked LP Token: ${myStakedBalance
+                            .dividedBy(Math.pow(10, 18))
+                            .toNumber()
+                            .toFixed(10)} ${token0.symbol}/${token1.symbol} LP Token`,
+                    );
+                    logger.info(`pool[${pid}] > my staked token0: ${myToken0} ${token0.symbol}`);
+                    logger.info(`pool[${pid}] > my staked token1: ${myToken1} ${token1.symbol}`);
+                    poolReceipt.myRatio = Number.parseFloat(myRatio.toNumber().toFixed(8));
+                    poolReceipt.receipts.push({
+                        token: token0,
+                        balance: myToken0,
+                    });
+                    poolReceipt.receipts.push({
+                        token: token1,
+                        balance: myToken1,
+                    });
+                } else if (callbackLPTHandler) {
+                    await callbackLPTHandler(lpTokenAddress, myStakedBalance);
+                } else {
+                    //质押token是单币erc20质押
+                    const erc20Token = await this.swissKnife.syncUpTokenDB(lpTokenAddress);
+                    logger.info(
+                        `pool[${pid}] > my staked token: ${myStakedBalance
+                            .dividedBy(Math.pow(10, erc20Token.decimals))
+                            .toNumber()
+                            .toFixed(10)} ${erc20Token.symbol}`,
+                    );
+                }
+                return poolReceipt;
+            }
+            return null;
+        } catch (e) {
+            logger.error(`getUserPoolReceipt > ${e.message}`);
         }
     }
 }

@@ -694,6 +694,10 @@
         "0x5a6a4d54456819380173272a5e8e9b9904bdf41b": {
             "symbol": "MIM-3LP3CRV-f",
             "decimals": 18
+        },
+        "0x0316eb71485b0ab14103307bf65a021042c6d380": {
+            "symbol": "HBTC",
+            "decimals": 18
         }
     },
     "25": {
@@ -1421,6 +1425,20 @@
         "0x28424507fefb6f7f8e9d3860f56504e4e5f5f390": {
             "symbol": "amWETH",
             "decimals": 18
+        },
+        "0x27f8d03b3a2196956ed754badc28d73be8830a6e": {
+            "symbol": "amDAI",
+            "decimals": 18,
+            "address": "0x27F8D03b3a2196956ED754baDc28D73be8830A6e"
+        },
+        "0x1a13f4ca1d028320a707d99520abfefca3998b7f": {
+            "symbol": "amUSDC",
+            "decimals": 6,
+            "address": "0x1a13F4Ca1d028320A707D99520AbFefca3998b7F"
+        },
+        "0x60d55f02a771d515e077c9c2403a1ef324885cec": {
+            "symbol": "amUSDT",
+            "decimals": 6
         }
     },
     "250": {
@@ -1565,6 +1583,14 @@
         },
         "0xbecf29265b0cc8d33fa24446599955c7bcf7f73b": {
             "symbol": "gLINK",
+            "decimals": 18
+        },
+        "0xc165d941481e68696f43ee6e99bfb2b23e0e3114": {
+            "symbol": "OXD",
+            "decimals": 18
+        },
+        "0xd5fa400a24eb2ea55bc5bd29c989e70fbc626fff": {
+            "symbol": "Spooky LP",
             "decimals": 18
         }
     }
