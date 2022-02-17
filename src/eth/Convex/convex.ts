@@ -266,10 +266,14 @@ const getPoolInfo = async (pid: number, pVersion: number): Promise<PoolInfo> => 
 };
 
 const main = async () => {
-    for (const [poolAddress, poolParams] of Object.entries(Config.pools)) {
-        const poolInfo = await getPoolInfo(poolParams.pid, poolParams.version);
-        console.log(JSON.stringify(poolInfo));
-    }
+    // for (const [poolAddress, poolParams] of Object.entries(Config.pools)) {
+    //     const poolInfo = await getPoolInfo(poolParams.pid, poolParams.version);
+    //     console.log(JSON.stringify(poolInfo));
+    // }
+
+    const cvxAmount = await calculateCVXRewards(new BigNumber(665671812981867441 * 3600 * 24 * 365).dividedBy(1e18));
+
+    console.log(cvxAmount.toNumber().toFixed(4));;
 };
 
 main().catch((e) => {

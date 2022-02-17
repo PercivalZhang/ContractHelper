@@ -64,7 +64,6 @@ type PoolV1Params = {
 };
 type PoolV2Params = {
     version: number;
-    coinSize: number;
     gauge: string;
 };
 const Config = {
@@ -259,8 +258,13 @@ const getPoolV2Info = async (poolAddress: string, poolParams: PoolV2Params) => {
     const registry = new ContractHelper(Config.registry, './ETH/Curve/registry.json', network);
 
     const poolName = await registry.callReadMethod('get_pool_name', poolAddress);
-    const coinAddresses = await registry.callReadMethod('get_coins', poolAddress);
+    const gaugeData = await registry.callReadMethod('get_gauges', poolAddress);
+    const gaugeAddress = gaugeData['0'][0];
+    logger.info(`pool - ${poolName} gauge: ${gaugeAddress}`);
+    let coinAddresses = await registry.callReadMethod('get_coins', poolAddress);
+    coinAddresses = coinAddresses.filter(address => address !== '0x0000000000000000000000000000000000000000');
     const coinBalances = await registry.callReadMethod('get_balances', poolAddress);
+    const nCoins = await registry.callReadMethod('get_n_coins', poolAddress);
 
     poolInfo.poolName = poolName;
     let i = 0;
@@ -281,6 +285,31 @@ const getPoolV2Info = async (poolAddress: string, poolParams: PoolV2Params) => {
         coin.amount = coinToken.readableAmount(coinBalance).toFixed(6);
         poolInfo.coins.push(coin);
         i = i + 1;
+    }
+    if(nCoins[1] > 0) {
+        logger.info(`detected ${nCoins[1]} underlying coins`);
+        let underlyingCoinAddresses = await registry.callReadMethod('get_underlying_coins', poolAddress);
+        underlyingCoinAddresses = underlyingCoinAddresses.filter(address => address !== '0x0000000000000000000000000000000000000000');
+        const underlyingCoinBalances = await registry.callReadMethod('get_underlying_balances', poolAddress);
+        let i = 0;
+        for (const coinAddress of underlyingCoinAddresses) {
+            const coin: Coin = {
+                token: undefined,
+                ratio: '',
+                amount: '0',
+                totalUSD: '0',
+                priceOracle: '0',
+                priceScale: '0',
+                price: '0',
+            };
+            const coinToken = await swissKnife.syncUpTokenDB(coinAddress);
+            logger.info(`pool - ${poolInfo.poolName} > underlying coin - ${coinToken.symbol}: ${coinToken.address}`);
+            const coinBalance = underlyingCoinBalances[i];
+            coin.token = coinToken;
+            coin.amount = coinToken.readableAmount(coinBalance).toFixed(6);
+            poolInfo.underlyingCoins.push(coin);
+            i = i + 1;
+        }
     }
     const pool = new ContractHelper(poolAddress, './ETH/Curve/pool.v2.json', network);
     // pool的swap费率，精度1e10
@@ -308,8 +337,8 @@ const getPoolV2Info = async (poolAddress: string, poolParams: PoolV2Params) => {
     // 添加默认奖励CRV Token
     poolInfo.rewards.push({ token: crvERC20, rate: crvInflationRate, price: '' });
     // 获取gauge自身及额外奖励相关的信息
-    const gaugeInfo = await getGaugeInfo(poolParams.gauge);
-    poolInfo.lpToken = gaugeInfo.lptAddress;
+    const gaugeInfo = await getGaugeInfo(gaugeAddress);
+    // poolInfo.lpToken = gaugeInfo.lptAddress;
     if (gaugeInfo.rewards.length > 0) {
         poolInfo.rewards.push(...gaugeInfo.rewards);
     }
