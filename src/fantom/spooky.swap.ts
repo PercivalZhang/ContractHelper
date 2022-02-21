@@ -20,9 +20,11 @@ const Config = {
             poolInfo: 'poolInfo',
             pendingReward: 'pendingBOO',
             rewardToken: 'boo',
+            totalAllocPoint: 'totalAllocPoint',
         },
         pool: {
             lpToken: 'lpToken',
+            allocPoint: 'allocPoint',
         },
     },
     //BOO单币质押挖矿，BOO->xBOO
@@ -34,9 +36,11 @@ const Config = {
             poolInfo: 'poolInfo',
             pendingReward: 'pendingReward',
             stakeToken: 'xboo',
+            totalAllocPoint: 'totalAllocPoint',
         },
         pool: {
             rewardToken: 'RewardToken',
+            allocPoint: 'allocPoint',
         },
     },
 };

@@ -11,9 +11,11 @@ export type ChefMethods = {
     poolInfo: string;
     pendingReward: string;
     rewardToken: string;
+    totalAllocPoint: string;
 };
 export type ChefPool = {
     lpToken: string;
+    allocPoint: string;
 };
 export type MasterChefMetadata = {
     address: string;
@@ -96,7 +98,7 @@ export class MasterChefHelper {
                     logger.info(`pool[${pid}] > my staked token0: ${myToken0} ${token0.symbol}`);
                     logger.info(`pool[${pid}] > my staked token1: ${myToken1} ${token1.symbol}`);
                 } else if (callbackLPTHandler) {
-                    await callbackLPTHandler(lpTokenAddress, myStakedBalance);
+                    await callbackLPTHandler(pid, lpTokenAddress, myStakedBalance);
                 } else {
                     //质押token是单币erc20质押
                     const erc20Token = await this.swissKnife.syncUpTokenDB(lpTokenAddress);
@@ -115,7 +117,7 @@ export class MasterChefHelper {
                 );
                 //callback是一个函数，用于处理奖励token的特殊案例，比如多个奖励token
                 if (callbackRewardHandler) {
-                    await callbackRewardHandler(pendingReward);
+                    await callbackRewardHandler(pid, pendingReward);
                 } else {
                     if (!rewardToken) {
                         // 奖励token单币
@@ -135,6 +137,28 @@ export class MasterChefHelper {
                 }
             }
         }
+    }
+    public async getPoolInfo(pid: number): Promise<any> {
+        return await this.chef.callReadMethod(this.chefMetadata.methods.poolInfo, pid);
+    }
+    public async getPoolLPTBalance(pid: number): Promise<BigNumber> {
+        const poolInfo = await this.getPoolInfo(pid);
+        const lptAddress = poolInfo[this.chefMetadata.pool.lpToken];
+        const lpToken = new ContractHelper(lptAddress, './erc20.json', this.network);
+        const totalStakedLPT = new BigNumber(await lpToken.callReadMethod('balanceOf', this.chefMetadata.address));
+        return totalStakedLPT;
+    }
+    public async getAPY(pid: number, poolTotalUSD: BigNumber, annualRewardUSD: BigNumber): Promise<any> {
+        const totalAllocPoint = await this.chef.callReadMethod(this.chefMetadata.methods.totalAllocPoint);
+        logger.info(`total alloc poin: ${totalAllocPoint}`);
+        const poolInfo = await this.chef.callReadMethod(this.chefMetadata.methods.poolInfo, pid);
+        const poolAllocPoint = poolInfo[this.chefMetadata.pool.allocPoint];
+        logger.info(`pool[${pid}] alloc point: ${poolAllocPoint}`);
+
+        const poolRewardRatio = poolAllocPoint / totalAllocPoint;
+
+        const apy = annualRewardUSD.multipliedBy(poolRewardRatio).dividedBy(poolTotalUSD);
+        logger.info(`pool[]: APY: ${apy.toNumber().toFixed(4)}`);
     }
 
     public async getUserPoolReceipt(pid: number, userAddress: string, callbackLPTHandler = null): Promise<PoolReceipt> {

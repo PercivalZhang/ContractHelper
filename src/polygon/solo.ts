@@ -19,9 +19,11 @@ const Config = {
             poolInfo: 'pools',
             pendingReward: 'unclaimedReward',
             rewardToken: 'rewardToken',
+            totalAllocPoint: 'totalAllocPoint',
         },
         pool: {
             lpToken: 'token',
+            allocPoint: 'allocPoint',
         },
     },
 };

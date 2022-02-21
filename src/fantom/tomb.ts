@@ -20,12 +20,14 @@ const Config = {
             poolInfo: 'poolInfo',
             pendingReward: 'pendingShare',
             rewardToken: 'tshare',
+            totalAllocPoint: 'totalAllocPoint',
         },
         pool: {
             lpToken: 'token',
+            allocPoint: 'allocPoint',
         },
     },
-    masonry: '0x8764DE60236C5843D9faEB1B638fbCE962773B67' // 质押TShare，奖励Tomb
+    masonry: '0x8764DE60236C5843D9faEB1B638fbCE962773B67', // 质押TShare，奖励Tomb
 };
 const getMasonryReceipt = async (userAddress: string) => {
     const masonry = new ContractHelper(Config.masonry, './Fantom/Tomb/masonry.json', network);
@@ -43,8 +45,7 @@ const getMasonryReceipt = async (userAddress: string) => {
     const rewardData = await masonry.callReadMethod('masons', userAddress);
     const pendingRewards = rewardData['rewardEarned'];
     logger.info(`Masonry > my pending rewards: ${tombToken.readableAmount(pendingRewards)} ${tombToken.symbol}`);
-
-}
+};
 const masterChef = new MasterChefHelper(network, Config.farmChef, './Fantom/Tomb/master.chef.json');
 const main = async () => {
     // await masterChef.getFarmingReceipts('0x881897b1FC551240bA6e2CAbC7E59034Af58428a');

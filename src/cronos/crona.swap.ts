@@ -20,9 +20,11 @@ const Config = {
             poolInfo: 'poolInfo',
             pendingReward: 'pendingCrona',
             rewardToken: 'crona',
+            totalAllocPoint: 'totalAllocPoint',
         },
         pool: {
             lpToken: 'lpToken',
+            allocPoint: 'allocPoint',
         },
     },
     vault: {
@@ -59,7 +61,7 @@ const getOtherVaultReceipt = async (vaultAddress: string, userAddress: string) =
 
 /**
  * 获取自动复投单币质押金库的用户资产详情
- * 
+ *
  * 质押平台币 - crona，自动复投收益
  * @param vaultAddress 金库合约地址
  * @param userAddress  目标用户地址

@@ -20,9 +20,11 @@ const Config = {
             poolInfo: 'poolInfo',
             pendingReward: 'pendingSpirit',
             rewardToken: 'spirit',
+            totalAllocPoint: 'totalAllocPoint',
         },
         pool: {
             lpToken: 'lpToken',
+            allocPoint: 'allocPoint',
         },
     },
     boostedFarms: [

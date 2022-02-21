@@ -20,9 +20,11 @@ const Config = {
             poolInfo: 'poolInfo',
             pendingReward: 'pendingIce',
             rewardToken: 'ice',
+            totalAllocPoint: 'totalAllocPoint',
         },
         pool: {
             lpToken: 'stakingToken',
+            allocPoint: 'allocPoint',
         },
     },
     spell: '0x090185f2135308bad17527004364ebcc2d37e5f6',

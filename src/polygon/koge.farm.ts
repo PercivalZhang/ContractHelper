@@ -19,9 +19,11 @@ const Config = {
             poolInfo: 'poolInfo',
             pendingReward: 'pendingReward',
             rewardToken: 'rewardToken',
+            totalAllocPoint: 'totalAllocPoint',
         },
         pool: {
             lpToken: 'lpToken',
+            allocPoint: 'allocPoint',
         },
     },
     vaults: [

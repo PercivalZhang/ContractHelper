@@ -1593,5 +1593,51 @@
             "symbol": "Spooky LP",
             "decimals": 18
         }
+    },
+    "43114": {
+        "0x0d26d103c91f63052fbca88aaf01d5304ae40015": {
+            "symbol": "LP-USDT.e",
+            "decimals": 6,
+            "address": "0x0D26D103c91F63052Fbca88aAF01d5304Ae40015"
+        },
+        "0x909b0ce4fac1a0dca78f8ca7430bbafeeca12871": {
+            "symbol": "LP-USDC.e",
+            "decimals": 6,
+            "address": "0x909B0ce4FaC1A0dCa78F8Ca7430bBAfeEcA12871"
+        },
+        "0x22d4002028f537599be9f666d1c4fa138522f9c8": {
+            "symbol": "PTP",
+            "decimals": 18,
+            "address": "0x22d4002028f537599be9f666d1c4fa138522f9c8"
+        },
+        "0xc7198437980c041c805a1edcba50c1ce5db95118": {
+            "symbol": "USDT.e",
+            "decimals": 6,
+            "address": "0xc7198437980c041c805A1EDcbA50c1Ce5db95118"
+        },
+        "0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664": {
+            "symbol": "USDC.e",
+            "decimals": 6,
+            "address": "0xA7D7079b0FEaD91F3e65f86E8915Cb59c1a4C664"
+        },
+        "0xd586e7f844cea2f87f50152665bcbc2c279d8d70": {
+            "symbol": "DAI.e",
+            "decimals": 18,
+            "address": "0xd586E7F844cEa2F87f50152665BCbc2C279D8d70"
+        },
+        "0xc1daa16e6979c2d1229cb1fd0823491ea44555be": {
+            "symbol": "LP-DAI.e",
+            "decimals": 18,
+            "address": "0xc1Daa16E6979C2D1229cB1fd0823491eA44555Be"
+        },
+        "0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e": {
+            "symbol": "USDC",
+            "decimals": 6,
+            "address": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
+        },
+        "0xaef735b1e7ecfaf8209ea46610585817dc0a2e16": {
+            "symbol": "LP-USDC",
+            "decimals": 6
+        }
     }
 }
