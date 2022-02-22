@@ -1638,6 +1638,10 @@
         "0xaef735b1e7ecfaf8209ea46610585817dc0a2e16": {
             "symbol": "LP-USDC",
             "decimals": 6
+        },
+        "0x5857019c749147eee22b1fe63500f237f3c1b692": {
+            "symbol": "vePTP",
+            "decimals": 18
         }
     }
 }

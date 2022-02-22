@@ -39,13 +39,49 @@ const logger = LoggerFactory.getInstance().getLogger('farm');
 
 const vePTPHelper = new ContractHelper(Config.vePTP, './Avalanche/platypus/vePTP.json', network);
 const ptpPHelper = new ContractHelper(Config.ptp, './erc20.json', network);
-const handlePendingReward = async (pid: number, pendingRewardData: any) => {
-    // 每个质押的PTP每秒产生的vePTP
-    const ptpPerSecond = await vePTPHelper.callReadMethod('generationRate');
-    const totalStakedPTP = ptpPHelper.callReadMethod('balanceOf', Config.vePTP);
 
-    const myStakedPTPBalance = await vePTPHelper.callReadMethod(
-        'getStakedPtp',
-        '0x881897b1FC551240bA6e2CAbC7E59034Af58428a',
+const getVePTPInfor = async (userAddress: string) => {
+    const ptpToken = await swissKnife.syncUpTokenDB(Config.ptp);
+    const vePTPToken = await swissKnife.syncUpTokenDB(Config.vePTP);
+    //获取vePTP供应量
+    const totalVePTP = await vePTPHelper.callReadMethod('totalSupply');
+    logger.info(`vePTP > total vePTP supply: ${vePTPToken.readableAmount(totalVePTP)} ${vePTPToken.symbol}`);
+    //获取用户vePTP的余额
+    const myVePTPBalance = await vePTPHelper.callReadMethod('balanceOf', userAddress);
+    logger.info(`vePTP > my vePTP balance: ${vePTPToken.readableAmount(myVePTPBalance)} ${vePTPToken.symbol}`);
+    //获取PTP总共质押量
+    const totalStakedPTP = await ptpPHelper.callReadMethod('balanceOf', Config.vePTP);
+    logger.info(
+        `vePTP > total staked PTP: ${ptpToken.readableAmount(totalStakedPTP.toString()).toFixed(6)} ${ptpToken.symbol}`,
+    );
+    //获取用户质押的PTP数量
+    const myStakedPTPBalance = await vePTPHelper.callReadMethod('getStakedPtp', userAddress);
+    logger.info(`vePTP > my staked PTP: ${ptpToken.readableAmount(myStakedPTPBalance).toFixed(6)} ${ptpToken.symbol}`);
+    //每个质押的PTP每秒产生的vePTP
+    const vePTPPerSecond = await vePTPHelper.callReadMethod('generationRate');
+    //基于用户质押的PTP数量的vePTP速率
+    const myVePTPPerSecond = new BigNumber(vePTPPerSecond).multipliedBy(myStakedPTPBalance);
+    logger.info(
+        `vePTP > my vePTP emission rate: ${new BigNumber(myVePTPPerSecond)
+            .multipliedBy(3600)
+            .dividedBy(Math.pow(10, ptpToken.decimals))
+            .dividedBy(Math.pow(10, vePTPToken.decimals))
+            .toNumber()
+            .toFixed(6)}/hour ${vePTPToken.symbol} `,
+    );
+    //获取用户待领取的vePTP数量
+    const myClaimabeVePTPBalance = await vePTPHelper.callReadMethod('claimable', userAddress);
+    logger.info(
+        `vePTP > my claimable vePTP: ${vePTPToken.readableAmount(myClaimabeVePTPBalance).toFixed(6)} ${
+            vePTPToken.symbol
+        }`,
     );
 };
+
+const main = async () => {
+    await getVePTPInfor('0x881897b1FC551240bA6e2CAbC7E59034Af58428a');
+};
+
+main().catch((e) => {
+    logger.error(e.message);
+});
