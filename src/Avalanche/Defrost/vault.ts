@@ -115,11 +115,10 @@ export class SuperVault {
     public getUserReceipt = async (userAddress: string) => {
         const swissKnife = new SwissKnife(this.network);
         const assetToken = await swissKnife.syncUpTokenDB(Config.H2O);
-        //const vault = new ContractHelper(vaultAddress, './Avalanche/Defrost/collateral.vault.json', network);
         const sTokenAddress = await this.vault.callReadMethod('collateralToken');
         const sToken = await swissKnife.syncUpTokenDB(sTokenAddress);
-        const minCollateralRate = await this.vault.callReadMethod('collateralRate');
-        //通过racle获取super token price
+        const minCollateralRate = new BigNumber(await this.vault.callReadMethod('collateralRate')).dividedBy(1e18);
+        //通过oracle获取super token price
         const oracleAddress = await this.vault.callReadMethod('getOracleAddress');
         const sTokenPriceOracle = new ContractHelper(
             oracleAddress,
@@ -156,13 +155,20 @@ export class SuperVault {
                 }`,
             );
             //获取asset Token的余额: H2O稳定币
-            const assetTokenBalance = await this.vault.callReadMethod('getAssetBalance', userAddress);
-            logger.info(
-                `${vaultTAG} > asset token balance: ${assetToken.readableAmount(assetTokenBalance).toFixed(6)} ${
-                    assetToken.symbol
-                }`,
+            const assetTokenBalance = assetToken.readableAmount(
+                await this.vault.callReadMethod('getAssetBalance', userAddress),
             );
-            const myCollateralRate = sTokenUSD.dividedBy(assetToken.readableAmount(assetTokenBalance));
+            logger.info(`${vaultTAG} > asset token balance: ${assetTokenBalance.toFixed(4)} ${assetToken.symbol}`);
+            const usedMiningPowerRatio = new BigNumber(assetTokenBalance)
+                .multipliedBy(minCollateralRate)
+                .dividedBy(sTokenUSD);
+            logger.info(
+                `${vaultTAG} > used mining power ratio: ${usedMiningPowerRatio
+                    .multipliedBy(100)
+                    .toNumber()
+                    .toFixed(2)}%`,
+            );
+            const myCollateralRate = sTokenUSD.dividedBy(assetTokenBalance);
             logger.info(
                 `${vaultTAG} > my collateral rate: ${myCollateralRate.multipliedBy(100).toNumber().toFixed(2)}%`,
             );
