@@ -1642,6 +1642,25 @@
         "0x5857019c749147eee22b1fe63500f237f3c1b692": {
             "symbol": "vePTP",
             "decimals": 18
+        },
+        "0x51009d121595bde06e476c4cfff5cc097253cf0e": {
+            "symbol": "SqiETH",
+            "decimals": 8,
+            "address": "0x51009D121595bde06E476C4CFff5cc097253cF0E"
+        },
+        "0x334ad834cd4481bb02d09615e7c11a00579a7909": {
+            "symbol": "qiETH",
+            "decimals": 8,
+            "address": "0x334AD834Cd4481BB02d09615E7c11a00579A7909"
+        },
+        "0x29374554b54b5a39bb6789c0deee474ab10d8c75": {
+            "symbol": "SqiDAI",
+            "decimals": 8,
+            "address": "0x29374554b54B5a39Bb6789C0deEe474AB10d8c75"
+        },
+        "0x835866d37afb8cb8f8334dccdaf66cf01832ff5d": {
+            "symbol": "qiDAI",
+            "decimals": 8
         }
     }
 }

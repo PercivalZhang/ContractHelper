@@ -24,7 +24,7 @@ const Config = {
         },
     },
     ptp: '0x22d4002028f537599be9f666d1c4fa138522f9c8',
-    ptpPrice: 3.85,
+    ptpPrice: 4.18,
     poolManager: '0x66357dcace80431aee0a7507e2e361b7e2402370',
     priceOracle: '0x7b52f4b5c476e7afd09266c35274737cd0af746b',
     tokens: {
@@ -39,7 +39,7 @@ const Config = {
 const network = NetworkType.AVALANCHE;
 
 const swissKnife = new SwissKnife(network);
-const logger = LoggerFactory.getInstance().getLogger('farm');
+const logger = LoggerFactory.getInstance().getLogger('pool');
 
 const poolManager = new ContractHelper(Config.poolManager, './Avalanche/platypus/pool.manager.json', network);
 
@@ -79,26 +79,26 @@ const getPoolDetails = async (tokenAddress: string, ratio: number) => {
     //计算coverage ratio = cash / liability
     const coverageRatio = new BigNumber(cash).dividedBy(liability);
     logger.info(`${poolTAG} > coverage ratio: ${coverageRatio.multipliedBy(100).toNumber().toFixed(4)}%`);
-    //每月当前池子收到的PTP奖励（USD计价）
-    const poolMonthlyRewardedPTPUSD = new BigNumber(Config.ptpMonthlyEmissionAmount)
-        .multipliedBy(0.3)
-        .multipliedBy(ratio)
-        .multipliedBy(Config.ptpPrice);
-    const baseAPY = poolMonthlyRewardedPTPUSD.multipliedBy(12).dividedBy(totalDepositUSD);
-    logger.info(`${poolTAG} > base APY: ${baseAPY.multipliedBy(100).toNumber().toFixed(4)}%`);
+    // //每月当前池子收到的PTP奖励（USD计价）
+    // const poolMonthlyRewardedPTPUSD = new BigNumber(Config.ptpMonthlyEmissionAmount)
+    //     .multipliedBy(0.3)
+    //     .multipliedBy(ratio)
+    //     .multipliedBy(Config.ptpPrice);
+    // const baseAPY = poolMonthlyRewardedPTPUSD.multipliedBy(12).dividedBy(totalDepositUSD);
+    // logger.info(`${poolTAG} > base APY: ${baseAPY.multipliedBy(100).toNumber().toFixed(4)}%`);
 };
 /**
  * 计算池子每年奖励PTP Token的数量
  * - base奖励
  * - boosted奖励：质押PTP，获取vePTP加成的奖励
- * @param pid 
+ * @param pid
  * @param isBoosted true: Boosted奖励 | false: Base奖励
- * @returns 
+ * @returns
  */
 const getPoolAnnualPtpReward = async (pid: number, isBoosted: boolean): Promise<number> => {
     const ptpToken = await swissKnife.syncUpTokenDB(Config.ptp);
     const masterChef = new ContractHelper(Config.farmChef.address, './Avalanche/platypus/master.chef.json', network);
-    const ptpPerSecond = await masterChef.callReadMethod('ptpPerSecond');
+    const ptpPerSecond = await masterChef.callReadMethod('ptpPerSec');
     const poolInfo = await masterChef.callReadMethod('poolInfo', pid);
     const poolAllocPoint = poolInfo['allocPoint'];
     const totalAllocPoint = await masterChef.callReadMethod('totalAllocPoint');
@@ -108,9 +108,9 @@ const getPoolAnnualPtpReward = async (pid: number, isBoosted: boolean): Promise<
     const allPoolsAnnualPtpReward = new BigNumber(ptpPerSecond).multipliedBy(3600).multipliedBy(24).multipliedBy(365);
     const poolAnnualPtpReward = allPoolsAnnualPtpReward.multipliedBy(poolAllocPoint).dividedBy(totalAllocPoint);
 
-    let repartition = dialutingRepartition; //base奖励
+    let repartition = dialutingRepartition; //base奖励的占比份额
     if (isBoosted) {
-        repartition = nonDialutingRepartition; //boosted奖励
+        repartition = nonDialutingRepartition; //boosted奖励的占比份额
     }
     let totalAnnualPtp = poolAnnualPtpReward.multipliedBy(repartition).dividedBy(1000);
     return ptpToken.readableAmountFromBN(totalAnnualPtp);
@@ -122,9 +122,9 @@ const getPoolAnnualPtpReward = async (pid: number, isBoosted: boolean): Promise<
 const getPoolBaseAPY = async (pid: number) => {
     const priceOracle = new ContractHelper(Config.priceOracle, './Avalanche/platypus/price.oracle.json', network);
     const masterChef = new ContractHelper(Config.farmChef.address, './Avalanche/platypus/master.chef.json', network);
-    
+
     const poolAnnualReward = await getPoolAnnualPtpReward(pid, false);
-    
+
     const poolInfo = await masterChef.callReadMethod('poolInfo', pid);
     const assetTokenAddress = poolInfo['lpToken'];
     const assetToken = await swissKnife.syncUpTokenDB(assetTokenAddress);
@@ -136,17 +136,19 @@ const getPoolBaseAPY = async (pid: number) => {
     const priceAsset = await priceOracle.callReadMethod('getAssetPrice', underlyingTokenAddress);
 
     const poolTAG = `pool[${pid}] - ${underlyingToken.symbol}`;
-    const poolStakedTVLUSD = new BigNumber(priceAsset).multipliedBy(totalStakedAsset).dividedBy(1e8).dividedBy(Math.pow(10, assetToken.decimals));
+    const poolStakedTVLUSD = new BigNumber(priceAsset)
+        .multipliedBy(totalStakedAsset)
+        .dividedBy(1e8)
+        .dividedBy(Math.pow(10, assetToken.decimals));
     const poolAnnualRewardUSD = new BigNumber(poolAnnualReward).multipliedBy(Config.ptpPrice);
 
-    const apr = poolAnnualRewardUSD.dividedBy(poolStakedTVLUSD)
-    logger.info(
-        `${poolTAG} > base apr: ${apr.multipliedBy(100).toNumber().toFixed(4)} %`,
-    );
-}
+    const apr = poolAnnualRewardUSD.dividedBy(poolStakedTVLUSD);
+    logger.info(`${poolTAG} > base APR: ${apr.multipliedBy(100).toNumber().toFixed(4)} %`);
+};
 //计算用户Boosted APR
 const getUserBoostedAPR = async (pid: number, userAddress: string) => {
     //const poolManager = new ContractHelper(Config.poolManager, './Avalanche/platypus/pool.manager.json', network);
+    const ptpToken = await swissKnife.syncUpTokenDB(Config.ptp);
     //预言机合约
     const priceOracle = new ContractHelper(Config.priceOracle, './Avalanche/platypus/price.oracle.json', network);
     //masterchef挖矿合约
@@ -155,6 +157,7 @@ const getUserBoostedAPR = async (pid: number, userAddress: string) => {
     //true：计算Boosted APR
     //false: 计算Base APR
     const poolAnnualReward = await getPoolAnnualPtpReward(pid, true);
+    logger.info(`getUserBoostedAPR > pool[${pid}] > annual reward: ${poolAnnualReward} ${ptpToken.symbol}`);
     //计算质押池每年奖励PTP Token的USD价值
     const poolAnnualRewardUSD = new BigNumber(poolAnnualReward).multipliedBy(Config.ptpPrice);
     //获取用户质押信息
@@ -185,9 +188,7 @@ const getUserBoostedAPR = async (pid: number, userAddress: string) => {
     logger.info(`${poolTAG} > account[${userAddress}] TVL: ${userTVLUSD.toNumber().toFixed(6)} USD`);
     //计算用户Boosted APR
     const apr = userAnnualRewardUSD.dividedBy(userTVLUSD);
-    logger.info(
-        `${poolTAG} > account[${userAddress}] boosted apr: ${apr.multipliedBy(100).toNumber().toFixed(4)} %`,
-    );
+    logger.info(`${poolTAG} > account[${userAddress}] boosted APR: ${apr.multipliedBy(100).toNumber().toFixed(4)} %`);
 };
 const main = async () => {
     // const underlyingTokenAddresses = await poolManager.callReadMethod('getTokenAddresses');
@@ -195,7 +196,8 @@ const main = async () => {
     //     await getPoolDetails(tokenAddress, ratio);
     //     break;
     // }
-    await getUserBoostedAPR(1, '0x881897b1FC551240bA6e2CAbC7E59034Af58428a')
+    await getPoolBaseAPY(1);
+    await getUserBoostedAPR(1, '0x881897b1FC551240bA6e2CAbC7E59034Af58428a');
 };
 
 main().catch((e) => {
