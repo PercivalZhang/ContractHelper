@@ -14,7 +14,7 @@ const MaxGas = 700000;
 
 export class ContractHelper {
     public web3: Web3;
-    private readonly address: string;
+    public readonly address: string;
     private abiFileName: string;
     private contract: Contract;
     private hideExceptionOutput: boolean;
@@ -91,7 +91,7 @@ export class ContractHelper {
     public async callReadMethodWithFrom(methodName: string, fromUser: string, ...args: any[]): Promise<any> {
         try {
             logger.debug(`call method - ${methodName} : ${args}`);
-            const ret = await this.contract.methods[methodName](...args).call({from: fromUser});
+            const ret = await this.contract.methods[methodName](...args).call({ from: fromUser });
             logger.debug(`callReadMethod > ${JSON.stringify(ret)}`);
             return ret;
         } catch (e) {

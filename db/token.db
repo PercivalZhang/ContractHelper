@@ -1665,6 +1665,10 @@
         "0x9ecf784db7ac647255259ed713bb971f9439b3e7": {
             "symbol": "SqiDAI",
             "decimals": 8
+        },
+        "0x026187bdbc6b751003517bcb30ac7817d5b766f8": {
+            "symbol": "H2O",
+            "decimals": 18
         }
     }
 }
