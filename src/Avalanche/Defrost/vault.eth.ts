@@ -13,8 +13,7 @@ type TokenBalance = {
 const Config = {
     //LP挖矿
     vaults: [
-        '0x8fe7a130da6299fe132b664f25d20c6799fca523', //Super Benqi ETH
-        '0x5a733eb741bc080abae9bf3adaed9400416932f0', //Super Benqi DAI
+        '0x8fe7a130da6299fe132b664f25d20c6799fca523', //Super Benqi ETH, 版本SV
     ],
     H2O: '0x026187bdbc6b751003517bcb30ac7817d5b766f8',
 };
@@ -29,17 +28,17 @@ const logger = LoggerFactory.getInstance().getLogger('vault');
  * @param sTokenAddress
  * @returns
  */
-const getUnderlyingTokenAmount = async (sTokenAmount: BigNumber, sTokenAddress: string): Promise<TokenBalance> => {
+const getCTokenAmount = async (sTokenAmount: BigNumber, sTokenAddress: string): Promise<TokenBalance> => {
     const sTokenHelper = new ContractHelper(sTokenAddress, './Avalanche/Defrost/super.token.json', network);
-    const underlyingTokenAddress = await sTokenHelper.callReadMethod('stakeToken');
-    const underlyingTokenHelper = new ContractHelper(underlyingTokenAddress, './erc20.json', network);
-    const unnderlyingToken = await swissKnife.syncUpTokenDB(underlyingTokenAddress);
-    const totalStakedUnderlyingTokens = await underlyingTokenHelper.callReadMethod('balanceOf', sTokenAddress);
+    const cTokenAddress = await sTokenHelper.callReadMethod('stakeToken');
+    const cTokenHelper = new ContractHelper(cTokenAddress, './erc20.json', network);
+    const cToken = await swissKnife.syncUpTokenDB(cTokenAddress);
+    const totalStakedCTokens = await cTokenHelper.callReadMethod('balanceOf', sTokenAddress);
     const totalSuperTokens = await sTokenHelper.callReadMethod('totalSupply');
-    const underlyingTokenAmount = sTokenAmount.multipliedBy(totalStakedUnderlyingTokens).dividedBy(totalSuperTokens);
+    const cTokenAmount = sTokenAmount.multipliedBy(totalStakedCTokens).dividedBy(totalSuperTokens);
     return {
-        token: unnderlyingToken,
-        balance: unnderlyingToken.readableAmountFromBN(underlyingTokenAmount),
+        token: cToken,
+        balance: cToken.readableAmountFromBN(cTokenAmount),
     };
 };
 const getUserVaultReceipt = async (vaultAddress: string, userAddress: string) => {
@@ -48,6 +47,11 @@ const getUserVaultReceipt = async (vaultAddress: string, userAddress: string) =>
     const sTokenAddress = await vault.callReadMethod('collateralToken');
     const sToken = await swissKnife.syncUpTokenDB(sTokenAddress);
     const minCollateralRate = await vault.callReadMethod('collateralRate');
+    //通过oracle获取super token price
+    const oracleAddress = await vault.callReadMethod('getOracleAddress');
+    const sTokenPriceOracle = new ContractHelper(oracleAddress, './Avalanche/Defrost/super.token.oracle.json', network);
+    const sTokenPriceData = await sTokenPriceOracle.callReadMethod('getSuperPrice', sTokenAddress);
+    const sTokenPrice = sTokenPriceData['1'];
 
     const vaultTAG = `vault - ${sToken.symbol}`;
     logger.info(
@@ -59,23 +63,32 @@ const getUserVaultReceipt = async (vaultAddress: string, userAddress: string) =>
     );
     //获取用户抵押资产余额
     const sTokenBalance = await vault.callReadMethod('collateralBalances', userAddress);
-    logger.info(
-        `${vaultTAG} > collateral super token balance: ${sToken.readableAmount(sTokenBalance).toFixed(6)} ${
-            sToken.symbol
-        }`,
-    );
-    const underlyingTokenBalance = await getUnderlyingTokenAmount(new BigNumber(sTokenBalance), sTokenAddress);
-    logger.info(
-        `${vaultTAG} > collateral underlying token balance: ${underlyingTokenBalance.balance.toFixed(6)} ${
-            underlyingTokenBalance.token.symbol
-        }`,
-    );
+    if (new BigNumber(sTokenBalance).gt(0)) {
+        logger.info(
+            `${vaultTAG} > collateral super token balance: ${sToken.readableAmount(sTokenBalance).toFixed(6)} ${
+                sToken.symbol
+            }`,
+        );
+        //获取用户质押资产的价值USD
+        const sTokenUSD = new BigNumber(sTokenPrice)
+            .multipliedBy(sTokenBalance)
+            .dividedBy(Math.pow(10, 28))
+            .dividedBy(Math.pow(10, sToken.decimals));
+        logger.info(`${vaultTAG} > collateral super token value: ${sTokenUSD.toNumber().toFixed(6)} USD`);
+        //获取super Token对应的cToken的数量
+        const underlyingTokenBalance = await getCTokenAmount(new BigNumber(sTokenBalance), sTokenAddress);
+        logger.info(
+            `${vaultTAG} > collateral underlying token balance: ${underlyingTokenBalance.balance.toFixed(6)} ${
+                underlyingTokenBalance.token.symbol
+            }`,
+        );
+    }
 };
 
 const main = async () => {
     // const underlyingTokenAddresses = await poolManager.callReadMethod('getTokenAddresses');
     for (const vaultAddress of Config.vaults) {
-        await getUserVaultReceipt(vaultAddress, '0x881897b1FC551240bA6e2CAbC7E59034Af58428a');
+        await getUserVaultReceipt(vaultAddress, '0x5ea5a55be3c8c199244141f904857b0a389c218f');
     }
 };
 

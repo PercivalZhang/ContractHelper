@@ -1661,6 +1661,10 @@
         "0x835866d37afb8cb8f8334dccdaf66cf01832ff5d": {
             "symbol": "qiDAI",
             "decimals": 8
+        },
+        "0x9ecf784db7ac647255259ed713bb971f9439b3e7": {
+            "symbol": "SqiDAI",
+            "decimals": 8
         }
     }
 }
