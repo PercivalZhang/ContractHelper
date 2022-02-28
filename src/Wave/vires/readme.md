@@ -1,0 +1,93 @@
+waves
+
+官方 API
+获取账号状态
+https://api.vires.finance/user/3PBYybAKc9M9hsFE47S8pxdg9obJJsVotAs
+用户参与的所有市场的信息：
+···
+{
+"3P8G747fnB1DTQ4d5uD114vjAaeezCW4FaM": {
+"borrow": "0",
+"supply": "0",
+"protectedSupply": "0",
+"vTokenContractBalance": "0",
+"useAsCollateral": true,
+"rewardsAccumulated": "0",
+"rewardsClaimed": "0",
+"rewardsAvailable": "0"
+},
+"3PA7QMFyHMtHeP66SUQnwCgwKQHKpCyXWwd": {
+"borrow": "0",
+"supply": "0",
+"protectedSupply": "0",
+"vTokenContractBalance": "0",
+"useAsCollateral": true,
+"rewardsAccumulated": "0",
+"rewardsClaimed": "0",
+"rewardsAvailable": "0"
+},
+"3PBjqiMwwag72VWUtHNnVrxTBrNK8D7bVcN": {
+"borrow": "0",
+"supply": "0",
+"protectedSupply": "0",
+"vTokenContractBalance": "0",
+"useAsCollateral": true,
+"rewardsAccumulated": "0",
+"rewardsClaimed": "0",
+"rewardsAvailable": "0"
+},
+"3PCwFXSq8vj8iKitA5zrrLRbuqehfmimpce": {
+"borrow": "0",
+"supply": "0",
+"protectedSupply": "0",
+"vTokenContractBalance": "0",
+"useAsCollateral": true,
+"rewardsAccumulated": "0",
+"rewardsClaimed": "0",
+"rewardsAvailable": "0"
+},
+"3PEiD1zJWTMZNWSCyzhvBw9pxxAWeEwaghR": {
+"borrow": "0",
+"supply": "2000055",
+"protectedSupply": "0",
+"vTokenContractBalance": "1732667",
+"useAsCollateral": true,
+"rewardsAccumulated": "5",
+"rewardsClaimed": "0",
+"rewardsAvailable": "5"
+},
+"3PGCkrHBxFMi7tz1xqnxgBpeNvn5E4M4g8S": {
+"borrow": "0",
+"supply": "0",
+"protectedSupply": "0",
+"vTokenContractBalance": "0",
+"useAsCollateral": true,
+"rewardsAccumulated": "0",
+"rewardsClaimed": "0",
+"rewardsAvailable": "0"
+},
+"3PPdeWwrzaxqgr6BuReoF3sWfxW8SYv743D": {
+"borrow": "0",
+"supply": "0",
+"protectedSupply": "0",
+"vTokenContractBalance": "0",
+"useAsCollateral": true,
+"rewardsAccumulated": "0",
+"rewardsClaimed": "0",
+"rewardsAvailable": "0"
+}
+}
+···
+
+入口 smart 账户的脚本：https://wavesexplorer.com/address/3PAZv9tgK1PX7dKR7b4kchq5qdpUS3G5sYT/script
+
+关键方法 - 存款：func doDeposit (i,reserve,useAsCollateral)
+｜
+调用了 Reserve 智能账户的脚本： invoke(validateReserve(reserve), "depositFor", [user, useAsCollateral], i.payments）
+
+Reserv - USDT 智能账户：
+https://wavesexplorer.com/address/3PEiD1zJWTMZNWSCyzhvBw9pxxAWeEwaghR/script
+
+关键方法存款：func depositFor (depositor,useAsCollateral)
+
+交易：https://wavesexplorer.com/tx/DueJ2HSZCB1nT5N8aBWw5UxaFz8K62Ps8AH5XGbQmbcy
