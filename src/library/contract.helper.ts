@@ -28,14 +28,21 @@ export class ContractHelper {
         const pathABIFile = path.resolve('abi', abiFileName);
         const apiInterfaceContract = JSON.parse(fs.readFileSync(pathABIFile).toString());
         this.contract = new this.web3.eth.Contract(apiInterfaceContract, address);
-
         this.hideExceptionOutput = false;
+    }
+
+    public setDefaultBlock(blockNumber: number) {
+        this.contract.defaultBlock = blockNumber;
     }
 
     public toggleHiddenExceptionOutput() {
         this.hideExceptionOutput = !this.hideExceptionOutput;
     }
 
+    public async getBlockHeight(): Promise<number> {
+        return this.web3.eth.getBlockNumber();
+    }
+    
     public async callWriteMethod(
         signer: Account,
         methodName: string,
