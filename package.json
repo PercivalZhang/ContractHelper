@@ -44,6 +44,7 @@
     "@solana/web3.js": "^1.31.0",
     "@uniswap/sdk-core": "^3.0.1",
     "@uniswap/v3-sdk": "^3.6.3",
+    "@waves/waves-transactions": "^4.2.5-beta.3",
     "axios": "^0.20.0",
     "bignumber.js": "^9.0.1",
     "decimal.js": "^10.3.1",
