@@ -89,5 +89,15 @@ Reserv - USDT 智能账户：
 https://wavesexplorer.com/address/3PEiD1zJWTMZNWSCyzhvBw9pxxAWeEwaghR/script
 
 关键方法存款：func depositFor (depositor,useAsCollateral)
-
 交易：https://wavesexplorer.com/tx/DueJ2HSZCB1nT5N8aBWw5UxaFz8K62Ps8AH5XGbQmbcy
+
+每个Reserve都会关联一个全局的配置智能账户 - Reserve池的各种配置信息
+https://wavesexplorer.com/address/3PJ1kc4EAPL6fxuz3UZL68LPz1G9u4ptjYT/data
+
+挖矿奖励
+在配置账户的Data中有一个key - vires_distributor 定义了平台币vires的奖励计算和分发的智能账户
+
+
+平台币vires的奖励计算和分发的智能账户
+https://wavesexplorer.com/address/3P2RkFDTHJCB82HcVvJNU2eMEfUo82ZFagV/script
+关键方法：func userRewardBalance (reserve,user) 

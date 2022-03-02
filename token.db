@@ -6,5 +6,21 @@
     "34n9yceetlwn93qyq64esp1x89tsruju44rremsxxepj": {
         "symbol": "USDT",
         "decimals": 6
+    },
+    "fkuy7vaexj7vdm8hdupoctvdznvk2jhcpbe5xuvtd91": {
+        "symbol": "VIRES_WAVES_LP",
+        "decimals": 8
+    },
+    "fsrhtsyxrxqjzqlrtmaqfpbddcnjy8pu8kntwogxvbmr": {
+        "symbol": "VIRES_USDC_LP",
+        "decimals": 6
+    },
+    "d3r6qmxm9rgtwjhcaubwxwcifb6cbn1czkf3tm1sfsue": {
+        "symbol": "VIRES_USDN_LP",
+        "decimals": 6
+    },
+    "8yxb9tevhqhchphzw7ypxtkxeprnqsy1mq3y7gedcctd": {
+        "symbol": "VIRES_EURN_LP",
+        "decimals": 6
     }
 }
