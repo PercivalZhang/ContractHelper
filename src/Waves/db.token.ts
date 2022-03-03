@@ -11,7 +11,7 @@ export class TokenDB {
     private static instance: TokenDB;
 
     private constructor() {
-        this.tokenDB = new JSONDBBuilder(path.resolve('./token.db'), true, true, '/');
+        this.tokenDB = new JSONDBBuilder(path.resolve('./db/Waves/token.db'), true, true, '/');
     }
     
     static getInstance() {
@@ -26,10 +26,13 @@ export class TokenDB {
         try {
             const tokenData = await this.tokenDB.getData('/' + token.address.toLowerCase());
             if (!tokenData) {
+                logger.info(`Token - ${token.symbol} does not exist`);
                 this.tokenDB.push('/' + token.address.toLowerCase(), {
                     symbol: token.symbol,
                     decimals: token.decimals,
                 });
+            } else {
+                logger.info(`Token - ${token.symbol} already existed`);
             } 
             return token;    
         } catch (e) {

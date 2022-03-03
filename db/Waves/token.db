@@ -22,5 +22,9 @@
     "8yxb9tevhqhchphzw7ypxtkxeprnqsy1mq3y7gedcctd": {
         "symbol": "VIRES_EURN_LP",
         "decimals": 6
+    },
+    "dsbbhlsstedg5lsiufk2aneh3djvqjupr2m9uu1gwy5p": {
+        "symbol": "VIRES",
+        "decimals": 8
     }
 }

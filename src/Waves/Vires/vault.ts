@@ -3,10 +3,7 @@ import { ERC20Token } from '../../library/erc20.token';
 import { LoggerFactory } from '../../library/LoggerFactory';
 import { TokenDB } from '../db.token';
 import BigNumber from 'bignumber.js';
-
-const NodeUrl = 'https://nodes.wavesnodes.com/';
-const RewardDistributor = '3P2RkFDTHJCB82HcVvJNU2eMEfUo82ZFagV';
-const VIRES = 'DSbbhLsSTeDg5Lsiufk2Aneh3DjVqJuPr2M9uU1gwy5p';
+import { Config } from './Config';
 
 type TokenInfo = {
     token: ERC20Token;
@@ -28,6 +25,7 @@ type VaultInfo = {
     aTokenSupply: string;
     totalDeposit: string;
     totalBorrow: string;
+    rewardInfo: RewardInfo;
 };
 type RewardInfo = {
     borrowRewards: string;
@@ -36,22 +34,15 @@ type RewardInfo = {
     depositRewardSpeed: string;
 };
 
+const NodeUrl = Config.nodeURI;
 const tokenDB = TokenDB.getInstance();
 const logger = LoggerFactory.getInstance().getLogger('vault');
-const Oracle = '3PKkojKdd6BBzTf1RXbQVfUDraNFXXHKzQF';
-const EUROracle = '3P8qJyxUqizCWWtEn2zsLZVPzZAjdNGppB1';
-
-const KeyOfPriceMap = {
-    '8LQW8f7P5d5PZM7GtZEBgaqRPGSzS3DfPuiXrURJ4AJS': '%s%s__price__BTC-USDT', //btc
-    '474jTeYx2r2Va35794tCScAXWJG9hU2HcgxzMowaZUnu': '%s%s__price__ETH-USDT', //eth
-    'DUk2YTxhRoAqMJLus4G2b3fR8hMHVh6eiyFx5r29VR6t': '%s%s__price__EUR', //usdn
-    WAVES: '%s%s__price__WAVES-USDT', //WAVES
-};
 
 export class Vault {
     public address: string;
     private vToken: ERC20Token;
     private assetToken: ERC20Token;
+    private rewardToken: ERC20Token;
     private configAddress: string;
     private config: ConfigInfo;
 
@@ -59,26 +50,39 @@ export class Vault {
         this.address = address;
     }
 
+    public static async getViresPrice(): Promise<number> {
+        const keyBalanceA = 'A_asset_balance';
+        const keyBalanceB = 'B_asset_balance';
+        const balanceAData = await nodeInteraction.accountDataByKey(keyBalanceA, Config.swopfiPair, NodeUrl);
+        const balanceBData = await nodeInteraction.accountDataByKey(keyBalanceB, Config.swopfiPair, NodeUrl);
+
+        const balanceA = new BigNumber(balanceAData.value.toString());
+        const balanceB = new BigNumber(balanceBData.value.toString());
+
+        const priceVires = balanceB.multipliedBy(100).dividedBy(balanceA);
+        logger.info(`getViresPrice > ${priceVires.toNumber().toFixed(4)} USD`);
+        return priceVires.toNumber();
+    }
     public static async getAssetPrice(assetId: string): Promise<number> {
-        const keyPrice = KeyOfPriceMap[assetId];
-        logger.info(`getAssetPrice > key: ${keyPrice}`);
+        const keyPrice = Config.KeyOfPriceMap[assetId];
         if (keyPrice) {
-            if(keyPrice === '%s%s__price__EUR') {
-                const priceData = await nodeInteraction.accountDataByKey(keyPrice, EUROracle, NodeUrl);
+            logger.info(`getAssetPrice > key: ${keyPrice}`);
+            if (keyPrice === '%s%s__price__EUR') {//EUR
+                const priceData = await nodeInteraction.accountDataByKey(keyPrice, Config.eurOracle, NodeUrl);
                 return new BigNumber(1000000).dividedBy(priceData.value.toString()).toNumber();
             }
-            const priceData = await nodeInteraction.accountDataByKey(keyPrice, Oracle, NodeUrl);
+            //其他币种BTC/ETH/Waves
+            const priceData = await nodeInteraction.accountDataByKey(keyPrice, Config.oracle, NodeUrl);
             logger.info(`getAssetPrice > ${priceData.value.toString()}`);
             return new BigNumber(priceData.value.toString()).dividedBy(1e6).toNumber();
         } else {
-            logger.info(`getAssetPrice > ${1} USD`);
+            logger.info(`getAssetPrice > stable coin: ${1} USD`); //稳定币
             return 1;
         }
     }
 
     public static async getAssetInfo(assetId: string): Promise<ERC20Token> {
         const assetInfo = await nodeInteraction.transactionById(assetId, NodeUrl);
-
         const assetToken = new ERC20Token(
             assetInfo['assetId'],
             assetInfo['name'],
@@ -115,7 +119,11 @@ export class Vault {
             depositRewardSpeed: '',
         };
         const keyOfBorrowReward = vaultAddress + '_reward_borrow';
-        const borrowRewardData = await nodeInteraction.accountDataByKey(keyOfBorrowReward, RewardDistributor, NodeUrl);
+        const borrowRewardData = await nodeInteraction.accountDataByKey(
+            keyOfBorrowReward,
+            Config.rewardDistributor,
+            NodeUrl,
+        );
         const borrowRewards = borrowRewardData.value.toString();
         logger.info(`getDepositBorrowRewardInfo > total reward for borrow: ${borrowRewards}`);
         rewardInfo.borrowRewards = borrowRewards;
@@ -123,7 +131,7 @@ export class Vault {
         const keyOfDepositReward = vaultAddress + '_reward_deposit';
         const depositRewardData = await nodeInteraction.accountDataByKey(
             keyOfDepositReward,
-            RewardDistributor,
+            Config.rewardDistributor,
             NodeUrl,
         );
         const depositRewards = depositRewardData.value.toString();
@@ -133,7 +141,7 @@ export class Vault {
         const keyOfDepositRewardSpeed = vaultAddress + '_speed_deposit';
         const depositRewardSpeedData = await nodeInteraction.accountDataByKey(
             keyOfDepositRewardSpeed,
-            RewardDistributor,
+            Config.rewardDistributor,
             NodeUrl,
         );
         const depositRewardSpeed = depositRewardSpeedData.value.toString();
@@ -143,7 +151,7 @@ export class Vault {
         const keyOfBorrowRewardSpeed = vaultAddress + '_speed_borrow';
         const borrowRewardSpeedData = await nodeInteraction.accountDataByKey(
             keyOfBorrowRewardSpeed,
-            RewardDistributor,
+            Config.rewardDistributor,
             NodeUrl,
         );
         const borrowRewardSpeed = borrowRewardSpeedData.value.toString();
@@ -207,6 +215,10 @@ export class Vault {
             const vTokenInfo = await this.getVTokenInfo();
             this.vToken = vTokenInfo.token;
             logger.info(`loadBasicInfo > vToken - ${this.vToken.symbol}: ${this.vToken.address}`);
+
+            this.rewardToken = await tokenDB.syncUp(
+                new ERC20Token(Config.Vires.address, Config.Vires.symbol, Config.Vires.decimals),
+            );
 
             const configAddressData = await nodeInteraction.accountDataByKey('configAddress', this.address, NodeUrl);
             const configAddress = configAddressData.value.toString();
@@ -295,6 +307,7 @@ export class Vault {
             aTokenSupply: '',
             totalDeposit: '',
             totalBorrow: '',
+            rewardInfo: null,
         };
         if (!this.assetToken) {
             const assetIdItem = await nodeInteraction.accountDataByKey('assetId', this.address, NodeUrl);
@@ -305,16 +318,12 @@ export class Vault {
         } else {
             vaultInfo.asset = this.assetToken;
         }
-        // const assetBalance = await nodeInteraction.assetBalance(assetId, vaultAddress, nodeUrl);
-        // console.log(assetBalance);
-        // await tokenDB.syncUp(this.assetToken);
-
         logger.info(`getVaultInfo > asset - ${this.assetToken.symbol}: ${this.assetToken.address}`);
         const vTokenInfo = await this.getVTokenInfo();
         vaultInfo.aToken = vTokenInfo.token;
         vaultInfo.aTokenSupply = vTokenInfo.balance;
         logger.info(`getVaultInfo > vToken - ${vTokenInfo.token.symbol}: ${vTokenInfo.token.address}`);
-
+        //获取存款总数
         const totalDepositItem = await nodeInteraction.accountDataByKey('totalDeposit', this.address, NodeUrl);
         const totalDeposit = new BigNumber(totalDepositItem.value.toString());
         vaultInfo.totalDeposit = totalDeposit.toString();
@@ -323,7 +332,7 @@ export class Vault {
                 this.assetToken.symbol
             }`,
         );
-
+        //获取借款总数    
         const totalBorrowItem = await nodeInteraction.accountDataByKey('totalBorrow', this.address, NodeUrl);
         const totalBorrow = new BigNumber(totalBorrowItem.value.toString());
         vaultInfo.totalBorrow = totalBorrow.toString();
@@ -332,14 +341,15 @@ export class Vault {
                 this.assetToken.symbol
             }`,
         );
+        //获取资产token的价格
         const priceAsset = await Vault.getAssetPrice(this.assetToken.address);
         logger.info(`getVaultInfo > asset - ${this.assetToken.symbol} price: ${priceAsset.toFixed(4)} USD`);
-
+        //该池子的资金使用率    
         const utilizationRatio = totalBorrow.dividedBy(totalDeposit);
         logger.info(
             `getVaultInfo > current utilization ratio: ${utilizationRatio.multipliedBy(100).toNumber().toFixed(4)}%`,
         );
-
+        //计算存借款利息产生的收益APR    
         const [borrowAPR, supplyAPR] = Vault.calculateBorrowSupplyAPR(
             utilizationRatio.toNumber(),
             Number.parseFloat(this.config.aPoint),
@@ -350,23 +360,27 @@ export class Vault {
         );
         logger.info(`getVaultInfo > borrow APR: ${(borrowAPR * 100).toFixed(2)}%`);
         logger.info(`getVaultInfo > supply/lend APR: ${(supplyAPR * 100).toFixed(2)}%`);
-
+        //获取池子的奖励信息    
         const rewardInfo = await Vault.getDepositBorrowRewardInfo(this.address);
-
+        vaultInfo.rewardInfo = rewardInfo;
+        //计算存款的挖矿APR    
         const supplyViresAPR = new BigNumber(rewardInfo.depositRewardSpeed)
             .multipliedBy(3600 * 24 * 365)
             .dividedBy(this.assetToken.readableAmountFromBN(totalDeposit))
             .dividedBy(priceAsset)
             .dividedBy(1e8);
-        logger.info(`getVaultInfo > Vires Reward for Supply. APR: ${supplyViresAPR.multipliedBy(100).toNumber().toFixed(2)}%`);
-
+        logger.info(
+            `getVaultInfo > Vires Reward for Supply. APR: ${supplyViresAPR.multipliedBy(100).toNumber().toFixed(2)}%`,
+        );
+        //计算借款的APR    
         const borrowViresAPR = new BigNumber(rewardInfo.borrowRewardSpeed)
             .multipliedBy(3600 * 24 * 365)
             .dividedBy(this.assetToken.readableAmountFromBN(totalBorrow))
             .dividedBy(priceAsset)
             .dividedBy(1e8);
-        logger.info(`getVaultInfo > Vires Reward for Borrow. APR: ${borrowViresAPR.multipliedBy(100).toNumber().toFixed(2)}%`);
-
+        logger.info(
+            `getVaultInfo > Vires Reward for Borrow. APR: ${borrowViresAPR.multipliedBy(100).toNumber().toFixed(2)}%`,
+        );
         return vaultInfo;
     }
 
@@ -377,29 +391,55 @@ export class Vault {
         //获取用户存款aToken数量
         const keyOfATokenBalance = userAddress + '_aTokenBalance';
         const aTokenBalanceItem = await nodeInteraction.accountDataByKey(keyOfATokenBalance, this.address, NodeUrl);
-        const aTokenBalance = aTokenBalanceItem.value.toString();
-        logger.info(
-            `getUserInfo > vToken balance: ${vToken.readableAmount(aTokenBalanceItem.value.toString()).toFixed(4)} ${
-                vToken.symbol
-            }`,
-        );
-
-        const assetPerAToken = new BigNumber(vaultInfo.totalDeposit).dividedBy(vaultInfo.aTokenSupply);
-        const assetTokenBalance = assetPerAToken.multipliedBy(aTokenBalance);
-        logger.info(
-            `getUserInfo > asset balance: ${assetToken.readableAmount(assetTokenBalance.toString()).toFixed(5)} ${
-                assetToken.symbol
-            }`,
-        );
-
-        const keyOfUseAsCollateral = userAddress + '_useAsCollateral';
-        let useAsCollateral = await nodeInteraction.accountDataByKey(keyOfUseAsCollateral, this.address, NodeUrl);
-        logger.info(`getUserInfo > use as collateral: ${useAsCollateral.value}`);
-
-        //获取当前vault中的借款数量
-        const keyOfDebt = userAddress + '_debt';
-        const debtAssetBalanceItem = await nodeInteraction.accountDataByKey(keyOfDebt, this.address, NodeUrl);
-        const debtAssetBalance = assetToken.readableAmount(debtAssetBalanceItem.value.toString());
-        logger.info(`getUserInfo > debt asset balance: ${debtAssetBalance.toFixed(4)} ${assetToken.symbol}`);
+        if(aTokenBalanceItem) {
+            const aTokenBalance = aTokenBalanceItem.value.toString();
+            logger.info(
+                `getUserInfo > vToken balance: ${vToken.readableAmount(aTokenBalanceItem.value.toString()).toFixed(4)} ${
+                    vToken.symbol
+                }`,
+            );
+            //计算assetToken和vToken的兑换关系    
+            const assetPerVToken = new BigNumber(vaultInfo.totalDeposit).dividedBy(vaultInfo.aTokenSupply);
+            const assetTokenBalance = assetPerVToken.multipliedBy(aTokenBalance);
+            logger.info(
+                `getUserInfo > supply asset balance: ${assetToken.readableAmount(assetTokenBalance.toString()).toFixed(5)} ${
+                    assetToken.symbol
+                }`,
+            );
+            //获取用户是否将资产启用抵押    
+            const keyOfUseAsCollateral = userAddress + '_useAsCollateral';
+            let useAsCollateral = await nodeInteraction.accountDataByKey(keyOfUseAsCollateral, this.address, NodeUrl);
+            logger.info(`getUserInfo > use as collateral: ${useAsCollateral.value}`);
+            //获取该金库的奖励情况    
+            const rewardData = vaultInfo.rewardInfo;
+            //计算提供存款可领取的奖励
+            const pendingRewardForSupply = new BigNumber(rewardData.depositRewards)
+                .multipliedBy(assetTokenBalance)
+                .dividedBy(vaultInfo.totalDeposit)
+                .dividedBy(1e2);
+            logger.info(
+                `getVaultInfo > pending reward for supply: ${this.rewardToken
+                    .readableAmountFromBN(pendingRewardForSupply)
+                    .toFixed(7)} ${this.rewardToken.symbol}`,
+            );    
+            //获取当前vault中的借款数量
+            const keyOfDebt = userAddress + '_debt';
+            const debtAssetBalanceItem = await nodeInteraction.accountDataByKey(keyOfDebt, this.address, NodeUrl);
+            //有借款
+            if(debtAssetBalanceItem) {
+                const debtAssetBalance = assetToken.readableAmount(debtAssetBalanceItem.value.toString());
+                logger.info(`getUserInfo > debt asset balance: ${debtAssetBalance.toFixed(4)} ${assetToken.symbol}`);
+                //计算借款产生的可领取奖励
+                const pendingRewardForBorrow = new BigNumber(rewardData.borrowRewards)
+                .multipliedBy(debtAssetBalance)
+                .dividedBy(vaultInfo.totalBorrow)
+                .dividedBy(1e2);
+                logger.info(
+                    `getVaultInfo > pending reward for borrow: ${this.rewardToken
+                        .readableAmountFromBN(pendingRewardForBorrow)
+                        .toFixed(7)} ${this.rewardToken.symbol}`,
+                );  
+            }     
+        } 
     }
 }

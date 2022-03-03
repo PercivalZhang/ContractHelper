@@ -101,3 +101,16 @@ https://wavesexplorer.com/address/3PJ1kc4EAPL6fxuz3UZL68LPz1G9u4ptjYT/data
 平台币vires的奖励计算和分发的智能账户
 https://wavesexplorer.com/address/3P2RkFDTHJCB82HcVvJNU2eMEfUo82ZFagV/script
 关键方法：func userRewardBalance (reserve,user) 
+
+价格预言机
+https://wavesexplorer.com/address/3PFHm5TYKw4vVzj4rW8s3Yso88aD73Dai1C/script
+```
+func getViresPrice () = {
+    let swopfiPair = addressFromStringValue("3PJ48P3p2wvWUjgQaQiZ2cFbr8qmxMokBGd")
+    let keyBalanceA = "A_asset_balance"
+    let keyBalanceB = "B_asset_balance"
+    let balanceA = getIntegerValue(swopfiPair, keyBalanceA)
+    let balanceB = getIntegerValue(swopfiPair, keyBalanceB)
+    fraction(balanceB, (100 * dollar), balanceA)
+    }
+```
