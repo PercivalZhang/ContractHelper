@@ -732,6 +732,10 @@
         "0x09ad12552ec45f82be90b38dfe7b06332a680864": {
             "symbol": "CADDY",
             "decimals": 18
+        },
+        "0x6f186e4bed830d13dce638e40ba27fd6d91bad0b": {
+            "symbol": "MEERKAT-LP",
+            "decimals": 18
         }
     },
     "56": {

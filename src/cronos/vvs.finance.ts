@@ -35,7 +35,7 @@ const Config = {
 };
 
 const getOtherVaultReceipt = async (vaultAddress: string, userAddress: string) => {
-    const vault = new ContractHelper(vaultAddress, './chain.cronos/vvs.finance/vault.json', network);
+    const vault = new ContractHelper(vaultAddress, './Cronos/vvs.finance/vault.json', network);
     vault.toggleHiddenExceptionOutput();
 
     const stakedTokenAddress = await vault.callReadMethod('stakedToken');
@@ -60,7 +60,7 @@ const getOtherVaultReceipt = async (vaultAddress: string, userAddress: string) =
 };
 
 const getAutoVaultReceipt = async (vaultAddress: string, userAddress: string) => {
-    const vault = new ContractHelper(vaultAddress, './chain.cronos/vvs.finance/vault.auto.json', network);
+    const vault = new ContractHelper(vaultAddress, './Cronos/vvs.finance/vault.auto.json', network);
     vault.toggleHiddenExceptionOutput();
 
     const vvs = await swissKnife.syncUpTokenDB(Config.vvs);
