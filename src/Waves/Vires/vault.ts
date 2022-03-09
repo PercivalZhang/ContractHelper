@@ -363,9 +363,11 @@ export class Vault {
         //获取池子的奖励信息    
         const rewardInfo = await Vault.getDepositBorrowRewardInfo(this.address);
         vaultInfo.rewardInfo = rewardInfo;
+        const priceVires = await Vault.getViresPrice();
         //计算存款的挖矿APR    
         const supplyViresAPR = new BigNumber(rewardInfo.depositRewardSpeed)
-            .multipliedBy(3600 * 24 * 365)
+            .multipliedBy(3600 * 24 * 365).multipliedBy(priceVires)
+            .dividedBy(60)
             .dividedBy(this.assetToken.readableAmountFromBN(totalDeposit))
             .dividedBy(priceAsset)
             .dividedBy(1e8);
@@ -374,7 +376,8 @@ export class Vault {
         );
         //计算借款的APR    
         const borrowViresAPR = new BigNumber(rewardInfo.borrowRewardSpeed)
-            .multipliedBy(3600 * 24 * 365)
+            .multipliedBy(3600 * 24 * 365).multipliedBy(priceVires)
+            .dividedBy(60)
             .dividedBy(this.assetToken.readableAmountFromBN(totalBorrow))
             .dividedBy(priceAsset)
             .dividedBy(1e8);

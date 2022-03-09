@@ -65,6 +65,10 @@ export class Vault {
     public async getUserInfo(userAddress: string) {
         const balance = await this.vault.callReadMethod('balanceOf', userAddress);
         logger.info(`my balance: ${balance}`);
+
+        const result = await this.vault.callReadMethodWithFrom('getReward', userAddress);
+        console.log(result);
+
         const rewards = await this.vault.callReadMethod('rewards', userAddress);
         console.log(rewards);
         const earned = await this.vault.callReadMethod('earned', userAddress);
@@ -103,14 +107,14 @@ const getRewards = async (pid: number) => {
 
 };
 const main = async () => {
-    // vault: 0x00db5925892274f276846f25c7fe81dec3f3b769 pid=8 wbtc-weth
+    // vault: 0x00db5925892274f276846f25c7fe81dec3f3b769 pid=8 wbtc-weth user:0x169b0a0af452fe66ce28fdd4090652dd67444fb4
     // usdc-dai pid=11
     // 0x443ec402bec44da7138a54413b6e09037cf9cf41 MMF
     // vault:0x55B5540B5C48a27FD17ebe2B9E6a06911f8aa45A usdt-usdc LP pid=6
-    //const vault = new Vault('0x55B5540B5C48a27FD17ebe2B9E6a06911f8aa45A', network); //usdt-usdc
+    const vault = new Vault('0x00db5925892274f276846f25c7fe81dec3f3b769', network); //usdt-usdc
     //await vault.getVaultInfo();
-    await getRewards(6);
-    //await vault.getUserInfo('0x881897b1FC551240bA6e2CAbC7E59034Af58428a');
+    //await getRewards(6);
+    await vault.getUserInfo('0x169b0a0af452fe66ce28fdd4090652dd67444fb4');
 };
 
 main().catch((e) => {
