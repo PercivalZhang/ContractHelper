@@ -736,6 +736,14 @@
         "0x6f186e4bed830d13dce638e40ba27fd6d91bad0b": {
             "symbol": "MEERKAT-LP",
             "decimals": 18
+        },
+        "0x0101112c7addb2e8197922e9cfa17cbaa935eccc": {
+            "symbol": "MEERKAT-LP",
+            "decimals": 18
+        },
+        "0x97749c9b61f878a880dfe312d2594ae07aed7656": {
+            "symbol": "MMF",
+            "decimals": 18
         }
     },
     "56": {

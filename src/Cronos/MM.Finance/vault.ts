@@ -37,10 +37,22 @@ export class Vault {
     }
 
     public async getVaultInfo() {
+        //获取质押LPToken的地址
         const stakingTokenAddress = await this.vault.callReadMethod('stakingToken');
         const stakingToken = await swissKnife.syncUpTokenDB(stakingTokenAddress);
         logger.info(`getVaultInfo > staking Token - ${stakingToken.symbol}: ${stakingToken.address}`);
-
+        //获取质押LPToken的数量
+        const balance = await this.vault.callReadMethod('balance');
+        console.log(balance);
+        logger.info(
+            `getVaultInfo > total staked token balance: ${stakingToken.readableAmount(balance).toFixed(8)} ${
+                stakingToken.symbol
+            }`,
+        );
+        // const rewardDistAddress = await this.vault.callReadMethod('rewardsDistribution');
+        // logger.info(
+        //     `getVaultInfo > reward distribution address: ${rewardDistAddress}`
+        // );
         const rewardTokenAddress = await this.vault.callReadMethod('rewardsToken');
         console.log(rewardTokenAddress);
         //const rewardToken = await swissKnife.syncUpTokenDB(rewardTokenAddress);
@@ -55,21 +67,50 @@ export class Vault {
         logger.info(`my balance: ${balance}`);
         const rewards = await this.vault.callReadMethod('rewards', userAddress);
         console.log(rewards);
+        const earned = await this.vault.callReadMethod('earned', userAddress);
+        console.log(earned);
     }
 }
 
-const main = async () => {
-    const vault = new Vault('0x55B5540B5C48a27FD17ebe2B9E6a06911f8aa45A', network);
-    await vault.getVaultInfo();
-    //await vault.getUserInfo('0x881897b1FC551240bA6e2CAbC7E59034Af58428a');
-    // USDT-USDC LPT
-    const lpt = new ContractHelper(
-        '0x6F186E4BEd830D13DcE638e40bA27Fd6d91BAd0B',
-        './Cronos/MM.Finance/lp.token.json',
+const getRewards = async (pid: number) => {
+    const mmoPrice = 6.64;
+    const mmfPrice = 0.74;
+    const croPrice = 0.387;
+    const mmoPerCRO = 0.066;
+
+    const masterChef = new ContractHelper(
+        '0x6bE34986Fdd1A91e4634eb6b9F8017439b7b5EDc',
+        './Cronos/MM.Finance/master.chef.json',
         network,
     );
-    const reserves = await lpt.callReadMethod('getReserves');
-    console.log(reserves);
+    const poolInfo = await masterChef.callReadMethod('poolInfo', pid);
+    const allocPoint = poolInfo['allocPoint'];
+    const totalAllocPoint = await masterChef.callReadMethod('totalAllocPoint');
+    const rewardPerBlock = await masterChef.callReadMethod('meerkatPerBlock');
+
+    const annualRewardUSD = new BigNumber(rewardPerBlock)
+        .multipliedBy(3600 * 24 * 365)
+        .multipliedBy(mmfPrice)
+        .multipliedBy(allocPoint)
+        .dividedBy(totalAllocPoint)
+        .dividedBy(1e18).dividedBy(6.5);
+    
+    const annualRewardPart1USD = annualRewardUSD.multipliedBy(0.7);
+    const annualRewardPart2USD = annualRewardUSD.multipliedBy(0.3).multipliedBy(mmoPerCRO).multipliedBy(mmoPrice).dividedBy(croPrice);
+    
+    logger.info(`reward part1 USD: ${annualRewardPart1USD.toNumber().toFixed(4)}`);
+    logger.info(`reward part2 USD: ${annualRewardPart2USD.toNumber().toFixed(4)}`)
+
+};
+const main = async () => {
+    // vault: 0x00db5925892274f276846f25c7fe81dec3f3b769 pid=8 wbtc-weth
+    // usdc-dai pid=11
+    // 0x443ec402bec44da7138a54413b6e09037cf9cf41 MMF
+    // vault:0x55B5540B5C48a27FD17ebe2B9E6a06911f8aa45A usdt-usdc LP pid=6
+    //const vault = new Vault('0x55B5540B5C48a27FD17ebe2B9E6a06911f8aa45A', network); //usdt-usdc
+    //await vault.getVaultInfo();
+    await getRewards(6);
+    //await vault.getUserInfo('0x881897b1FC551240bA6e2CAbC7E59034Af58428a');
 };
 
 main().catch((e) => {
