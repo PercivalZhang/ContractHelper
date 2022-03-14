@@ -162,32 +162,36 @@ export class Vault {
     }
 
     private async getVTokenInfo(): Promise<TokenInfo> {
-        const keyOfTokenId = 'aTokenId';
-        const keyOfTokenDecimals = 'aTokenDecimals';
-        const keyOfTokenName = 'aTokenName';
-        const keyOfTokenCirculation = 'aTokenCirculation';
+        try {
+            const keyOfTokenId = 'aTokenId';
+            const keyOfTokenDecimals = 'aTokenDecimals';
+            const keyOfTokenName = 'aTokenName';
+            const keyOfTokenCirculation = 'aTokenCirculation';
 
-        const vTokenId = await nodeInteraction.accountDataByKey(keyOfTokenId, this.address, NodeUrl);
-        let vToken = await tokenDB.getByAddress(vTokenId.value.toString());
-        if (!vToken) {
-            logger.debug(`getVTokenInfo > token - ${vTokenId.value.toString()} does not exist in token db.`);
-            const aTokenName = await nodeInteraction.accountDataByKey(keyOfTokenName, this.address, NodeUrl);
-            const aTokenDecimals = await nodeInteraction.accountDataByKey(keyOfTokenDecimals, this.address, NodeUrl);
+            const vTokenId = await nodeInteraction.accountDataByKey(keyOfTokenId, this.address, NodeUrl);
+            let vToken = await tokenDB.getByAddress(vTokenId.value.toString());
+            if (!vToken) {
+                logger.debug(`getVTokenInfo > token - ${vTokenId.value.toString()} does not exist in token db.`);
+                const aTokenName = await nodeInteraction.accountDataByKey(keyOfTokenName, this.address, NodeUrl);
+                const aTokenDecimals = await nodeInteraction.accountDataByKey(keyOfTokenDecimals, this.address, NodeUrl);
 
-            vToken = new ERC20Token(
-                vTokenId.value.toString(),
-                aTokenName.value.toString(),
-                Number.parseInt(aTokenDecimals.value.toString()),
-            );
-            logger.debug(`getVTokenInfo > added token - ${vTokenId.value.toString()} to db.`);
-            await tokenDB.syncUp(vToken);
+                vToken = new ERC20Token(
+                    vTokenId.value.toString(),
+                    aTokenName.value.toString(),
+                    Number.parseInt(aTokenDecimals.value.toString()),
+                );
+                logger.debug(`getVTokenInfo > added token - ${vTokenId.value.toString()} to db.`);
+                await tokenDB.syncUp(vToken);
+            }
+            logger.info(`getVTokenInfo > token - ${vTokenId.value.toString()} already existed in token db.`);
+            const totalSupply = await nodeInteraction.accountDataByKey(keyOfTokenCirculation, this.address, NodeUrl);
+            return {
+                token: vToken,
+                balance: totalSupply.value.toString(),
+            };
+        } catch(e) {
+            logger.error(`getVTokenInfo > ${e.toString()}`)
         }
-        logger.info(`getVTokenInfo > token - ${vTokenId.value.toString()} already existed in token db.`);
-        const totalSupply = await nodeInteraction.accountDataByKey(keyOfTokenCirculation, this.address, NodeUrl);
-        return {
-            token: vToken,
-            balance: totalSupply.value.toString(),
-        };
     }
 
     public getConfig(): ConfigInfo {

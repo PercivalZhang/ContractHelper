@@ -1,0 +1,855 @@
+[
+    {
+        "inputs": [
+            { "internalType": "address", "name": "_multiSignature", "type": "address" },
+            { "internalType": "address", "name": "_origin0", "type": "address" },
+            { "internalType": "address", "name": "_origin1", "type": "address" }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "user", "type": "address" },
+            { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
+        ],
+        "name": "BoostDeposit",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "user", "type": "address" },
+            { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
+        ],
+        "name": "BoostWithdraw",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "user", "type": "address" },
+            { "indexed": true, "internalType": "uint256", "name": "pid", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
+        ],
+        "name": "Deposit",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": false, "internalType": "uint256", "name": "pid", "type": "uint256" },
+            { "indexed": false, "internalType": "bool", "name": "flag", "type": "bool" }
+        ],
+        "name": "DoubleFarmingEnable",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [{ "indexed": true, "internalType": "uint256", "name": "pid", "type": "uint256" }],
+        "name": "EmergencyWithdraw",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "user", "type": "address" },
+            { "indexed": true, "internalType": "uint256", "name": "pid", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
+        ],
+        "name": "EmergencyWithdraw",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": false, "internalType": "address", "name": "to", "type": "address" },
+            { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
+        ],
+        "name": "GetBackLeftRewardToken",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "previousOrigin", "type": "address" },
+            { "indexed": true, "internalType": "address", "name": "newOrigin", "type": "address" }
+        ],
+        "name": "OriginTransferred",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "previousOwner", "type": "address" },
+            { "indexed": true, "internalType": "address", "name": "newOwner", "type": "address" }
+        ],
+        "name": "OwnershipTransferred",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": false, "internalType": "address", "name": "to", "type": "address" },
+            { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
+        ],
+        "name": "QuitDefrostReward",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": false, "internalType": "address", "name": "extFarmAddr", "type": "address" },
+            { "indexed": false, "internalType": "address", "name": "rewardToken", "type": "address" },
+            { "indexed": false, "internalType": "address", "name": "to", "type": "address" },
+            { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
+        ],
+        "name": "QuitExtReward",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": false, "internalType": "uint256", "name": "pid", "type": "uint256" },
+            { "indexed": false, "internalType": "address", "name": "extFarmAddr", "type": "address" },
+            { "indexed": false, "internalType": "uint256", "name": "extPid", "type": "uint256" }
+        ],
+        "name": "SetExtFarm",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": false, "internalType": "uint256", "name": "pid", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "bonusEndBlock", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "rewardPerBlock", "type": "uint256" }
+        ],
+        "name": "UpdatePoolInfo",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "user", "type": "address" },
+            { "indexed": true, "internalType": "uint256", "name": "pid", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
+        ],
+        "name": "Withdraw",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": false, "internalType": "address", "name": "to", "type": "address" },
+            { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
+        ],
+        "name": "WithdrawDefrostReward",
+        "type": "event"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "BaseBoostTokenAmount",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "BaseIncreaseRatio",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "BoostTokenStepAmount",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "MaxFactor",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "RatioIncreaseStep",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            { "internalType": "address", "name": "_lpToken", "type": "address" },
+            { "internalType": "uint256", "name": "_bonusStartTime", "type": "uint256" },
+            { "internalType": "uint256", "name": "_bonusEndBlock", "type": "uint256" },
+            { "internalType": "uint256", "name": "_rewardPerBlock", "type": "uint256" },
+            { "internalType": "uint256", "name": "_totalMineReward", "type": "uint256" },
+            { "internalType": "uint256", "name": "_duration", "type": "uint256" },
+            { "internalType": "uint256", "name": "_secPerBlk", "type": "uint256" }
+        ],
+        "name": "add",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            { "internalType": "uint256", "name": "_pid", "type": "uint256" },
+            { "internalType": "address", "name": "_user", "type": "address" }
+        ],
+        "name": "allPendingReward",
+        "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [{ "internalType": "address", "name": "_account", "type": "address" }],
+        "name": "balanceOf",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            { "internalType": "uint256", "name": "_pid", "type": "uint256" },
+            { "internalType": "uint256", "name": "_amount", "type": "uint256" }
+        ],
+        "name": "boostDeposit",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [{ "internalType": "address", "name": "_account", "type": "address" }],
+        "name": "boostPendingReward",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [{ "internalType": "address", "name": "_account", "type": "address" }],
+        "name": "boostStakedFor",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "boostTotalStaked",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            { "internalType": "uint256", "name": "_pid", "type": "uint256" },
+            { "internalType": "uint256", "name": "_amount", "type": "uint256" }
+        ],
+        "name": "boostwithdraw",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            { "internalType": "uint256", "name": "_pid", "type": "uint256" },
+            { "internalType": "uint256", "name": "_amount", "type": "uint256" }
+        ],
+        "name": "deposit",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{ "internalType": "uint256", "name": "_pid", "type": "uint256" }],
+        "name": "disableExtEnableClaim",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            { "internalType": "uint256", "name": "_pid", "type": "uint256" },
+            { "internalType": "uint256", "name": "_amount", "type": "uint256" }
+        ],
+        "name": "distributeFinalExtReward",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{ "internalType": "uint256", "name": "_pid", "type": "uint256" }],
+        "name": "emergencyWithdrawExtLp",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            { "internalType": "uint256", "name": "_pid", "type": "uint256" },
+            { "internalType": "bool", "name": "enable", "type": "bool" }
+        ],
+        "name": "enableDoubleFarming",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [{ "internalType": "uint256", "name": "_pid", "type": "uint256" }],
+        "name": "extRewardPerBlock",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "fixedTeamRatio",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "fixedWhitelistRatio",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{ "internalType": "address", "name": "_to", "type": "address" }],
+        "name": "getBackLeftRewardToken",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "getBoostMineInfo",
+        "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [{ "internalType": "uint256", "name": "_pid", "type": "uint256" }],
+        "name": "getMineInfo",
+        "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "getMultiSignatureAddress",
+        "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [{ "internalType": "uint256", "name": "_pid", "type": "uint256" }],
+        "name": "getPoolInfo",
+        "outputs": [
+            { "internalType": "address", "name": "lpToken", "type": "address" },
+            { "internalType": "uint256", "name": "currentSupply", "type": "uint256" },
+            { "internalType": "uint256", "name": "bonusStartBlock", "type": "uint256" },
+            { "internalType": "uint256", "name": "newStartBlock", "type": "uint256" },
+            { "internalType": "uint256", "name": "bonusEndBlock", "type": "uint256" },
+            { "internalType": "uint256", "name": "lastRewardBlock", "type": "uint256" },
+            { "internalType": "uint256", "name": "accRewardPerShare", "type": "uint256" },
+            { "internalType": "uint256", "name": "rewardPerBlock", "type": "uint256" },
+            { "internalType": "uint256", "name": "totalDebtReward", "type": "uint256" }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            { "internalType": "uint256", "name": "_pid", "type": "uint256" },
+            { "internalType": "address", "name": "_user", "type": "address" }
+        ],
+        "name": "getRewardInfo",
+        "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [{ "internalType": "uint256", "name": "_amount", "type": "uint256" }],
+        "name": "getUserBoostFactor",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            { "internalType": "uint256", "name": "_pid", "type": "uint256" },
+            { "internalType": "address", "name": "_user", "type": "address" },
+            { "internalType": "uint256", "name": "_reward", "type": "uint256" }
+        ],
+        "name": "getUserRewardAndTeamReward",
+        "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "h2o",
+        "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "isOrigin",
+        "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "isOwner",
+        "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "owner",
+        "outputs": [{ "internalType": "address", "name": "_owner", "type": "address" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            { "internalType": "uint256", "name": "_pid", "type": "uint256" },
+            { "internalType": "address", "name": "_user", "type": "address" }
+        ],
+        "name": "pendingDefrostReward",
+        "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            { "internalType": "uint256", "name": "_pid", "type": "uint256" },
+            { "internalType": "address", "name": "_user", "type": "address" }
+        ],
+        "name": "pendingExtReward",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "name": "poolmineinfo",
+        "outputs": [
+            { "internalType": "uint256", "name": "totalMineReward", "type": "uint256" },
+            { "internalType": "uint256", "name": "duration", "type": "uint256" }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{ "internalType": "address", "name": "_to", "type": "address" }],
+        "name": "quitDefrostFarm",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            { "internalType": "address", "name": "extFarmAddr", "type": "address" },
+            { "internalType": "address", "name": "_to", "type": "address" }
+        ],
+        "name": "quitExtFarm",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "releaseSc",
+        "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [],
+        "name": "renounceOwnership",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "rewardToken",
+        "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            { "internalType": "uint256", "name": "_BaseBoostTokenAmount", "type": "uint256" },
+            { "internalType": "uint256", "name": "_BaseIncreaseRatio", "type": "uint256" },
+            { "internalType": "uint256", "name": "_BoostTokenStepAmount", "type": "uint256" },
+            { "internalType": "uint256", "name": "_RatioIncreaseStep", "type": "uint256" },
+            { "internalType": "uint256", "name": "_MaxFactor", "type": "uint256" }
+        ],
+        "name": "setBoostFarmFactorPara",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            { "internalType": "address", "name": "_rewardToken", "type": "address" },
+            { "internalType": "address", "name": "_h2o", "type": "address" },
+            { "internalType": "address", "name": "_teamRewardSc", "type": "address" },
+            { "internalType": "address", "name": "_releaseSc", "type": "address" },
+            { "internalType": "address", "name": "_tokenFarm", "type": "address" },
+            { "internalType": "address", "name": "_smelt", "type": "address" }
+        ],
+        "name": "setDefrostAddress",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            { "internalType": "uint256", "name": "_pid", "type": "uint256" },
+            { "internalType": "address", "name": "extFarmAddr", "type": "address" },
+            { "internalType": "uint256", "name": "_extPid", "type": "uint256" }
+        ],
+        "name": "setDoubleFarming",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{ "internalType": "uint256", "name": "_ratio", "type": "uint256" }],
+        "name": "setFixedTeamRatio",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            { "internalType": "uint256", "name": "_incRatio", "type": "uint256" },
+            { "internalType": "uint256", "name": "_whiteListfloorLimit", "type": "uint256" }
+        ],
+        "name": "setFixedWhitelistPara",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{ "internalType": "bool", "name": "halt", "type": "bool" }],
+        "name": "setHalt",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{ "internalType": "address[]", "name": "_user", "type": "address[]" }],
+        "name": "setWhiteList",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            { "internalType": "address", "name": "_user", "type": "address" },
+            { "internalType": "bool", "name": "_status", "type": "bool" }
+        ],
+        "name": "setWhiteListMemberStatus",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "smelt",
+        "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "teamRewardSc",
+        "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "tokenFarm",
+        "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [{ "internalType": "uint256", "name": "_pid", "type": "uint256" }],
+        "name": "totalStaked",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "totalSupply",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [{ "internalType": "address", "name": "extFarmAddr", "type": "address" }],
+        "name": "totalUnclaimedExtFarmReward",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            { "internalType": "address", "name": "_oldOrigin", "type": "address" },
+            { "internalType": "address", "name": "_newOrigin", "type": "address" }
+        ],
+        "name": "transferOrigin",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{ "internalType": "address", "name": "_newOwner", "type": "address" }],
+        "name": "transferOwnership",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "txOrigin",
+        "outputs": [
+            { "internalType": "address", "name": "_origin0", "type": "address" },
+            { "internalType": "address", "name": "_origin1", "type": "address" }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            { "internalType": "uint256", "name": "_pid", "type": "uint256" },
+            { "internalType": "uint256", "name": "_bonusEndBlock", "type": "uint256" },
+            { "internalType": "uint256", "name": "_rewardPerBlock", "type": "uint256" },
+            { "internalType": "uint256", "name": "_totalMineReward", "type": "uint256" },
+            { "internalType": "uint256", "name": "_duration", "type": "uint256" }
+        ],
+        "name": "updatePoolInfo",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "address", "name": "", "type": "address" }
+        ],
+        "name": "userInfo",
+        "outputs": [
+            { "internalType": "uint256", "name": "amount", "type": "uint256" },
+            { "internalType": "uint256", "name": "rewardDebt", "type": "uint256" },
+            { "internalType": "uint256", "name": "extRewardDebt", "type": "uint256" }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+        "name": "whiteListLpUserInfo",
+        "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "name": "whiteListRewardIncInfo",
+        "outputs": [
+            { "internalType": "uint256", "name": "amount", "type": "uint256" },
+            { "internalType": "uint256", "name": "incPercent", "type": "uint256" }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "whiteListfloorLimit",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            { "internalType": "uint256", "name": "_pid", "type": "uint256" },
+            { "internalType": "uint256", "name": "_amount", "type": "uint256" }
+        ],
+        "name": "withdraw",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+]

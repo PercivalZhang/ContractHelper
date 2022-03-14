@@ -3,7 +3,6 @@ import { LoggerFactory } from '../../library/LoggerFactory';
 import { NetworkType } from '../../library/web3.factory';
 import { SwissKnife } from '../../library/swiss.knife';
 import { MasterChefHelper } from '../../library/master.chef';
-import { SyrupChefHelper } from '../../library/syrup.chef';
 import BigNumber from 'bignumber.js';
 
 const Config = {

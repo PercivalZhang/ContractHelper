@@ -1680,6 +1680,21 @@
         },
         "0x026187bdbc6b751003517bcb30ac7817d5b766f8": {
             "symbol": "H2O",
+            "decimals": 18,
+            "address": "0x026187bdbc6b751003517bcb30ac7817d5b766f8"
+        },
+        "0x47eb6f7525c1aa999fbc9ee92715f5231eb1241d": {
+            "symbol": "MELT",
+            "decimals": 18,
+            "address": "0x47eb6f7525c1aa999fbc9ee92715f5231eb1241d"
+        },
+        "0xb2d69b273daa655d1ac7031615b36e23d5b302f4": {
+            "symbol": "SMELT",
+            "decimals": 18,
+            "address": "0xb2d69b273daa655d1ac7031615b36e23d5b302f4"
+        },
+        "0xf72beacc6fd334e14a7ddac25c3ce1eb8a827e10": {
+            "symbol": "DefrostH2O3CRV-f",
             "decimals": 18
         }
     }
