@@ -56,12 +56,11 @@ export class FarmingPool {
         const annualRewardMeltUSD = annualRewardMeltAmount.multipliedBy(Config.priceMelt);
         logger.info(`getFarmInfo > annual reward Melt USD: ${annualRewardMeltUSD.toNumber().toFixed(4)} USD`);
     }
-
+    // Extra H2O Reward based on SMELT staking for Boosting
     public async getExtraH20RewardInfo() {
         const h2o = await swissKnife.syncUpTokenDB(Config.H2O);
         const melt = await swissKnife.syncUpTokenDB(Config.MELT);
-        //const h2oFarmAddress = await this.farm.callReadMethod('tokenFarm');
-        //const h2oFarm = new ContractHelper(h2oFarmAddress, './Avalanche/Defrost/token.farm.json', Config.network);
+
         //获取H2O的奖励速率
         const mineInfo = await this.farm.callReadMethod('getBoostMineInfo');
         const rewardRate = h2o.readableAmount(mineInfo[0]) // 一天的H2O的释放量
@@ -83,27 +82,44 @@ export class FarmingPool {
     }
 
     public getUserReceipt = async (userAddress: string) => {
+        const h2oToken = await swissKnife.syncUpTokenDB(Config.H2O);
         const meltToken = await swissKnife.syncUpTokenDB(Config.MELT);
         const smeltToken = await swissKnife.syncUpTokenDB(Config.SMELT);
 
-        //返回用户质押的LP Token的数量，以及可领取的奖励token的数量
-        const rewardData = await this.farm.callReadMethod('getRewardInfo', userAddress);
+        //返回用户质押的LP Token的数量，以及可领取的奖励token - MELT的数量
+        const rewardData = await this.farm.callReadMethod('getRewardInfo', 0, userAddress);
         const stakedLPTBalance = rewardData[0];
-        logger.info(`farming > staked ${this.lpt.symbol}: ${this.lpt.readableAmount(stakedLPTBalance)}`);
+        logger.info(`getUserReceipt > staked LPToken - ${this.lpt.symbol}: ${this.lpt.readableAmount(stakedLPTBalance).toFixed(4)}`);
         const clamableRewards = rewardData[1];
-        const lockedRewards = rewardData[2];
-        //获取用户质押的SMelt Token的数量
-        const stakedSMeltBalance = await this.farm.callReadMethod('boostStakedFor', userAddress);
-        logger.info(`getUserReceipt > staked ${smeltToken.symbol}: ${smeltToken.readableAmount(stakedSMeltBalance)}`);
-        
+        logger.info(`getUserReceipt > claimable reward - ${meltToken.symbol}: ${meltToken.readableAmount(clamableRewards).toFixed(4)}`);
+        const lockedRewards = rewardData[2]; // 10% every 6 days
+        logger.info(`getUserReceipt > locked  reward - ${meltToken.symbol}: ${meltToken.readableAmount(lockedRewards).toFixed(4)}`);
 
+        //获取用户质押的sMELT的数量
+        const stakedSMeltBalance = await this.farm.callReadMethod('boostStakedFor', userAddress);
+        logger.info(`getUserReceipt > staked ${smeltToken.symbol} in boosting: ${smeltToken.readableAmount(stakedSMeltBalance).toFixed(4)}`);
+        let claimableBoostRewards = '0';
+        //获取用户质押sMELT产生的可领取奖励H2O的数量
+        if(new BigNumber(stakedSMeltBalance).gt(0)) {
+            claimableBoostRewards = await this.farm.callReadMethod('boostPendingReward', userAddress);
+        }
+        logger.info(`getUserReceipt > claimable reward - ${h2oToken.symbol}: ${h2oToken.readableAmount(claimableBoostRewards).toFixed(4)}`);
+        let boostingEffect = 0.0;
+        // boosted effect: requires min 1000 sMELT tokens
+        if(smeltToken.readableAmount(stakedSMeltBalance) >= 1000) {
+            //计算boosting APR因子，apr = baseAPR * （1 + boostingEffect）
+            boostingEffect = 0.03 + (smeltToken.readableAmount(stakedSMeltBalance)/1000 - 1) * 0.01
+        }
+        logger.info(`getUserReceipt > my APR boosting effect: ${boostingEffect}`);
     };
 }
 
 const main = async () => {
-    const farm = new FarmingPool(Config.farms.H203CRV)
-    await farm.getFarmInfo();
-    await farm.getExtraH20RewardInfo();
+    // const farm = new FarmingPool(Config.farms.H203CRV)
+    // await farm.getFarmInfo();
+    // await farm.getExtraH20RewardInfo();
+    // await farm.getUserReceipt('0x881897b1FC551240bA6e2CAbC7E59034Af58428a');
+    await smeltSaving.getAPRPlusAPY();
 };
 
 main().catch((e) => {

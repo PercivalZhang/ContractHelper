@@ -12,5 +12,5 @@ export const Config = {
        H203CRV: '0x40A2bf8a6091010cAE4a96e02e13D5b7157bE236' 
     },
     smeltSavings: '0x1e93b54ac156ac2fc9714b91fa10f1b65e2dafd9',
-    priceMelt: 0.354
+    priceMelt: 0.3412
 };

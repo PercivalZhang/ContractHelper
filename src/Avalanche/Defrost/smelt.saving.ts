@@ -61,4 +61,18 @@ export class SmeltSaving {
         const meltBalance = await this.vault.callReadMethod('totalStakedFor', userAddress);
         logger.info(`getUserReceipt > my staked ${meltToken.symbol}: ${meltToken.readableAmount(meltBalance)}`);
     };
+
+    public getAPRPlusAPY = async () => {
+        //每天利息率，decimal=1e27
+        const interestRate = await this.vault.callReadMethod('interestRate');
+        const interestRatePerDay = new BigNumber(interestRate).dividedBy(1e27);
+        logger.info(`getAPRPlusAPY > interest rate per day: ${interestRatePerDay.multipliedBy(100).toNumber().toFixed(2)}%`);
+        //apr= annual percentage rate
+        const apr = new BigNumber(interestRate).multipliedBy(365).dividedBy(1e27);
+        logger.info(`getAPRPlusAPY > APR: ${apr.multipliedBy(100).toNumber().toFixed(2)}%`);
+        //每天复投一次，复投周期一年，公式：APY = [1 + (APR / Number of Periods)]^(Number of Periods) - 1
+        const apy = Math.pow(apr.dividedBy(365).plus(1).toNumber(), 365) - 1;
+        logger.info(`getAPRPlusAPY > APR: ${(apy * 100).toFixed(2)}%`);
+    };
+
 }
