@@ -1,10 +1,49 @@
 [
     {
         "anonymous": false,
+        "inputs": [{ "indexed": true, "internalType": "address", "name": "implementation", "type": "address" }],
+        "name": "Upgraded",
+        "type": "event"
+    },
+    { "stateMutability": "payable", "type": "fallback" },
+    {
+        "inputs": [],
+        "name": "admin",
+        "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "implementation",
+        "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{ "internalType": "address", "name": "newImplementation", "type": "address" }],
+        "name": "upgradeTo",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "address", "name": "newImplementation", "type": "address" },
+            { "internalType": "bytes", "name": "data", "type": "bytes" }
+        ],
+        "name": "upgradeToAndCall",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+    },
+    { "stateMutability": "payable", "type": "receive" },
+    {
+        "anonymous": false,
         "inputs": [
             { "indexed": true, "internalType": "uint256", "name": "pid", "type": "uint256" },
-            { "indexed": false, "internalType": "uint256", "name": "allocPoint", "type": "uint256" },
-            { "indexed": true, "internalType": "contract IERC20", "name": "lpToken", "type": "address" },
+            { "indexed": false, "internalType": "uint256", "name": "baseAllocPoint", "type": "uint256" },
+            { "indexed": true, "internalType": "contract IAsset", "name": "lpToken", "type": "address" },
             { "indexed": true, "internalType": "contract IRewarder", "name": "rewarder", "type": "address" }
         ],
         "name": "Add",
@@ -69,7 +108,7 @@
         "anonymous": false,
         "inputs": [
             { "indexed": true, "internalType": "uint256", "name": "pid", "type": "uint256" },
-            { "indexed": false, "internalType": "uint256", "name": "allocPoint", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "baseAllocPoint", "type": "uint256" },
             { "indexed": true, "internalType": "contract IRewarder", "name": "rewarder", "type": "address" },
             { "indexed": false, "internalType": "bool", "name": "overwrite", "type": "bool" }
         ],
@@ -132,10 +171,11 @@
         "name": "Withdraw",
         "type": "event"
     },
+    { "inputs": [], "name": "acceptOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
     {
         "inputs": [
-            { "internalType": "uint256", "name": "_allocPoint", "type": "uint256" },
-            { "internalType": "contract IERC20", "name": "_lpToken", "type": "address" },
+            { "internalType": "uint256", "name": "_baseAllocPoint", "type": "uint256" },
+            { "internalType": "contract IAsset", "name": "_lpToken", "type": "address" },
             { "internalType": "contract IRewarder", "name": "_rewarder", "type": "address" }
         ],
         "name": "add",
@@ -213,6 +253,13 @@
     },
     { "inputs": [], "name": "massUpdatePools", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
     {
+        "inputs": [],
+        "name": "maxPoolLength",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
         "inputs": [{ "internalType": "uint256[]", "name": "_pids", "type": "uint256[]" }],
         "name": "migrate",
         "outputs": [],
@@ -244,6 +291,13 @@
         "stateMutability": "view",
         "type": "function"
     },
+    {
+        "inputs": [],
+        "name": "ownerCandidate",
+        "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
     { "inputs": [], "name": "pause", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
     {
         "inputs": [],
@@ -268,16 +322,24 @@
         "type": "function"
     },
     {
+        "inputs": [{ "internalType": "uint256", "name": "pid", "type": "uint256" }],
+        "name": "poolAdjustFactor",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
         "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
         "name": "poolInfo",
         "outputs": [
-            { "internalType": "contract IERC20", "name": "lpToken", "type": "address" },
-            { "internalType": "uint256", "name": "allocPoint", "type": "uint256" },
+            { "internalType": "contract IAsset", "name": "lpToken", "type": "address" },
+            { "internalType": "uint256", "name": "baseAllocPoint", "type": "uint256" },
             { "internalType": "uint256", "name": "lastRewardTimestamp", "type": "uint256" },
             { "internalType": "uint256", "name": "accPtpPerShare", "type": "uint256" },
             { "internalType": "contract IRewarder", "name": "rewarder", "type": "address" },
             { "internalType": "uint256", "name": "sumOfFactors", "type": "uint256" },
-            { "internalType": "uint256", "name": "accPtpPerFactorShare", "type": "uint256" }
+            { "internalType": "uint256", "name": "accPtpPerFactorShare", "type": "uint256" },
+            { "internalType": "uint256", "name": "adjustedAllocPoint", "type": "uint256" }
         ],
         "stateMutability": "view",
         "type": "function"
@@ -287,6 +349,13 @@
         "name": "poolLength",
         "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
         "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{ "internalType": "address", "name": "newOwner", "type": "address" }],
+        "name": "proposeOwner",
+        "outputs": [],
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -317,7 +386,7 @@
     {
         "inputs": [
             { "internalType": "uint256", "name": "_pid", "type": "uint256" },
-            { "internalType": "uint256", "name": "_allocPoint", "type": "uint256" },
+            { "internalType": "uint256", "name": "_baseAllocPoint", "type": "uint256" },
             { "internalType": "contract IRewarder", "name": "_rewarder", "type": "address" },
             { "internalType": "bool", "name": "overwrite", "type": "bool" }
         ],
@@ -327,7 +396,14 @@
         "type": "function"
     },
     {
-        "inputs": [{ "internalType": "contract IMasterPlatypus", "name": "_newMasterPlatypus", "type": "address" }],
+        "inputs": [{ "internalType": "uint256", "name": "_maxPoolLength", "type": "uint256" }],
+        "name": "setMaxPoolLength",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{ "internalType": "contract IMasterPlatypusV2", "name": "_newMasterPlatypus", "type": "address" }],
         "name": "setNewMasterPlatypus",
         "outputs": [],
         "stateMutability": "nonpayable",
@@ -349,16 +425,16 @@
     },
     {
         "inputs": [],
-        "name": "totalAllocPoint",
+        "name": "totalAdjustedAllocPoint",
         "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "inputs": [{ "internalType": "address", "name": "newOwner", "type": "address" }],
-        "name": "transferOwnership",
-        "outputs": [],
-        "stateMutability": "nonpayable",
+        "inputs": [],
+        "name": "totalBaseAllocPoint",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "view",
         "type": "function"
     },
     { "inputs": [], "name": "unpause", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
@@ -426,5 +502,14 @@
         ],
         "stateMutability": "nonpayable",
         "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "address", "name": "initialLogic", "type": "address" },
+            { "internalType": "address", "name": "initialAdmin", "type": "address" },
+            { "internalType": "bytes", "name": "_data", "type": "bytes" }
+        ],
+        "stateMutability": "payable",
+        "type": "constructor"
     }
 ]

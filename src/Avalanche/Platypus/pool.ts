@@ -9,7 +9,8 @@ import BigNumber from 'bignumber.js';
 const Config = {
     //LP挖矿
     farmChef: {
-        address: '0xb0523f9f473812fb195ee49bc7d2ab9873a98044',
+        //address: '0xb0523f9f473812fb195ee49bc7d2ab9873a98044',
+        address: '0x68c5f4374228beedfa078e77b5ed93c28a2f713e',
         methods: {
             poolLength: 'poolLength',
             userInfo: 'userInfo',
@@ -24,7 +25,7 @@ const Config = {
         },
     },
     ptp: '0x22d4002028f537599be9f666d1c4fa138522f9c8',
-    ptpPrice: 4.18,
+    ptpPrice: 4.71,
     poolManager: '0x66357dcace80431aee0a7507e2e361b7e2402370',
     priceOracle: '0x7b52f4b5c476e7afd09266c35274737cd0af746b',
     tokens: {
@@ -100,8 +101,13 @@ const getPoolAnnualPtpReward = async (pid: number, isBoosted: boolean): Promise<
     const masterChef = new ContractHelper(Config.farmChef.address, './Avalanche/platypus/master.chef.json', network);
     const ptpPerSecond = await masterChef.callReadMethod('ptpPerSec');
     const poolInfo = await masterChef.callReadMethod('poolInfo', pid);
-    const poolAllocPoint = poolInfo['allocPoint'];
-    const totalAllocPoint = await masterChef.callReadMethod('totalAllocPoint');
+    
+    const poolAllocPoint = poolInfo['adjustedAllocPoint'];
+    logger.info(`getPoolAnnualPtpReward > pool[${pid}] allocPoint: ${poolAllocPoint}`);
+
+    const totalAllocPoint = await masterChef.callReadMethod('totalAdjustedAllocPoint');
+    logger.info(`getPoolAnnualPtpReward > total allocPoint: ${totalAllocPoint}`);
+
     const dialutingRepartition = await masterChef.callReadMethod('dialutingRepartition');
     const nonDialutingRepartition = await masterChef.callReadMethod('nonDialutingRepartition');
 
@@ -113,6 +119,7 @@ const getPoolAnnualPtpReward = async (pid: number, isBoosted: boolean): Promise<
         repartition = nonDialutingRepartition; //boosted奖励的占比份额
     }
     let totalAnnualPtp = poolAnnualPtpReward.multipliedBy(repartition).dividedBy(1000);
+
     return ptpToken.readableAmountFromBN(totalAnnualPtp);
 };
 /**
@@ -128,18 +135,24 @@ const getPoolBaseAPY = async (pid: number) => {
     const poolInfo = await masterChef.callReadMethod('poolInfo', pid);
     const assetTokenAddress = poolInfo['lpToken'];
     const assetToken = await swissKnife.syncUpTokenDB(assetTokenAddress);
+    logger.info(`getPoolBaseAPY > asset token - ${assetToken.symbol}: ${assetToken.address}`);
+
     const assetTokenHelper = new ContractHelper(assetTokenAddress, './Avalanche/platypus/lp.token.json', network);
     const totalStakedAsset = await assetTokenHelper.callReadMethod('balanceOf', Config.farmChef.address);
+    logger.info(`getPoolBaseAPY > total staked asset - ${assetToken.symbol}: ${assetToken.readableAmount(totalStakedAsset)}`);
 
     const underlyingTokenAddress = await assetTokenHelper.callReadMethod('underlyingToken');
     const underlyingToken = await swissKnife.syncUpTokenDB(underlyingTokenAddress);
     const priceAsset = await priceOracle.callReadMethod('getAssetPrice', underlyingTokenAddress);
+    logger.info(`getPoolBaseAPY > asset - ${assetToken.symbol} price: ${priceAsset}`);
 
     const poolTAG = `pool[${pid}] - ${underlyingToken.symbol}`;
     const poolStakedTVLUSD = new BigNumber(priceAsset)
         .multipliedBy(totalStakedAsset)
         .dividedBy(1e8)
         .dividedBy(Math.pow(10, assetToken.decimals));
+
+    logger.info(`getPoolBaseAPY > PTP price: ${Config.ptpPrice}`);    
     const poolAnnualRewardUSD = new BigNumber(poolAnnualReward).multipliedBy(Config.ptpPrice);
 
     const apr = poolAnnualRewardUSD.dividedBy(poolStakedTVLUSD);

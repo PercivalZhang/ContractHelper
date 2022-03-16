@@ -149,7 +149,8 @@ export class MasterChefHelper {
         return totalStakedLPT;
     }
     public async getAPY(pid: number, poolTotalUSD: BigNumber, annualRewardUSD: BigNumber): Promise<any> {
-        const totalAllocPoint = await this.chef.callReadMethod(this.chefMetadata.methods.totalAllocPoint);
+        //const totalAllocPoint = await this.chef.callReadMethod(this.chefMetadata.methods.totalAllocPoint);
+        const totalAllocPoint = 100;
         logger.info(`total alloc poin: ${totalAllocPoint}`);
         const poolInfo = await this.chef.callReadMethod(this.chefMetadata.methods.poolInfo, pid);
         const poolAllocPoint = poolInfo[this.chefMetadata.pool.allocPoint];
@@ -159,6 +160,11 @@ export class MasterChefHelper {
 
         const apy = annualRewardUSD.multipliedBy(poolRewardRatio).dividedBy(poolTotalUSD);
         logger.info(`pool[]: APY: ${apy.toNumber().toFixed(4)}`);
+    }
+
+    public async getRewardRate(methodName: string): Promise<string> {
+        const rewardRate = await this.chef.callReadMethod(methodName);
+        return rewardRate;
     }
 
     public async getUserPoolReceipt(pid: number, userAddress: string, callbackLPTHandler = null): Promise<PoolReceipt> {
