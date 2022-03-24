@@ -49,7 +49,12 @@ const getMasonryReceipt = async (userAddress: string) => {
 const masterChef = new MasterChefHelper(network, Config.farmChef, './Fantom/Tomb/master.chef.json');
 const main = async () => {
     // await masterChef.getFarmingReceipts('0x881897b1FC551240bA6e2CAbC7E59034Af58428a');
-    await getMasonryReceipt('0x881897b1FC551240bA6e2CAbC7E59034Af58428a');
+    // await getMasonryReceipt('0x881897b1FC551240bA6e2CAbC7E59034Af58428a');
+
+    const test = new ContractHelper('0xf60E99FB768d6D64a66ECc02a51576F3eEc6601f', './Fantom/Tomb/test.json', network);
+    const impl = await test.callReadMethod('getProxyImplementation', '0xdbd50e13bdDe1CA08682f3233Ab098B2bB8A5616');
+    console.log(impl);
+
 };
 
 main().catch((e) => {

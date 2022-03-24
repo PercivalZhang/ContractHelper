@@ -26,3 +26,6 @@ https://polygonscan.com/address/0x7A9A3395afB32F923a142dBC56467Ae5675Ce5ec#readP
 
 调用方法getSystemVotes获取所有reactor的投票，以及投票总数
 
+# Toke质押合约
+https://etherscan.io/address/0x96f98ed74639689c3a11daf38ef86e59f43417d3#readProxyContract
+

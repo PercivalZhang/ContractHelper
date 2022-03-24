@@ -115,11 +115,11 @@ export class FarmingPool {
 }
 
 const main = async () => {
-    // const farm = new FarmingPool(Config.farms.H203CRV)
-    // await farm.getFarmInfo();
+    const farm = new FarmingPool(Config.farms.H203CRV)
+    await farm.getFarmInfo();
     // await farm.getExtraH20RewardInfo();
-    // await farm.getUserReceipt('0x881897b1FC551240bA6e2CAbC7E59034Af58428a');
-    await smeltSaving.getAPRPlusAPY();
+    await farm.getUserReceipt('0x881897b1FC551240bA6e2CAbC7E59034Af58428a');
+    //await smeltSaving.getAPRPlusAPY();
 };
 
 main().catch((e) => {

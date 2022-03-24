@@ -9,7 +9,7 @@ export const Config = {
             FRAX: '0x94671a3cee8c7a12ea72602978d1bb84e920efb2',
             wormUST: '0x482258099de8de2d0bda84215864800ea7e6b03d',
             USDC: '0x04bda0cf6ad025948af830e75228ed420b0e860d', //USDC
-            gOHM: '0xe7a7d17e2177f66d035d9d50a7f48d8d8e31532d',
+            gOHM: '0x41f6a95bacf9bc43704c4a4902ba5473a8b00263',
             ALUSD: '0x7211508d283353e77b9a7ed2f22334c219ad4b4c',
             DAI: '0x0ce34f4c26ba69158bc2eb8bf513221e44fdfb75',
             FEI: '0x03dcccd17cc36ee61f9004bcfd7a85f58b2d360d',
