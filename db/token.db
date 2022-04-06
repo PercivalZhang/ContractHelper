@@ -825,6 +825,20 @@
         "0xea3d9d00de6c14bf8507f46c46c29292bbfa8d25": {
             "symbol": "kmBUSD/WBNB-LINK",
             "decimals": 18
+        },
+        "0x15d0318fddf785ac0d3ba690c0033b3bedf4c648": {
+            "symbol": "tBTCB.QUEEN",
+            "decimals": 18,
+            "address": "0x15D0318Fddf785aC0d3ba690C0033b3bedF4c648"
+        },
+        "0x80da8ca6c3dabd3a9f06ca8eeed5d61687fab7ef": {
+            "symbol": "tBTCB.ROOK",
+            "decimals": 18,
+            "address": "0x80da8Ca6c3DabD3a9f06Ca8eEed5d61687fab7ef"
+        },
+        "0x20de22029ab63cf9a7cf5feb2b737ca1ee4c82a6": {
+            "symbol": "CHESS",
+            "decimals": 18
         }
     },
     "128": {

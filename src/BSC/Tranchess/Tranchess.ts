@@ -1,6 +1,6 @@
-import { ContractHelper } from './library/contract.helper';
-import { LoggerFactory } from './library/LoggerFactory';
-import { NetworkType, Web3Factory } from './library/web3.factory';
+import { ContractHelper } from '../../library/contract.helper';
+import { LoggerFactory } from '../../library/LoggerFactory';
+import { NetworkType, Web3Factory } from '../../library/web3.factory';
 import * as Sleep from 'sleep';
 import BigNumber from 'bignumber.js';
 import * as path from 'path';

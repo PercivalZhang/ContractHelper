@@ -1,20 +1,4 @@
 # DOC
-# Fantom
-## Router
-https://ftmscan.com/address/0xaf5191b0de278c7286d6c7cc6ab6bb8a73ba2cd6#code
-
-addLiquidity
-
-## Factory
-https://ftmscan.com/address/0x9d1b1669c73b033dfe47ae5a0164ab96df25b944#readContract
-
-管理pool
-
-## LPStaking 质押挖矿 Chef
-https://ftmscan.com/address/0x224D8Fd7aB6AD4c6eb4611Ce56EF35Dec2277F03#readContract
-
-
-
 
 # Stargate BSC
 
@@ -114,7 +98,6 @@ https://bscscan.com/address/0x3052A0F6ab15b4AE1df39962d5DdEFacA86DaB47#code
 
 
 # Stargate ETH
-
 ## Router合约
 https://etherscan.io/address/0x8731d54E9D02c286767d56ac03e8037C07e01e98#code
 
@@ -127,4 +110,30 @@ Tether USD-LP (S*USDT) : https://etherscan.io/address/0x38EA452219524Bb87e18dE1C
 
 ## LP Staking Chef合约
 https://etherscan.io/address/0xB0D502E938ed5f4df2E681fE6E419ff29631d62b#readContract
+
+
+# Stargate Arbitrium
+## Router合约
+https://arbiscan.io/address/0x53bf833a5d6c4dda888f69c22c88c9f356a41614#code
+
+## Factory合约
+https://arbiscan.io/address/0x55bdb4164d28fbaf0898e0ef14a589ac09ac9970#readContract
+
+## LP Staking Chef合约
+https://arbiscan.io/address/0xea8dfee1898a7e0a59f7527f076106d7e44c2176#code
+
+
+# Stargate Fantom
+## Router合约
+https://ftmscan.com/address/0xaf5191b0de278c7286d6c7cc6ab6bb8a73ba2cd6#code
+
+addLiquidity
+
+## Factory合约
+https://ftmscan.com/address/0x9d1b1669c73b033dfe47ae5a0164ab96df25b944#readContract
+
+管理pool
+
+## LP Staking Chef合约
+https://ftmscan.com/address/0x224D8Fd7aB6AD4c6eb4611Ce56EF35Dec2277F03#readContract
 

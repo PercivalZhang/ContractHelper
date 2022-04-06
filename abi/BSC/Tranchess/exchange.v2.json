@@ -1,0 +1,739 @@
+[
+    {
+        "inputs": [
+            { "internalType": "address", "name": "fund_", "type": "address" },
+            { "internalType": "address", "name": "chessSchedule_", "type": "address" },
+            { "internalType": "address", "name": "chessController_", "type": "address" },
+            { "internalType": "address", "name": "quoteAssetAddress_", "type": "address" },
+            { "internalType": "uint256", "name": "quoteDecimals_", "type": "uint256" },
+            { "internalType": "address", "name": "votingEscrow_", "type": "address" },
+            { "internalType": "uint256", "name": "minBidAmount_", "type": "uint256" },
+            { "internalType": "uint256", "name": "minAskAmount_", "type": "uint256" },
+            { "internalType": "uint256", "name": "makerRequirement_", "type": "uint256" },
+            { "internalType": "uint256", "name": "guardedLaunchStart_", "type": "uint256" },
+            { "internalType": "uint256", "name": "guardedLaunchMinOrderAmount_", "type": "uint256" }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "maker", "type": "address" },
+            { "indexed": true, "internalType": "uint256", "name": "tranche", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "pdLevel", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "baseAmount", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "version", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "orderIndex", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "fillable", "type": "uint256" }
+        ],
+        "name": "AskOrderCanceled",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "maker", "type": "address" },
+            { "indexed": true, "internalType": "uint256", "name": "tranche", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "pdLevel", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "baseAmount", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "version", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "orderIndex", "type": "uint256" }
+        ],
+        "name": "AskOrderPlaced",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "maker", "type": "address" },
+            { "indexed": true, "internalType": "uint256", "name": "tranche", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "pdLevel", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "quoteAmount", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "version", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "orderIndex", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "fillable", "type": "uint256" }
+        ],
+        "name": "BidOrderCanceled",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "maker", "type": "address" },
+            { "indexed": true, "internalType": "uint256", "name": "tranche", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "pdLevel", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "quoteAmount", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "version", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "orderIndex", "type": "uint256" }
+        ],
+        "name": "BidOrderPlaced",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "taker", "type": "address" },
+            { "indexed": true, "internalType": "uint256", "name": "tranche", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "quoteAmount", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "version", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "lastMatchedPDLevel", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "lastMatchedOrderIndex", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "lastMatchedBaseAmount", "type": "uint256" }
+        ],
+        "name": "BuyTrade",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": false, "internalType": "uint256", "name": "tranche", "type": "uint256" },
+            { "indexed": false, "internalType": "address", "name": "account", "type": "address" },
+            { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
+        ],
+        "name": "Deposited",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "account", "type": "address" },
+            { "indexed": false, "internalType": "uint256", "name": "expiration", "type": "uint256" }
+        ],
+        "name": "MakerApplied",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "account", "type": "address" },
+            { "indexed": false, "internalType": "uint256", "name": "epoch", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "amountM", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "amountA", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "amountB", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "quoteAmount", "type": "uint256" }
+        ],
+        "name": "MakerSettled",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [{ "indexed": false, "internalType": "address", "name": "account", "type": "address" }],
+        "name": "Paused",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "previousPauser", "type": "address" },
+            { "indexed": true, "internalType": "address", "name": "newPauser", "type": "address" }
+        ],
+        "name": "PauserRoleTransferred",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "taker", "type": "address" },
+            { "indexed": true, "internalType": "uint256", "name": "tranche", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "baseAmount", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "version", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "lastMatchedPDLevel", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "lastMatchedOrderIndex", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "lastMatchedQuoteAmount", "type": "uint256" }
+        ],
+        "name": "SellTrade",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "account", "type": "address" },
+            { "indexed": false, "internalType": "uint256", "name": "epoch", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "amountM", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "amountA", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "amountB", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "quoteAmount", "type": "uint256" }
+        ],
+        "name": "TakerSettled",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [{ "indexed": false, "internalType": "address", "name": "account", "type": "address" }],
+        "name": "Unpaused",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": false, "internalType": "uint256", "name": "tranche", "type": "uint256" },
+            { "indexed": false, "internalType": "address", "name": "account", "type": "address" },
+            { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
+        ],
+        "name": "Withdrawn",
+        "type": "event"
+    },
+    { "inputs": [], "name": "applyForMaker", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+    {
+        "inputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+        ],
+        "name": "asks",
+        "outputs": [
+            { "internalType": "uint256", "name": "head", "type": "uint256" },
+            { "internalType": "uint256", "name": "tail", "type": "uint256" },
+            { "internalType": "uint256", "name": "counter", "type": "uint256" }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "uint256", "name": "tranche", "type": "uint256" },
+            { "internalType": "address", "name": "account", "type": "address" }
+        ],
+        "name": "availableBalanceOf",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+        "name": "balanceVersion",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+        ],
+        "name": "bestAsks",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+        ],
+        "name": "bestBids",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+        ],
+        "name": "bids",
+        "outputs": [
+            { "internalType": "uint256", "name": "head", "type": "uint256" },
+            { "internalType": "uint256", "name": "tail", "type": "uint256" },
+            { "internalType": "uint256", "name": "counter", "type": "uint256" }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "uint256", "name": "version", "type": "uint256" },
+            { "internalType": "uint256", "name": "maxPDLevel", "type": "uint256" },
+            { "internalType": "uint256", "name": "quoteAmount", "type": "uint256" }
+        ],
+        "name": "buyA",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "uint256", "name": "version", "type": "uint256" },
+            { "internalType": "uint256", "name": "maxPDLevel", "type": "uint256" },
+            { "internalType": "uint256", "name": "quoteAmount", "type": "uint256" }
+        ],
+        "name": "buyB",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "uint256", "name": "version", "type": "uint256" },
+            { "internalType": "uint256", "name": "maxPDLevel", "type": "uint256" },
+            { "internalType": "uint256", "name": "quoteAmount", "type": "uint256" }
+        ],
+        "name": "buyM",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "uint256", "name": "version", "type": "uint256" },
+            { "internalType": "uint256", "name": "tranche", "type": "uint256" },
+            { "internalType": "uint256", "name": "pdLevel", "type": "uint256" },
+            { "internalType": "uint256", "name": "index", "type": "uint256" }
+        ],
+        "name": "cancelAsk",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "uint256", "name": "version", "type": "uint256" },
+            { "internalType": "uint256", "name": "tranche", "type": "uint256" },
+            { "internalType": "uint256", "name": "pdLevel", "type": "uint256" },
+            { "internalType": "uint256", "name": "index", "type": "uint256" }
+        ],
+        "name": "cancelBid",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "chessController",
+        "outputs": [{ "internalType": "contract IChessController", "name": "", "type": "address" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "chessSchedule",
+        "outputs": [{ "internalType": "contract IChessSchedule", "name": "", "type": "address" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{ "internalType": "address", "name": "primaryMarket", "type": "address" }],
+        "name": "claimAndDeposit",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+        "name": "claimRewards",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+        "name": "claimableRewards",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "uint256", "name": "tranche", "type": "uint256" },
+            { "internalType": "uint256", "name": "amount", "type": "uint256" }
+        ],
+        "name": "deposit",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{ "internalType": "uint256", "name": "timestamp", "type": "uint256" }],
+        "name": "endOfEpoch",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "pure",
+        "type": "function"
+    },
+    {
+        "inputs": [{ "internalType": "uint256", "name": "timestamp", "type": "uint256" }],
+        "name": "estimateNavs",
+        "outputs": [
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "fund",
+        "outputs": [{ "internalType": "contract IFund", "name": "", "type": "address" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "uint256", "name": "version", "type": "uint256" },
+            { "internalType": "uint256", "name": "tranche", "type": "uint256" },
+            { "internalType": "uint256", "name": "pdLevel", "type": "uint256" },
+            { "internalType": "uint256", "name": "index", "type": "uint256" }
+        ],
+        "name": "getAskOrder",
+        "outputs": [
+            { "internalType": "address", "name": "maker", "type": "address" },
+            { "internalType": "uint256", "name": "amount", "type": "uint256" },
+            { "internalType": "uint256", "name": "fillable", "type": "uint256" }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "uint256", "name": "version", "type": "uint256" },
+            { "internalType": "uint256", "name": "tranche", "type": "uint256" },
+            { "internalType": "uint256", "name": "pdLevel", "type": "uint256" },
+            { "internalType": "uint256", "name": "index", "type": "uint256" }
+        ],
+        "name": "getBidOrder",
+        "outputs": [
+            { "internalType": "address", "name": "maker", "type": "address" },
+            { "internalType": "uint256", "name": "amount", "type": "uint256" },
+            { "internalType": "uint256", "name": "fillable", "type": "uint256" }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{ "internalType": "uint256", "name": "tranche", "type": "uint256" }],
+        "name": "getMakerReserveRatio",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "pure",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "guardedLaunchMinOrderAmount",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "guardedLaunchStart",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    { "inputs": [], "name": "initialize", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+    {
+        "inputs": [{ "internalType": "address", "name": "pauser_", "type": "address" }],
+        "name": "initializeV2",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+        "name": "isMaker",
+        "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "uint256", "name": "tranche", "type": "uint256" },
+            { "internalType": "address", "name": "account", "type": "address" }
+        ],
+        "name": "lockedBalanceOf",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+        "name": "makerExpiration",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "makerRequirement",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "minAskAmount",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "minBidAmount",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    { "inputs": [], "name": "pause", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+    {
+        "inputs": [],
+        "name": "paused",
+        "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "pauser",
+        "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "uint256", "name": "tranche", "type": "uint256" },
+            { "internalType": "uint256", "name": "pdLevel", "type": "uint256" },
+            { "internalType": "uint256", "name": "baseAmount", "type": "uint256" },
+            { "internalType": "uint256", "name": "version", "type": "uint256" }
+        ],
+        "name": "placeAsk",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "uint256", "name": "tranche", "type": "uint256" },
+            { "internalType": "uint256", "name": "pdLevel", "type": "uint256" },
+            { "internalType": "uint256", "name": "quoteAmount", "type": "uint256" },
+            { "internalType": "uint256", "name": "version", "type": "uint256" }
+        ],
+        "name": "placeBid",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "quoteAssetAddress",
+        "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "address", "name": "account", "type": "address" },
+            { "internalType": "uint256", "name": "targetVersion", "type": "uint256" }
+        ],
+        "name": "refreshBalance",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    { "inputs": [], "name": "renouncePauserRole", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+    {
+        "inputs": [
+            { "internalType": "uint256", "name": "version", "type": "uint256" },
+            { "internalType": "uint256", "name": "minPDLevel", "type": "uint256" },
+            { "internalType": "uint256", "name": "baseAmount", "type": "uint256" }
+        ],
+        "name": "sellA",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "uint256", "name": "version", "type": "uint256" },
+            { "internalType": "uint256", "name": "minPDLevel", "type": "uint256" },
+            { "internalType": "uint256", "name": "baseAmount", "type": "uint256" }
+        ],
+        "name": "sellB",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "uint256", "name": "version", "type": "uint256" },
+            { "internalType": "uint256", "name": "minPDLevel", "type": "uint256" },
+            { "internalType": "uint256", "name": "baseAmount", "type": "uint256" }
+        ],
+        "name": "sellM",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "address", "name": "account", "type": "address" },
+            { "internalType": "uint256", "name": "epoch", "type": "uint256" }
+        ],
+        "name": "settleMaker",
+        "outputs": [
+            { "internalType": "uint256", "name": "amountM", "type": "uint256" },
+            { "internalType": "uint256", "name": "amountA", "type": "uint256" },
+            { "internalType": "uint256", "name": "amountB", "type": "uint256" },
+            { "internalType": "uint256", "name": "quoteAmount", "type": "uint256" }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "address", "name": "account", "type": "address" },
+            { "internalType": "uint256", "name": "epoch", "type": "uint256" }
+        ],
+        "name": "settleTaker",
+        "outputs": [
+            { "internalType": "uint256", "name": "amountM", "type": "uint256" },
+            { "internalType": "uint256", "name": "amountA", "type": "uint256" },
+            { "internalType": "uint256", "name": "amountB", "type": "uint256" },
+            { "internalType": "uint256", "name": "quoteAmount", "type": "uint256" }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+        "name": "syncWithVotingEscrow",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{ "internalType": "uint256", "name": "tranche", "type": "uint256" }],
+        "name": "totalSupply",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{ "internalType": "address", "name": "newPauser", "type": "address" }],
+        "name": "transferPauserRole",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    { "inputs": [], "name": "unpause", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+    {
+        "inputs": [
+            { "internalType": "address", "name": "", "type": "address" },
+            { "internalType": "uint256", "name": "", "type": "uint256" },
+            { "internalType": "uint256", "name": "", "type": "uint256" }
+        ],
+        "name": "unsettledTrades",
+        "outputs": [
+            {
+                "components": [
+                    { "internalType": "uint256", "name": "frozenQuote", "type": "uint256" },
+                    { "internalType": "uint256", "name": "effectiveQuote", "type": "uint256" },
+                    { "internalType": "uint256", "name": "reservedBase", "type": "uint256" }
+                ],
+                "internalType": "struct UnsettledBuyTrade",
+                "name": "takerBuy",
+                "type": "tuple"
+            },
+            {
+                "components": [
+                    { "internalType": "uint256", "name": "frozenBase", "type": "uint256" },
+                    { "internalType": "uint256", "name": "effectiveBase", "type": "uint256" },
+                    { "internalType": "uint256", "name": "reservedQuote", "type": "uint256" }
+                ],
+                "internalType": "struct UnsettledSellTrade",
+                "name": "takerSell",
+                "type": "tuple"
+            },
+            {
+                "components": [
+                    { "internalType": "uint256", "name": "frozenBase", "type": "uint256" },
+                    { "internalType": "uint256", "name": "effectiveBase", "type": "uint256" },
+                    { "internalType": "uint256", "name": "reservedQuote", "type": "uint256" }
+                ],
+                "internalType": "struct UnsettledSellTrade",
+                "name": "makerBuy",
+                "type": "tuple"
+            },
+            {
+                "components": [
+                    { "internalType": "uint256", "name": "frozenQuote", "type": "uint256" },
+                    { "internalType": "uint256", "name": "effectiveQuote", "type": "uint256" },
+                    { "internalType": "uint256", "name": "reservedBase", "type": "uint256" }
+                ],
+                "internalType": "struct UnsettledBuyTrade",
+                "name": "makerSell",
+                "type": "tuple"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+        "name": "veSnapshotOf",
+        "outputs": [
+            {
+                "components": [
+                    { "internalType": "uint256", "name": "veProportion", "type": "uint256" },
+                    {
+                        "components": [
+                            { "internalType": "uint256", "name": "amount", "type": "uint256" },
+                            { "internalType": "uint256", "name": "unlockTime", "type": "uint256" }
+                        ],
+                        "internalType": "struct IVotingEscrow.LockedBalance",
+                        "name": "veLocked",
+                        "type": "tuple"
+                    }
+                ],
+                "internalType": "struct VESnapshot",
+                "name": "",
+                "type": "tuple"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "votingEscrow",
+        "outputs": [{ "internalType": "contract IVotingEscrow", "name": "", "type": "address" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "uint256", "name": "amountM", "type": "uint256" },
+            { "internalType": "uint256", "name": "amountA", "type": "uint256" },
+            { "internalType": "uint256", "name": "amountB", "type": "uint256" }
+        ],
+        "name": "weightedBalance",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "pure",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "uint256", "name": "tranche", "type": "uint256" },
+            { "internalType": "uint256", "name": "amount", "type": "uint256" }
+        ],
+        "name": "withdraw",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+        "name": "workingBalanceOf",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "workingSupply",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "view",
+        "type": "function"
+    }
+]
