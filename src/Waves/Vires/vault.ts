@@ -419,16 +419,26 @@ export class Vault {
             logger.info(`getUserInfo > use as collateral: ${useAsCollateral.value}`);
             //获取该金库的奖励情况    
             const rewardData = vaultInfo.rewardInfo;
+
             //计算提供存款可领取的奖励
-            const pendingRewardForSupply = new BigNumber(rewardData.depositRewards)
+            const keyOfAccDepositReward = this.address + '_userRewardAdj_deposit_' + userAddress;
+            const accDepositRewardData = await nodeInteraction.accountDataByKey(
+                keyOfAccDepositReward,
+                Config.rewardDistributor,
+                NodeUrl,
+            );
+            let pendingRewardForSupply = new BigNumber(rewardData.depositRewards)
                 .multipliedBy(assetTokenBalance)
-                .dividedBy(vaultInfo.totalDeposit)
-                .dividedBy(1e2);
+                .dividedBy(vaultInfo.totalDeposit);
+            if(accDepositRewardData) {   
+                pendingRewardForSupply = new BigNumber(accDepositRewardData.value.toString()).plus(pendingRewardForSupply);
+            }           
             logger.info(
                 `getVaultInfo > pending reward for supply: ${this.rewardToken
                     .readableAmountFromBN(pendingRewardForSupply)
                     .toFixed(7)} ${this.rewardToken.symbol}`,
-            );    
+            );   
+
             //获取当前vault中的借款数量
             const keyOfDebt = userAddress + '_debt';
             const debtAssetBalanceItem = await nodeInteraction.accountDataByKey(keyOfDebt, this.address, NodeUrl);
@@ -437,10 +447,18 @@ export class Vault {
                 const debtAssetBalance = assetToken.readableAmount(debtAssetBalanceItem.value.toString());
                 logger.info(`getUserInfo > debt asset balance: ${debtAssetBalance.toFixed(4)} ${assetToken.symbol}`);
                 //计算借款产生的可领取奖励
-                const pendingRewardForBorrow = new BigNumber(rewardData.borrowRewards)
+                const keyOfAccBorrowReward = this.address + '_userRewardAdj_borrow_' + userAddress;
+                const accBorrowRewardData = await nodeInteraction.accountDataByKey(
+                    keyOfAccBorrowReward,
+                    Config.rewardDistributor,
+                    NodeUrl,
+                );
+                let pendingRewardForBorrow = new BigNumber(rewardData.borrowRewards)
                 .multipliedBy(debtAssetBalance)
-                .dividedBy(vaultInfo.totalBorrow)
-                .dividedBy(1e2);
+                .dividedBy(vaultInfo.totalBorrow);
+                if(accBorrowRewardData) {   
+                    pendingRewardForBorrow = new BigNumber(accBorrowRewardData.value.toString()).plus(pendingRewardForBorrow);
+                } 
                 logger.info(
                     `getVaultInfo > pending reward for borrow: ${this.rewardToken
                         .readableAmountFromBN(pendingRewardForBorrow)
