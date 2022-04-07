@@ -838,6 +838,11 @@
         },
         "0x20de22029ab63cf9a7cf5feb2b737ca1ee4c82a6": {
             "symbol": "CHESS",
+            "decimals": 18,
+            "address": "0x20de22029ab63cf9a7cf5feb2b737ca1ee4c82a6"
+        },
+        "0x95a2bbcd64e2859d40e2ad1b5ba49dc0e1abc6c2": {
+            "symbol": "veCHESS",
             "decimals": 18
         }
     },

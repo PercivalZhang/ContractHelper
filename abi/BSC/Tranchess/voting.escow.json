@@ -2,9 +2,6 @@
     {
         "inputs": [
             { "internalType": "address", "name": "token_", "type": "address" },
-            { "internalType": "address", "name": "addressWhitelist_", "type": "address" },
-            { "internalType": "string", "name": "name_", "type": "string" },
-            { "internalType": "string", "name": "symbol_", "type": "string" },
             { "internalType": "uint256", "name": "maxTime_", "type": "uint256" }
         ],
         "stateMutability": "nonpayable",
@@ -40,11 +37,32 @@
     },
     {
         "anonymous": false,
+        "inputs": [{ "indexed": false, "internalType": "address", "name": "account", "type": "address" }],
+        "name": "Paused",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "previousPauser", "type": "address" },
+            { "indexed": true, "internalType": "address", "name": "newPauser", "type": "address" }
+        ],
+        "name": "PauserRoleTransferred",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
         "inputs": [
             { "indexed": true, "internalType": "address", "name": "account", "type": "address" },
             { "indexed": false, "internalType": "uint256", "name": "newUnlockTime", "type": "uint256" }
         ],
         "name": "UnlockTimeIncreased",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [{ "indexed": false, "internalType": "address", "name": "account", "type": "address" }],
+        "name": "Unpaused",
         "type": "event"
     },
     {
@@ -80,16 +98,36 @@
         "stateMutability": "view",
         "type": "function"
     },
+    { "inputs": [], "name": "calibrateSupply", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+    {
+        "inputs": [],
+        "name": "callback",
+        "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "checkpointWeek",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
     {
         "inputs": [
             { "internalType": "uint256", "name": "amount", "type": "uint256" },
-            { "internalType": "uint256", "name": "unlockTime", "type": "uint256" },
-            { "internalType": "address", "name": "", "type": "address" },
-            { "internalType": "bytes", "name": "", "type": "bytes" }
+            { "internalType": "uint256", "name": "unlockTime", "type": "uint256" }
         ],
         "name": "createLock",
         "outputs": [],
         "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "decimals",
+        "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }],
+        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -122,9 +160,7 @@
     {
         "inputs": [
             { "internalType": "address", "name": "account", "type": "address" },
-            { "internalType": "uint256", "name": "amount", "type": "uint256" },
-            { "internalType": "address", "name": "", "type": "address" },
-            { "internalType": "bytes", "name": "", "type": "bytes" }
+            { "internalType": "uint256", "name": "amount", "type": "uint256" }
         ],
         "name": "increaseAmount",
         "outputs": [],
@@ -132,19 +168,30 @@
         "type": "function"
     },
     {
-        "inputs": [
-            { "internalType": "uint256", "name": "unlockTime", "type": "uint256" },
-            { "internalType": "address", "name": "", "type": "address" },
-            { "internalType": "bytes", "name": "", "type": "bytes" }
-        ],
+        "inputs": [{ "internalType": "uint256", "name": "unlockTime", "type": "uint256" }],
         "name": "increaseUnlockTime",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
     },
     {
-        "inputs": [{ "internalType": "uint256", "name": "maxTimeAllowed_", "type": "uint256" }],
+        "inputs": [
+            { "internalType": "string", "name": "name_", "type": "string" },
+            { "internalType": "string", "name": "symbol_", "type": "string" },
+            { "internalType": "uint256", "name": "maxTimeAllowed_", "type": "uint256" }
+        ],
         "name": "initialize",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            { "internalType": "address", "name": "pauser_", "type": "address" },
+            { "internalType": "string", "name": "name_", "type": "string" },
+            { "internalType": "string", "name": "symbol_", "type": "string" }
+        ],
+        "name": "initializeV2",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -182,12 +229,35 @@
     },
     {
         "inputs": [],
+        "name": "nextWeekSupply",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
         "name": "owner",
         "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
         "stateMutability": "view",
         "type": "function"
     },
+    { "inputs": [], "name": "pause", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+    {
+        "inputs": [],
+        "name": "paused",
+        "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "pauser",
+        "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
     { "inputs": [], "name": "renounceOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+    { "inputs": [], "name": "renouncePauserRole", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
     {
         "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
         "name": "scheduledUnlock",
@@ -206,6 +276,13 @@
         "inputs": [],
         "name": "token",
         "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "totalLocked",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
         "stateMutability": "view",
         "type": "function"
     },
@@ -231,8 +308,23 @@
         "type": "function"
     },
     {
+        "inputs": [{ "internalType": "address", "name": "newPauser", "type": "address" }],
+        "name": "transferPauserRole",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    { "inputs": [], "name": "unpause", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+    {
         "inputs": [{ "internalType": "address", "name": "newWhitelist", "type": "address" }],
         "name": "updateAddressWhitelist",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{ "internalType": "address", "name": "newCallback", "type": "address" }],
+        "name": "updateCallback",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -242,6 +334,13 @@
         "name": "updateMaxTimeAllowed",
         "outputs": [],
         "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "name": "veSupplyPerWeek",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "stateMutability": "view",
         "type": "function"
     },
     { "inputs": [], "name": "withdraw", "outputs": [], "stateMutability": "nonpayable", "type": "function" }

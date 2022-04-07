@@ -103,6 +103,7 @@ export class ContractHelper {
             return ret;
         } catch (e) {
             if (!this.hideExceptionOutput) {
+                logger.error(`methodName: ${methodName}`);
                 logger.error(`callReadMethod> ${e.message}`);
             }
             return false;
@@ -117,6 +118,7 @@ export class ContractHelper {
             return ret;
         } catch (e) {
             if (!this.hideExceptionOutput) {
+                logger.error(`methodName: ${methodName}`);
                 logger.error(`callReadMethod> ${e.message}`);
             }
             return false;

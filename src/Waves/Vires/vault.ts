@@ -420,7 +420,21 @@ export class Vault {
             //获取该金库的奖励情况    
             const rewardData = vaultInfo.rewardInfo;
 
-            //计算提供存款可领取的奖励
+            
+            /*
+            * 计算提供存款可领取的奖励
+            * accReward - claimedReward
+            */
+            let pendingRewards = new BigNumber(0);
+            //获取已经领取的奖励数量    
+            const keyOfClaimedReward = this.address + '_claimed_' + userAddress;
+            const claimedRewardData = await nodeInteraction.accountDataByKey(
+                keyOfClaimedReward,
+                Config.rewardDistributor,
+                NodeUrl,
+            );
+            pendingRewards = pendingRewards.minus(claimedRewardData.value.toString());
+
             const keyOfAccDepositReward = this.address + '_userRewardAdj_deposit_' + userAddress;
             const accDepositRewardData = await nodeInteraction.accountDataByKey(
                 keyOfAccDepositReward,
@@ -432,13 +446,13 @@ export class Vault {
                 .dividedBy(vaultInfo.totalDeposit);
             if(accDepositRewardData) {   
                 pendingRewardForSupply = new BigNumber(accDepositRewardData.value.toString()).plus(pendingRewardForSupply);
-            }           
+            }  
+            pendingRewards = pendingRewards.plus(pendingRewardForSupply);         
             logger.info(
-                `getVaultInfo > pending reward for supply: ${this.rewardToken
+                `getVaultInfo > accumulated reward for supply: ${this.rewardToken
                     .readableAmountFromBN(pendingRewardForSupply)
                     .toFixed(7)} ${this.rewardToken.symbol}`,
             );   
-
             //获取当前vault中的借款数量
             const keyOfDebt = userAddress + '_debt';
             const debtAssetBalanceItem = await nodeInteraction.accountDataByKey(keyOfDebt, this.address, NodeUrl);
@@ -459,12 +473,18 @@ export class Vault {
                 if(accBorrowRewardData) {   
                     pendingRewardForBorrow = new BigNumber(accBorrowRewardData.value.toString()).plus(pendingRewardForBorrow);
                 } 
+                pendingRewards = pendingRewards.plus(pendingRewardForBorrow);
                 logger.info(
-                    `getVaultInfo > pending reward for borrow: ${this.rewardToken
+                    `getVaultInfo > accumulated reward for borrow: ${this.rewardToken
                         .readableAmountFromBN(pendingRewardForBorrow)
                         .toFixed(7)} ${this.rewardToken.symbol}`,
                 );  
-            }     
+            }  
+            logger.info(
+                `getVaultInfo > pending rewards: ${this.rewardToken
+                    .readableAmountFromBN(pendingRewards)
+                    .toFixed(7)} ${this.rewardToken.symbol}`,
+            );   
         } 
     }
 }
