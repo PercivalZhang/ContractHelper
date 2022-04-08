@@ -67,7 +67,7 @@ export class VotingEscow {
         // time weighted balanced: (lockedBalance.amount.mul(lockedBalance.unlockTime - timestamp)) / maxTime;
         const veChessBalance = await this.itself.callReadMethod(
             'balanceOf',
-            '0xD2050719eA37325BdB6c18a85F6c442221811FAC',
+            userAddress,
         );
         logger.info(`getUserInfo > Token - ${veChessToken.symbol} balance: ${veChessToken.readableAmount(veChessBalance).toFixed(4)}`);
     }

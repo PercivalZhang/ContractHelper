@@ -3,13 +3,9 @@ import BigNumber from 'bignumber.js';
 import { ContractHelper } from '../../library/contract.helper';
 import { SwissKnife } from '../../library/swiss.knife';
 import { Config } from './Config';
+import { FundCategroy } from './data.type';
 import { TWAPOracle } from './twap.oracle';
 
-export enum FundCategroy {
-    BTCFund,
-    ETHFund,
-    BNBFund,
-}
 
 const logger = LoggerFactory.getInstance().getLogger('ExchangePlusStake');
 const swissKnife = new SwissKnife(Config.network);
@@ -125,17 +121,17 @@ export class TrancheChef {
 
     public async getPrices(): Promise<string[]> {
         const lastTimestamp = await this.twapOracle.getLastTimestamp();
-        logger.debug(`getPrice > last timestamp from oracle: ${lastTimestamp}`);
-        if (Number.parseInt(lastTimestamp) > this.timestamp) {
-            this.timestamp = Number.parseInt(lastTimestamp);
-            const priceData = await this.chef.callReadMethod('estimateNavs', this.timestamp);
-            logger.debug(`getPrice > detected new last timestamp`);
-            logger.debug(`getPrice > update prices from new last timestamp`);
-            this.prices[0] = priceData['0'];
-            this.prices[1] = priceData['1'];
-            this.prices[2] = priceData['2'];
-        }
-        logger.debug(`getPrice > last timestamp: ${this.timestamp}`);
+        logger.info(`chef: ${this.chef.address}`);
+        logger.info(`getPrice > last timestamp from oracle: ${lastTimestamp}`);
+       
+        const priceData = await this.chef.callReadMethod('estimateNavs', lastTimestamp);
+       
+        console.log(priceData)
+        this.prices[0] = priceData['0'];
+        this.prices[1] = priceData['1'];
+        this.prices[2] = priceData['2'];
+        
+       
         return this.prices;
     }
 
@@ -158,14 +154,14 @@ export class TrancheChef {
     }
 }
 
-const main = async () => {
-    const trancheChef = TrancheChef.getInstance(FundCategroy.BTCFund);
-    await trancheChef.getPrices();
-    await trancheChef.getFundWeight();
-    await trancheChef.getUserInfo('0xD2050719eA37325BdB6c18a85F6c442221811FAC');
-    await trancheChef.getTrancheInfo(0);
-};
+// const main = async () => {
+//     const trancheChef = TrancheChef.getInstance(FundCategroy.BTCFund);
+//     await trancheChef.getPrices();
+//     await trancheChef.getFundWeight();
+//     await trancheChef.getUserInfo('0xD2050719eA37325BdB6c18a85F6c442221811FAC');
+//     await trancheChef.getTrancheInfo(0);
+// };
 
-main().catch((e) => {
-    logger.error(e.message);
-});
+// main().catch((e) => {
+//     logger.error(e.message);
+// });

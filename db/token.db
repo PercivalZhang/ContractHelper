@@ -844,6 +844,24 @@
         "0x95a2bbcd64e2859d40e2ad1b5ba49dc0e1abc6c2": {
             "symbol": "veCHESS",
             "decimals": 18
+        },
+        "0x8cc456b384c8ad06bf430f4f130aa63ef0dc6f85": {
+            "symbol": "tBTCB.BISHOP",
+            "decimals": 18
+        },
+        "0xf8d829c3eb05c078e7911efb3303c7899c8d2c3a": {
+            "symbol": "nQUEEN+",
+            "decimals": 18,
+            "address": "0xF8D829C3eB05C078e7911EfB3303C7899c8D2C3A"
+        },
+        "0x9fd554cdb6e77d9aa048a37dcccee41fffad1a90": {
+            "symbol": "nBISHOP+",
+            "decimals": 18,
+            "address": "0x9Fd554CDb6e77D9Aa048A37DCccee41FfFad1a90"
+        },
+        "0x3a632b713637d837ff3b0e34d093a21da1ef9fb1": {
+            "symbol": "nROOK+",
+            "decimals": 18
         }
     },
     "128": {

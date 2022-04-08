@@ -425,7 +425,6 @@ export class Vault {
             * 计算提供存款可领取的奖励
             * accReward - claimedReward
             */
-            let pendingRewards = new BigNumber(0);
             //获取已经领取的奖励数量    
             const keyOfClaimedReward = this.address + '_claimed_' + userAddress;
             const claimedRewardData = await nodeInteraction.accountDataByKey(
@@ -433,7 +432,8 @@ export class Vault {
                 Config.rewardDistributor,
                 NodeUrl,
             );
-            pendingRewards = pendingRewards.minus(claimedRewardData.value.toString());
+            const claimedRewards = new BigNumber(claimedRewardData.value.toString());
+            //pendingRewards = pendingRewards.minus(claimedRewardData.value.toString());
 
             const keyOfAccDepositReward = this.address + '_userRewardAdj_deposit_' + userAddress;
             const accDepositRewardData = await nodeInteraction.accountDataByKey(
@@ -441,18 +441,19 @@ export class Vault {
                 Config.rewardDistributor,
                 NodeUrl,
             );
-            let pendingRewardForSupply = new BigNumber(rewardData.depositRewards)
+            let accRewardForSupply = new BigNumber(rewardData.depositRewards)
                 .multipliedBy(assetTokenBalance)
                 .dividedBy(vaultInfo.totalDeposit);
             if(accDepositRewardData) {   
-                pendingRewardForSupply = new BigNumber(accDepositRewardData.value.toString()).plus(pendingRewardForSupply);
+                accRewardForSupply = accRewardForSupply.plus(accDepositRewardData.value.toString());
             }  
-            pendingRewards = pendingRewards.plus(pendingRewardForSupply);         
+                  
             logger.info(
                 `getVaultInfo > accumulated reward for supply: ${this.rewardToken
-                    .readableAmountFromBN(pendingRewardForSupply)
+                    .readableAmountFromBN(accRewardForSupply)
                     .toFixed(7)} ${this.rewardToken.symbol}`,
-            );   
+            ); 
+            let accRewardForBorrow = new BigNumber(0);  
             //获取当前vault中的借款数量
             const keyOfDebt = userAddress + '_debt';
             const debtAssetBalanceItem = await nodeInteraction.accountDataByKey(keyOfDebt, this.address, NodeUrl);
@@ -467,24 +468,30 @@ export class Vault {
                     Config.rewardDistributor,
                     NodeUrl,
                 );
-                let pendingRewardForBorrow = new BigNumber(rewardData.borrowRewards)
+                accRewardForBorrow = new BigNumber(rewardData.borrowRewards)
                 .multipliedBy(debtAssetBalance)
                 .dividedBy(vaultInfo.totalBorrow);
                 if(accBorrowRewardData) {   
-                    pendingRewardForBorrow = new BigNumber(accBorrowRewardData.value.toString()).plus(pendingRewardForBorrow);
+                    accRewardForBorrow = accRewardForBorrow.plus(accBorrowRewardData.value.toString());
                 } 
-                pendingRewards = pendingRewards.plus(pendingRewardForBorrow);
                 logger.info(
                     `getVaultInfo > accumulated reward for borrow: ${this.rewardToken
-                        .readableAmountFromBN(pendingRewardForBorrow)
+                        .readableAmountFromBN(accRewardForBorrow)
                         .toFixed(7)} ${this.rewardToken.symbol}`,
                 );  
             }  
+            const totalAccRewards = BigNumber.max(0, accRewardForSupply.plus(accRewardForBorrow));
+            const availableRewards = BigNumber.max(0, totalAccRewards.minus(claimedRewards));
             logger.info(
-                `getVaultInfo > pending rewards: ${this.rewardToken
-                    .readableAmountFromBN(pendingRewards)
-                    .toFixed(7)} ${this.rewardToken.symbol}`,
-            );   
+                `getVaultInfo > total accumulated rewards: ${this.rewardToken
+                    .readableAmountFromBN(totalAccRewards)
+                    .toFixed(10)} ${this.rewardToken.symbol}`,
+            );
+            logger.info(
+                `getVaultInfo > available rewards: ${this.rewardToken
+                    .readableAmountFromBN(availableRewards)
+                    .toFixed(10)} ${this.rewardToken.symbol}`,
+            );
         } 
     }
 }
