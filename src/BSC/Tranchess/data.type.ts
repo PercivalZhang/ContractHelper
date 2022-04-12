@@ -36,7 +36,9 @@ export type ExchangeInfo = {
         workingBalance: string,
         veSnapshot: {
             veProportion: string,
+            veChessAmount: string,
             veLocked: {
+                token: ERC20Token,
                 amount: string,
                 unlockTime: string
             }
@@ -70,11 +72,22 @@ export type APRInfo = {
         min: string,
         max: string
     }
+    boostedFactor: number
 }
 
 export type GovernanceInfo = {
     chessTotalSupply: TokenInfo,
     chessRate: string,
+    nextWeekChessRate: string,
+    votingEscrow: {
+        totalLocked: string,
+        totalSupply: string,
+        tradingWeekTotalSupply: string,
+        account: {
+            amount: string,
+            unlockTime: string
+        }
+    }
 }
 
 export type ProtocalDataInfo = {

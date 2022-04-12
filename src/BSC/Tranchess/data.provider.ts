@@ -3,10 +3,9 @@ import { SwissKnife } from '../../library/swiss.knife';
 import { Config } from './Config';
 import BigNumber from 'bignumber.js';
 import { ethers, Contract } from 'ethers';
+import moment from 'moment';
 import { FundCategroy, ExchangeInfo, ProtocalDataInfo, FundInfo, GovernanceInfo, APRInfo } from './data.type';
 import { TrancheChef } from './tranche.chef';
-import { ContractHelper } from '../../library/contract.helper';
-import { multiply } from '@solendprotocol/solend-sdk/dist/examples/common';
 
 const logger = LoggerFactory.getInstance().getLogger('DataProviderHelper');
 const swissKnife = new SwissKnife(Config.network);
@@ -231,6 +230,7 @@ export class DataProviderHelper {
             userAddress,
             0,
         );
+
         const exchangeInfo: ExchangeInfo = {
             totalDeposited: {
                 tokenM: {
@@ -283,7 +283,9 @@ export class DataProviderHelper {
                 workingBalance: '',
                 veSnapshot: {
                     veProportion: '',
+                    veChessAmount: '',
                     veLocked: {
+                        token: undefined,
                         amount: '',
                         unlockTime: '',
                     },
@@ -345,9 +347,14 @@ export class DataProviderHelper {
             'veProportion'
         ].toString();
         exchangeInfo.account.veSnapshot.veLocked = {
+            token: chessToken,
             amount: data['exchange']['account']['veSnapshot']['veLocked']['amount'].toString(),
             unlockTime: data['exchange']['account']['veSnapshot']['veLocked']['unlockTime'].toString(),
         };
+        exchangeInfo.account.veSnapshot.veChessAmount = this.getVotingPowerAtTimestamp({
+            lockedChessAmount: exchangeInfo.account.veSnapshot.veLocked.amount,
+            unlockTimestamp: Number.parseInt(exchangeInfo.account.veSnapshot.veLocked.unlockTime) * 1000,
+        });
 
         exchangeInfo.account.isMaker = data['exchange']['account']['isMaker'];
         exchangeInfo.account.chessRewards = {
@@ -369,6 +376,16 @@ export class DataProviderHelper {
                 balance: data['governance']['chessTotalSupply'].toString(),
             },
             chessRate: data['governance']['chessRate'].toString(),
+            nextWeekChessRate: data['governance']['nextWeekChessRate'].toString(),
+            votingEscrow: {
+                totalSupply: data['governance']['votingEscrow']['totalSupply'].toString(),
+                totalLocked: data['governance']['votingEscrow']['totalLocked'].toString(),
+                tradingWeekTotalSupply: data['governance']['votingEscrow']['tradingWeekTotalSupply'].toString(),
+                account: {
+                    amount: data['governance']['votingEscrow']['account']['amount'].toString(),
+                    unlockTime: data['governance']['votingEscrow']['account']['unlockTime'].toString(),
+                },
+            },
         };
         const prices = await chef.getPrices();
 
@@ -404,7 +421,18 @@ export class DataProviderHelper {
             .dividedBy(Config.rewardWeight.M);
         const maxAPRA = aprA.multipliedBy(3);
         logger.info(`Tranche A - Bishop apr: ${aprA.toNumber().toFixed(4)} ~ ${maxAPRA.toNumber().toFixed(4)}`);
-        const aprInfo : APRInfo = {
+
+        const boostedFactor = this.getBoostingFactorByVeProportion({
+            weightedSupply: exchangeInfo.weightedSupply,
+            workingSupply: exchangeInfo.workingSupply,
+            mAmount: exchangeInfo.account.available.tokenM.balance,
+            aAmount: exchangeInfo.account.available.tokenA.balance,
+            bAmount: exchangeInfo.account.available.tokenB.balance,
+            workingBalance: exchangeInfo.account.workingBalance,
+            veProportion: new BigNumber(exchangeInfo.account.veSnapshot.veProportion).dividedBy(1e18).toNumber(),
+        });
+
+        const aprInfo: APRInfo = {
             tokenM: {
                 token: tokenM,
                 min: aprM.toNumber().toFixed(4),
@@ -419,9 +447,9 @@ export class DataProviderHelper {
                 token: tokenB,
                 min: aprB.toNumber().toFixed(4),
                 max: maxAPRB.toNumber().toFixed(4),
-            }
-        }
-        
+            },
+            boostedFactor: Number.parseFloat(boostedFactor),
+        };
 
         return {
             fund: fundInfo,
@@ -430,14 +458,137 @@ export class DataProviderHelper {
             governance: governInfo,
         };
     }
+
+    public getWeightedBalance = ({ mAmount = '', aAmount = '', bAmount = '' }): string => {
+        const weightedBalance = new BigNumber(mAmount || 0)
+            .times(Config.rewardWeight.M)
+            .plus(new BigNumber(aAmount || 0).times(Config.rewardWeight.A))
+            .plus(new BigNumber(bAmount || 0).times(Config.rewardWeight.B))
+            .div(Config.rewardWeight.M);
+        return weightedBalance.toString();
+    };
+
+    public getWorkingBalance = ({
+        weightedSupply = '',
+        mAmount = '',
+        aAmount = '',
+        bAmount = '',
+        veProportion = 0,
+    }) => {
+        const result = {
+            workingAB: null,
+            workingM: null,
+            total: null,
+        };
+        const boostingPower = new BigNumber(weightedSupply || 0).times(veProportion);
+        const weightedM = this.getWeightedBalance({
+            mAmount,
+            aAmount: '0',
+            bAmount: '0',
+        });
+        const weightedAB = this.getWeightedBalance({
+            mAmount: '0',
+            aAmount,
+            bAmount,
+        });
+        const workingAB = BigNumber.min(
+            new BigNumber(weightedAB).plus(boostingPower.times(new BigNumber(3).minus(1))),
+            new BigNumber(weightedAB).times(3),
+        );
+
+        const workingM = BigNumber.min(
+            new BigNumber(weightedM).plus(
+                BigNumber.min(BigNumber.max(0, boostingPower.minus(weightedAB)), boostingPower.div(2)).times(
+                    new BigNumber(3).minus(1),
+                ),
+            ),
+            new BigNumber(weightedM).times(3),
+        );
+        result.workingAB = workingAB.toString();
+        result.workingM = workingM.toString();
+        result.total = workingAB.plus(workingM).toString();
+        return result;
+    };
+
+    public getBoostingFactor = ({
+        workingSupply = '',
+        mAmount = '',
+        aAmount = '',
+        bAmount = '',
+        workingBalance = '',
+    }) => {
+        const weightedBalance = this.getWeightedBalance({ mAmount, aAmount, bAmount });
+        let boostingFactor = new BigNumber(1);
+        if (Number(workingSupply) > 0 && Number(workingBalance) > 0 && Number(weightedBalance) > 0) {
+            boostingFactor = new BigNumber(workingBalance)
+                .div(workingSupply)
+                .div(
+                    new BigNumber(weightedBalance).div(
+                        new BigNumber(workingSupply).minus(workingBalance).plus(weightedBalance),
+                    ),
+                );
+        }
+        return boostingFactor.toString();
+    };
+
+    public getBoostingFactorByVeProportion = ({
+        weightedSupply = '',
+        workingSupply = '',
+        mAmount = '',
+        aAmount = '',
+        bAmount = '',
+        workingBalance = '',
+        veProportion = 0,
+    }) => {
+        const newWorkingBalance = this.getWorkingBalance({ weightedSupply, mAmount, aAmount, bAmount, veProportion });
+        const newWorkingSupply = new BigNumber(workingSupply || 0)
+            .minus(workingBalance || 0)
+            .plus(newWorkingBalance.total || 0)
+            .toString();
+        return this.getBoostingFactor({
+            workingSupply: newWorkingSupply,
+            mAmount,
+            aAmount,
+            bAmount,
+            workingBalance: newWorkingBalance.total,
+        });
+    };
+    /**
+     * getVotingPowerAtTimestamp 获取锁定chess获得的voting power
+     * @param lockedChessAmount 锁定的chess token的数量
+     * @param unlockTimestamp   解锁时间
+     * @param timestamp         时间戳
+     * @returns 
+     */
+    public getVotingPowerAtTimestamp = ({ lockedChessAmount = '', unlockTimestamp = 0, timestamp = 0 }) => {
+        const atMoment = timestamp == 0 ? moment().unix() : moment(timestamp).unix()
+        const timeDiffInSecond = moment(unlockTimestamp).unix() - atMoment;
+        logger.info(`getVotingPowerAtTimestamp > timeDiffInSecond : ${timeDiffInSecond}`)
+        const votingPower = new BigNumber(lockedChessAmount)
+            .multipliedBy(Math.max(timeDiffInSecond, 0))
+            .dividedBy(Config.VOTING_ESCORW_MAX_TIME);
+            logger.info(`getVotingPowerAtTimestamp > votingPower : ${votingPower}`)    
+        return votingPower.toNumber().toFixed(4);
+    };
 }
 
-const userAddress = '0xD2050719eA37325BdB6c18a85F6c442221811FAC';
+// const userAddress = '0xD2050719eA37325BdB6c18a85F6c442221811FAC';
+const userAddress = '0x881897b1FC551240bA6e2CAbC7E59034Af58428a';
 const dataProvider = DataProviderHelper.getInstance();
 
 const main = async () => {
     const data = await dataProvider.getProtocolData(FundCategroy.BNBFund, userAddress);
     console.log(JSON.stringify(data));
+
+    // const bAPR = dataProvider.getBoostingFactorByVeProportion(
+    //     data.exchange.weightedSupply,
+    //     data.exchange.workingSupply,
+    //     data.exchange.account.available.tokenM.balance,
+    //     data.exchange.account.available.tokenA.balance,
+    //     data.exchange.account.available.tokenB.balance,
+    //     data.exchange.account.workingBalance,
+    //     new BigNumber(data.exchange.account.veSnapshot.veProportion).dividedBy(1e18).toNumber());
+    // console.log(bAPR);
 };
 
 main().catch((e) => {
