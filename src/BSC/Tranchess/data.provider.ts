@@ -556,8 +556,8 @@ export class DataProviderHelper {
     /**
      * getVotingPowerAtTimestamp 获取锁定chess获得的voting power
      * @param lockedChessAmount 锁定的chess token的数量
-     * @param unlockTimestamp   解锁时间
-     * @param timestamp         时间戳
+     * @param unlockTimestamp   解锁时间 millionseconds
+     * @param timestamp         时间戳  millionseconds
      * @returns 
      */
     public getVotingPowerAtTimestamp = ({ lockedChessAmount = '', unlockTimestamp = 0, timestamp = 0 }) => {

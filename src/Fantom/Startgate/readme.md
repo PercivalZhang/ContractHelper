@@ -123,6 +123,22 @@ https://arbiscan.io/address/0x55bdb4164d28fbaf0898e0ef14a589ac09ac9970#readContr
 https://arbiscan.io/address/0xea8dfee1898a7e0a59f7527f076106d7e44c2176#code
 
 
+# Stargate Polygon
+## Router合约
+https://polygonscan.com/address/0x45a01e4e04f14f7a4a6702c74187c5f6222033cd#readContract
+
+## Factory合约
+https://polygonscan.com/address/0x808d7c71ad2ba3fa531b068a2417c63106bc0949#readContract
+
+## LP合约
+...
+
+## LP Staking Chef合约
+https://polygonscan.com/address/0x8731d54e9d02c286767d56ac03e8037c07e01e98#readContract
+
+
+
+
 # Stargate Fantom
 ## Router合约
 https://ftmscan.com/address/0xaf5191b0de278c7286d6c7cc6ab6bb8a73ba2cd6#code
