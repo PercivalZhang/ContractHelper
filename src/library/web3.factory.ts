@@ -11,6 +11,8 @@ const FANTOM = 'Https://rpc.fantom.network';
 // const BSC = 'https://bsc-dataseed1.binance.org/'
 const CRONOS = 'https://rpc.vvs.finance'; // chain id = 25
 const AVALANCHE = 'https://api.avax.network/ext/bc/C/rpc'; // chain id = 25
+
+
 export enum NetworkType {
     ETH_MAIN,
     HECO,
@@ -22,6 +24,7 @@ export enum NetworkType {
     CRONOS,
     AVALANCHE
 }
+
 
 export class Web3Factory {
     private static instance: Web3Factory;
