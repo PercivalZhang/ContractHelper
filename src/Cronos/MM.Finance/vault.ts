@@ -113,8 +113,8 @@ const main = async () => {
     // vault:0x55B5540B5C48a27FD17ebe2B9E6a06911f8aa45A usdt-usdc LP pid=6
     const vault = new Vault('0x00db5925892274f276846f25c7fe81dec3f3b769', network); //usdt-usdc
     //await vault.getVaultInfo();
-    await getRewards(6);
-    //await vault.getUserInfo('0x169b0a0af452fe66ce28fdd4090652dd67444fb4');
+    //await getRewards(6);
+    await vault.getUserInfo('0x169b0a0af452fe66ce28fdd4090652dd67444fb4');
 };
 
 main().catch((e) => {
