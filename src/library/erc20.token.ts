@@ -3,6 +3,8 @@ export class ERC20Token {
     public address: string;
     public symbol: string;
     public decimals: number;
+    id: string;
+    name: string;
 
     public constructor(address: string, symbol: string, decimals: number) {
         this.address = address;

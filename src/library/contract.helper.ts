@@ -57,17 +57,18 @@ export class ContractHelper {
             logger.debug(`callWriteMethod > input gas price: ${gasPrice} gwei`);
 
             const currentGasPrice = await this.web3.eth.getGasPrice(); // string wei
-            logger.debug(`callWriteMethod > current gas price: ${currentGasPrice} wei`);
+            logger.info(`callWriteMethod > current gas price: ${currentGasPrice} wei`);
             const currentGasPriceBN = new BigNumber(currentGasPrice);
 
             gasPrice = this.web3.utils.toWei(gasPrice, 'gwei');
             logger.debug(`callWriteMethod > input gas price: ${gasPrice} wei`);
+            
             const inputGasPriceBN = new BigNumber(gasPrice);
 
-            if (inputGasPriceBN.lte(currentGasPriceBN)) {
+            if(inputGasPriceBN.lte(currentGasPriceBN))
                 gasPrice = currentGasPrice;
-            }
-            logger.debug(`callWriteMethod > gas price: ${gasPrice} wei`);
+          
+            logger.info(`callWriteMethod > gas price: ${gasPrice} wei`);
 
             const nonce = await this.web3.eth.getTransactionCount(signer.address);
             const callData = this.contract.methods[methodName](...args).encodeABI();
@@ -103,6 +104,7 @@ export class ContractHelper {
             return ret;
         } catch (e) {
             if (!this.hideExceptionOutput) {
+                logger.error(`methodName: ${methodName}`);
                 logger.error(`callReadMethod> ${e.message}`);
             }
             return false;
@@ -117,6 +119,7 @@ export class ContractHelper {
             return ret;
         } catch (e) {
             if (!this.hideExceptionOutput) {
+                logger.error(`methodName: ${methodName}`);
                 logger.error(`callReadMethod> ${e.message}`);
             }
             return false;

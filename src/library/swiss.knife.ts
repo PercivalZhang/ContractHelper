@@ -146,4 +146,12 @@ export class SwissKnife {
     public getWeb3() {
         return this.web3;
     }
+
+    public async getBlockHeight(): Promise<number> {
+        return await this.web3.eth.getBlockNumber();
+    }
+    public async getBlockTimestamp(blockNumber: string) {
+        const block = await this.web3.eth.getBlock(blockNumber);
+        return block.timestamp
+    }
 }

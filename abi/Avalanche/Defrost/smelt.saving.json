@@ -1,0 +1,389 @@
+[
+    {
+        "inputs": [
+            { "internalType": "address", "name": "_melt", "type": "address" },
+            { "internalType": "address", "name": "_multiSignature", "type": "address" },
+            { "internalType": "address", "name": "_origin0", "type": "address" },
+            { "internalType": "address", "name": "_origin1", "type": "address" }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "recieptor", "type": "address" },
+            { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
+        ],
+        "name": "AddAsset",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "sender", "type": "address" },
+            { "indexed": false, "internalType": "address", "name": "stakeToken", "type": "address" },
+            { "indexed": false, "internalType": "int256", "name": "interestRate", "type": "int256" },
+            { "indexed": false, "internalType": "uint256", "name": "interestInterval", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "assetCeiling", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "assetFloor", "type": "uint256" }
+        ],
+        "name": "InitContract",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "previousOrigin", "type": "address" },
+            { "indexed": true, "internalType": "address", "name": "newOrigin", "type": "address" }
+        ],
+        "name": "OriginTransferred",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "previousOwner", "type": "address" },
+            { "indexed": true, "internalType": "address", "name": "newOwner", "type": "address" }
+        ],
+        "name": "OwnershipTransferred",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "sender", "type": "address" },
+            { "indexed": true, "internalType": "address", "name": "account", "type": "address" },
+            { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
+        ],
+        "name": "Save",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "from", "type": "address" },
+            { "indexed": false, "internalType": "int256", "name": "_interestRate", "type": "int256" },
+            { "indexed": false, "internalType": "uint256", "name": "_interestInterval", "type": "uint256" }
+        ],
+        "name": "SetInterestInfo",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "account", "type": "address" },
+            { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" },
+            { "indexed": false, "internalType": "uint256", "name": "subOrigin", "type": "uint256" }
+        ],
+        "name": "SubAsset",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            { "indexed": true, "internalType": "address", "name": "sender", "type": "address" },
+            { "indexed": true, "internalType": "address", "name": "account", "type": "address" },
+            { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
+        ],
+        "name": "Withdraw",
+        "type": "event"
+    },
+    { "payable": true, "stateMutability": "payable", "type": "fallback" },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "accumulatedRate",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "assetCeiling",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "assetFloor",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+        "name": "assetInfoMap",
+        "outputs": [
+            { "internalType": "uint256", "name": "originAsset", "type": "uint256" },
+            { "internalType": "uint256", "name": "assetAndInterest", "type": "uint256" },
+            { "internalType": "uint256", "name": "interestRateOrigin", "type": "uint256" }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{ "internalType": "uint256", "name": "_amount", "type": "uint256" }],
+        "name": "deposit",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [{ "internalType": "uint256", "name": "_smeltAmount", "type": "uint256" }],
+        "name": "getMeltAmount",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "getMultiSignatureAddress",
+        "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [{ "internalType": "uint256", "name": "_meltAmount", "type": "uint256" }],
+        "name": "getSmeltAmount",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{ "internalType": "address", "name": "_reciever", "type": "address" }],
+        "name": "getbackLeftMiningToken",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "h2o",
+        "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "interestInterval",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "interestRate",
+        "outputs": [{ "internalType": "int256", "name": "", "type": "int256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "isOrigin",
+        "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "isOwner",
+        "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "latestSettleTime",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "maxRate",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "melt",
+        "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "minRate",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "owner",
+        "outputs": [{ "internalType": "address", "name": "_owner", "type": "address" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [],
+        "name": "renounceOwnership",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{ "internalType": "bool", "name": "halt", "type": "bool" }],
+        "name": "setHalt",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            { "internalType": "int256", "name": "_interestRate", "type": "int256" },
+            { "internalType": "uint256", "name": "_interestInterval", "type": "uint256" }
+        ],
+        "name": "setInterestInfo",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            { "internalType": "uint256", "name": "_maxRate", "type": "uint256" },
+            { "internalType": "uint256", "name": "_minRate", "type": "uint256" }
+        ],
+        "name": "setInterestMaxMinRatio",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "smelt",
+        "outputs": [{ "internalType": "contract smeltToken", "name": "", "type": "address" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "totalAssetAmount",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "totalStaked",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [{ "internalType": "address", "name": "_account", "type": "address" }],
+        "name": "totalStakedFor",
+        "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            { "internalType": "address", "name": "_oldOrigin", "type": "address" },
+            { "internalType": "address", "name": "_newOrigin", "type": "address" }
+        ],
+        "name": "transferOrigin",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{ "internalType": "address", "name": "_newOwner", "type": "address" }],
+        "name": "transferOwnership",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "txOrigin",
+        "outputs": [
+            { "internalType": "address", "name": "_origin0", "type": "address" },
+            { "internalType": "address", "name": "_origin1", "type": "address" }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [{ "internalType": "uint256", "name": "_smeltAmount", "type": "uint256" }],
+        "name": "withdraw",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+]

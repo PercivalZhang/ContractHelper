@@ -77,10 +77,10 @@ export class Vault {
 }
 
 const getRewards = async (pid: number) => {
-    const mmoPrice = 6.64;
-    const mmfPrice = 0.74;
-    const croPrice = 0.387;
-    const mmoPerCRO = 0.066;
+    const mmoPrice = 8.49;
+    const mmfPrice = 1.022;
+    const croPrice = 0.415;
+    const mmoPerCRO = 0.049;
 
     const masterChef = new ContractHelper(
         '0x6bE34986Fdd1A91e4634eb6b9F8017439b7b5EDc',

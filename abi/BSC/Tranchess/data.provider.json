@@ -1,0 +1,171 @@
+[
+    `function getProtocolData (address primaryMarketAddress, address exchangeAddress, address pancakePairAddress, address feeDistributorAddress, address account, uint256 fundVersion) view returns (
+        tuple (
+            uint256 blockNumber, 
+            uint256 blockTimestamp, 
+            tuple (
+                tuple (
+                    uint256 nativeCurrency, 
+                    uint256 underlyingToken, 
+                    uint256 quoteToken, 
+                    uint256 tokenM, 
+                    uint256 tokenA, 
+                    uint256 tokenB, 
+                    uint256 chess
+                ) balance, 
+                tuple (
+                    uint256 primaryMarketUnderlying, 
+                    tuple (
+                        uint256 quoteToken, 
+                        uint256 tokenM, 
+                        uint256 tokenA, 
+                        uint256 tokenB
+                    ) exchange, 
+                    uint256 votingEscrowChess
+                ) allowance
+            ) wallet, 
+            tuple (
+                bool isFundActive, 
+                bool isPrimaryMarketActive, 
+                bool isExchangeActive, 
+                uint256 fundActivityStartTime, 
+                uint256 exchangeActivityStartTime, 
+                uint256 currentDay, 
+                uint256 currentWeek, 
+                uint256 dailyProtocolFeeRate, 
+                uint256 totalShares, 
+                uint256 totalUnderlying, 
+                uint256 rebalanceSize, 
+                uint256 currentInterestRate, 
+                tuple (
+                    uint256 ratioM, 
+                    uint256 ratioA2M, 
+                    uint256 ratioB2M, 
+                    uint256 ratioAB, 
+                    uint256 timestamp
+                ) lastRebalance, 
+                uint256 relativeWeight, 
+                uint256 strategyUnderlying
+            ) fund, 
+            tuple (
+                uint256 currentCreatingUnderlying, 
+                uint256 currentRedeemingShares, 
+                uint256 fundCap, 
+                uint256 redemptionFeeRate, 
+                uint256 splitFeeRate, 
+                uint256 mergeFeeRate, 
+                uint256 minCreationUnderlying, 
+                tuple (
+                    uint256 creatingUnderlying, 
+                    uint256 redeemingShares, 
+                    uint256 createdShares, 
+                    uint256 redeemedUnderlying, 
+                    uint256[16] recentDelayedRedemptions
+                ) account
+            ) primaryMarket, 
+            tuple (
+                tuple (
+                    uint256 tokenM, 
+                    uint256 tokenA, 
+                    uint256 tokenB
+                ) totalDeposited, 
+                uint256 weightedSupply, 
+                uint256 workingSupply, 
+                uint256 minBidAmount, 
+                uint256 minAskAmount,
+                tuple (
+                    tuple (
+                        uint256 tokenM, 
+                        uint256 tokenA, 
+                        uint256 tokenB
+                    ) available, 
+                    tuple (
+                        uint256 tokenM, 
+                        uint256 tokenA, 
+                        uint256 tokenB
+                    ) locked, 
+                    uint256 weightedBalance, 
+                    uint256 workingBalance, 
+                    tuple (
+                        uint256 veProportion, 
+                        tuple (
+                            uint256 amount, 
+                            uint256 unlockTime
+                        ) veLocked
+                    ) veSnapshot, 
+                    bool isMaker, 
+                    uint256 chessRewards
+                ) account
+            ) exchange, 
+            tuple (
+                uint256 chessTotalSupply, 
+                uint256 chessRate, 
+                uint256 nextWeekChessRate, 
+                tuple (
+                    uint256 totalLocked, 
+                    uint256 totalSupply, 
+                    uint256 tradingWeekTotalSupply, 
+                    tuple (
+                        uint256 amount, 
+                        uint256 unlockTime
+                    ) account
+                ) votingEscrow, 
+                tuple (
+                    uint256 tradingWeekTotalSupply, 
+                    tuple (
+                        uint256 amount, 
+                        uint256 unlockTime, 
+                        uint256 weight
+                    ) account
+                ) interestRateBallot, 
+                tuple (
+                    address[] pools, 
+                    uint256[] currentSums, 
+                    tuple (
+                        uint256 amount, 
+                        uint256 unlockTime, 
+                        uint256[] weights
+                    ) account
+                ) controllerBallot, 
+                tuple (
+                    tuple (
+                        uint256 claimableRewards, 
+                        uint256 currentBalance, 
+                        uint256 amount, 
+                        uint256 unlockTime
+                    ) account, 
+                    uint256 currentRewards, 
+                    uint256 currentSupply, 
+                    uint256 tradingWeekTotalSupply, 
+                    uint256 adminFeeRate
+                ) feeDistributor
+            ) governance, 
+            tuple (
+                uint112 reserve0, 
+                uint112 reserve1, 
+                address token0, 
+                address token1
+            ) pair
+        ) data
+    )`,
+    `function getUnsettledTrades (address exchangeAddress, address account, uint256[] epochs) view returns (
+        tuple[] (
+            tuple(uint256 frozenQuote, uint256 effectiveQuote, uint256 reservedBase) takerBuy,
+            tuple(uint256 frozenBase, uint256 effectiveBase, uint256 reservedQuote) takerSell,
+            tuple(uint256 frozenBase, uint256 effectiveBase, uint256 reservedQuote) makerBuy,
+            tuple(uint256 frozenQuote, uint256 effectiveQuote, uint256 reservedBase) makerSell
+        ) unsettledTradeM,
+        tuple[] (
+            tuple(uint256 frozenQuote, uint256 effectiveQuote, uint256 reservedBase) takerBuy,
+            tuple(uint256 frozenBase, uint256 effectiveBase, uint256 reservedQuote) takerSell,
+            tuple(uint256 frozenBase, uint256 effectiveBase, uint256 reservedQuote) makerBuy,
+            tuple(uint256 frozenQuote, uint256 effectiveQuote, uint256 reservedBase) makerSell
+        ) unsettledTradeA,
+        tuple[] (
+            tuple(uint256 frozenQuote, uint256 effectiveQuote, uint256 reservedBase) takerBuy,
+            tuple(uint256 frozenBase, uint256 effectiveBase, uint256 reservedQuote) takerSell,
+            tuple(uint256 frozenBase, uint256 effectiveBase, uint256 reservedQuote) makerBuy,
+            tuple(uint256 frozenQuote, uint256 effectiveQuote, uint256 reservedBase) makerSell
+        ) unsettledTradeB
+    )`
+]

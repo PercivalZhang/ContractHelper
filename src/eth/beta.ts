@@ -47,9 +47,12 @@ const getBTokenReceipts = async (bTokenAddress: string, userAddress: string) => 
     );
 };
 
+const tToken = new ContractHelper('0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2', './erc20.json', network);
 const main = async () => {
     // await getMiningReceipts('0xD2050719eA37325BdB6c18a85F6c442221811FAC');
-    await getBTokenReceipts(Config.bToken.USDT, '0x0a7b83f9b400a1bc25a2e3306531bc713ed7f5d5');
+    //await getBTokenReceipts(Config.bToken.USDT, '0x0a7b83f9b400a1bc25a2e3306531bc713ed7f5d5');
+    const balance = await tToken.callReadMethod('balanceOf', '0xbecaa4ad36e5d134fd6979cc6780eb48ac5b5a93');
+    logger.info(`balance: ${balance}`);
 };
 
 main().catch((e) => {

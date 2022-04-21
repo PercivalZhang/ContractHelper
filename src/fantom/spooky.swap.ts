@@ -1,13 +1,10 @@
-import { ContractHelper } from '../library/contract.helper';
 import { LoggerFactory } from '../library/LoggerFactory';
 import { NetworkType } from '../library/web3.factory';
-import { SwissKnife } from '../library/swiss.knife';
 import { MasterChefHelper } from '../library/master.chef';
 import { SyrupChefHelper } from '../library/syrup.chef';
 
 const network = NetworkType.FANTOM;
 
-const swissKnife = new SwissKnife(network);
 const logger = LoggerFactory.getInstance().getLogger('main');
 //UniswapV2 Factory： https://ftmscan.com/address/0x152ee697f2e276fa89e96742e9bb9ab1f2e61be3#readContract
 const Config = {
