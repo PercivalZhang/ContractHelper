@@ -226,9 +226,11 @@ const main = async () => {
     // position/tokenId: 157606
     const receipt = await positionHelper.getMyNFTReceipts(
         //'0xecaa8f3636270ee917c5b08d6324722c2c4951c7',
-        '0xC5E6081E7Fd4FE2C180e670a3c117a3649a9B7C2',
+        //'0xC5E6081E7Fd4FE2C180e670a3c117a3649a9B7C2',
+        '0x95b870e8e3f933a052be1d9c106f7ae1e7693405',
         callbackPosition,
     );
+    console.log(JSON.stringify(receipt));
     // Map - 用户保存每个池子对应的用户Position列表
     const poolPostionMap: Map<string, Position[]> = new Map<string, Position[]>();
     if (receipt.customizedData.length > 0) {

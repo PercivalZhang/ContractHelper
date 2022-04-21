@@ -4,6 +4,7 @@ import { LoggerFactory } from '../../library/LoggerFactory';
 import { TokenDB } from '../db.token';
 import BigNumber from 'bignumber.js';
 import { Config } from './Config';
+import { CDNTokenListResolutionStrategy } from '@solana/spl-token-registry';
 
 type TokenInfo = {
     token: ERC20Token;
@@ -67,7 +68,8 @@ export class Vault {
         const keyPrice = Config.KeyOfPriceMap[assetId];
         if (keyPrice) {
             logger.info(`getAssetPrice > key: ${keyPrice}`);
-            if (keyPrice === '%s%s__price__EUR') {//EUR
+            if (keyPrice === '%s%s__price__EUR') {
+                //EUR
                 const priceData = await nodeInteraction.accountDataByKey(keyPrice, Config.eurOracle, NodeUrl);
                 return new BigNumber(1000000).dividedBy(priceData.value.toString()).toNumber();
             }
@@ -162,32 +164,40 @@ export class Vault {
     }
 
     private async getVTokenInfo(): Promise<TokenInfo> {
-        const keyOfTokenId = 'aTokenId';
-        const keyOfTokenDecimals = 'aTokenDecimals';
-        const keyOfTokenName = 'aTokenName';
-        const keyOfTokenCirculation = 'aTokenCirculation';
+        try {
+            const keyOfTokenId = 'aTokenId';
+            const keyOfTokenDecimals = 'aTokenDecimals';
+            const keyOfTokenName = 'aTokenName';
+            const keyOfTokenCirculation = 'aTokenCirculation';
 
-        const vTokenId = await nodeInteraction.accountDataByKey(keyOfTokenId, this.address, NodeUrl);
-        let vToken = await tokenDB.getByAddress(vTokenId.value.toString());
-        if (!vToken) {
-            logger.debug(`getVTokenInfo > token - ${vTokenId.value.toString()} does not exist in token db.`);
-            const aTokenName = await nodeInteraction.accountDataByKey(keyOfTokenName, this.address, NodeUrl);
-            const aTokenDecimals = await nodeInteraction.accountDataByKey(keyOfTokenDecimals, this.address, NodeUrl);
+            const vTokenId = await nodeInteraction.accountDataByKey(keyOfTokenId, this.address, NodeUrl);
+            let vToken = await tokenDB.getByAddress(vTokenId.value.toString());
+            if (!vToken) {
+                logger.debug(`getVTokenInfo > token - ${vTokenId.value.toString()} does not exist in token db.`);
+                const aTokenName = await nodeInteraction.accountDataByKey(keyOfTokenName, this.address, NodeUrl);
+                const aTokenDecimals = await nodeInteraction.accountDataByKey(
+                    keyOfTokenDecimals,
+                    this.address,
+                    NodeUrl,
+                );
 
-            vToken = new ERC20Token(
-                vTokenId.value.toString(),
-                aTokenName.value.toString(),
-                Number.parseInt(aTokenDecimals.value.toString()),
-            );
-            logger.debug(`getVTokenInfo > added token - ${vTokenId.value.toString()} to db.`);
-            await tokenDB.syncUp(vToken);
+                vToken = new ERC20Token(
+                    vTokenId.value.toString(),
+                    aTokenName.value.toString(),
+                    Number.parseInt(aTokenDecimals.value.toString()),
+                );
+                logger.debug(`getVTokenInfo > added token - ${vTokenId.value.toString()} to db.`);
+                await tokenDB.syncUp(vToken);
+            }
+            logger.info(`getVTokenInfo > token - ${vTokenId.value.toString()} already existed in token db.`);
+            const totalSupply = await nodeInteraction.accountDataByKey(keyOfTokenCirculation, this.address, NodeUrl);
+            return {
+                token: vToken,
+                balance: totalSupply.value.toString(),
+            };
+        } catch (e) {
+            logger.error(`getVTokenInfo > ${e.toString()}`);
         }
-        logger.info(`getVTokenInfo > token - ${vTokenId.value.toString()} already existed in token db.`);
-        const totalSupply = await nodeInteraction.accountDataByKey(keyOfTokenCirculation, this.address, NodeUrl);
-        return {
-            token: vToken,
-            balance: totalSupply.value.toString(),
-        };
     }
 
     public getConfig(): ConfigInfo {
@@ -332,7 +342,7 @@ export class Vault {
                 this.assetToken.symbol
             }`,
         );
-        //获取借款总数    
+        //获取借款总数
         const totalBorrowItem = await nodeInteraction.accountDataByKey('totalBorrow', this.address, NodeUrl);
         const totalBorrow = new BigNumber(totalBorrowItem.value.toString());
         vaultInfo.totalBorrow = totalBorrow.toString();
@@ -344,12 +354,12 @@ export class Vault {
         //获取资产token的价格
         const priceAsset = await Vault.getAssetPrice(this.assetToken.address);
         logger.info(`getVaultInfo > asset - ${this.assetToken.symbol} price: ${priceAsset.toFixed(4)} USD`);
-        //该池子的资金使用率    
+        //该池子的资金使用率
         const utilizationRatio = totalBorrow.dividedBy(totalDeposit);
         logger.info(
             `getVaultInfo > current utilization ratio: ${utilizationRatio.multipliedBy(100).toNumber().toFixed(4)}%`,
         );
-        //计算存借款利息产生的收益APR    
+        //计算存借款利息产生的收益APR
         const [borrowAPR, supplyAPR] = Vault.calculateBorrowSupplyAPR(
             utilizationRatio.toNumber(),
             Number.parseFloat(this.config.aPoint),
@@ -360,13 +370,14 @@ export class Vault {
         );
         logger.info(`getVaultInfo > borrow APR: ${(borrowAPR * 100).toFixed(2)}%`);
         logger.info(`getVaultInfo > supply/lend APR: ${(supplyAPR * 100).toFixed(2)}%`);
-        //获取池子的奖励信息    
+        //获取池子的奖励信息
         const rewardInfo = await Vault.getDepositBorrowRewardInfo(this.address);
         vaultInfo.rewardInfo = rewardInfo;
         const priceVires = await Vault.getViresPrice();
-        //计算存款的挖矿APR    
+        //计算存款的挖矿APR
         const supplyViresAPR = new BigNumber(rewardInfo.depositRewardSpeed)
-            .multipliedBy(3600 * 24 * 365).multipliedBy(priceVires)
+            .multipliedBy(3600 * 24 * 365)
+            .multipliedBy(priceVires)
             .dividedBy(60)
             .dividedBy(this.assetToken.readableAmountFromBN(totalDeposit))
             .dividedBy(priceAsset)
@@ -374,9 +385,10 @@ export class Vault {
         logger.info(
             `getVaultInfo > Vires Reward for Supply. APR: ${supplyViresAPR.multipliedBy(100).toNumber().toFixed(2)}%`,
         );
-        //计算借款的APR    
+        //计算借款的APR
         const borrowViresAPR = new BigNumber(rewardInfo.borrowRewardSpeed)
-            .multipliedBy(3600 * 24 * 365).multipliedBy(priceVires)
+            .multipliedBy(3600 * 24 * 365)
+            .multipliedBy(priceVires)
             .dividedBy(60)
             .dividedBy(this.assetToken.readableAmountFromBN(totalBorrow))
             .dividedBy(priceAsset)
@@ -386,7 +398,27 @@ export class Vault {
         );
         return vaultInfo;
     }
+    //获取用户借款余额
+    public async getUserDebtBalance(userAddress: string): Promise<BigNumber> {
+        //获取当前vault中的借款数量
+        const keyOfDebt = userAddress + '_debt';
+        const debtAssetBalanceItem = await nodeInteraction.accountDataByKey(keyOfDebt, this.address, NodeUrl);
+        if (debtAssetBalanceItem) {
+            //获取currentIndex
+            const keyOfCurrentIndex = 'storedIndex';
+            const currentIdexItem = await nodeInteraction.accountDataByKey(keyOfCurrentIndex, this.address, NodeUrl);
+            //获取用户Index
+            const keyOfUserIndex = userAddress + '_index';
+            const userIdexItem = await nodeInteraction.accountDataByKey(keyOfUserIndex, this.address, NodeUrl);
 
+            const debtBalance = new BigNumber(debtAssetBalanceItem.value.toString())
+                .multipliedBy(currentIdexItem.value.toString())
+                .dividedBy(userIdexItem.value.toString());
+            return debtBalance;
+        }
+        return new BigNumber(0);
+    }
+    //获取用户借贷信息
     public async getUserInfo(userAddress: string) {
         const vaultInfo = await this.getVaultInfo();
         const assetToken = this.assetToken;
@@ -394,55 +426,106 @@ export class Vault {
         //获取用户存款aToken数量
         const keyOfATokenBalance = userAddress + '_aTokenBalance';
         const aTokenBalanceItem = await nodeInteraction.accountDataByKey(keyOfATokenBalance, this.address, NodeUrl);
-        if(aTokenBalanceItem) {
+        if (aTokenBalanceItem) {
             const aTokenBalance = aTokenBalanceItem.value.toString();
             logger.info(
-                `getUserInfo > vToken balance: ${vToken.readableAmount(aTokenBalanceItem.value.toString()).toFixed(4)} ${
-                    vToken.symbol
-                }`,
+                `getUserInfo > vToken balance: ${vToken
+                    .readableAmount(aTokenBalanceItem.value.toString())
+                    .toFixed(4)} ${vToken.symbol}`,
             );
-            //计算assetToken和vToken的兑换关系    
+            //计算assetToken和vToken的兑换关系
             const assetPerVToken = new BigNumber(vaultInfo.totalDeposit).dividedBy(vaultInfo.aTokenSupply);
             const assetTokenBalance = assetPerVToken.multipliedBy(aTokenBalance);
             logger.info(
-                `getUserInfo > supply asset balance: ${assetToken.readableAmount(assetTokenBalance.toString()).toFixed(5)} ${
-                    assetToken.symbol
-                }`,
+                `getUserInfo > supply asset balance: ${assetToken
+                    .readableAmount(assetTokenBalance.toString())
+                    .toFixed(5)} ${assetToken.symbol}`,
             );
-            //获取用户是否将资产启用抵押    
+            //获取用户是否将资产启用抵押
             const keyOfUseAsCollateral = userAddress + '_useAsCollateral';
             let useAsCollateral = await nodeInteraction.accountDataByKey(keyOfUseAsCollateral, this.address, NodeUrl);
             logger.info(`getUserInfo > use as collateral: ${useAsCollateral.value}`);
-            //获取该金库的奖励情况    
+            //获取该金库的奖励情况
             const rewardData = vaultInfo.rewardInfo;
-            //计算提供存款可领取的奖励
-            const pendingRewardForSupply = new BigNumber(rewardData.depositRewards)
+            /*
+             * 计算提供存款可领取的奖励
+             * accReward - claimedReward
+             */
+            //获取已经领取的奖励数量
+            const keyOfClaimedReward = this.address + '_claimed_' + userAddress;
+            const claimedRewardData = await nodeInteraction.accountDataByKey(
+                keyOfClaimedReward,
+                Config.rewardDistributor,
+                NodeUrl,
+            );
+            let claimedRewards = new BigNumber(0);
+            if (claimedRewardData) {
+                console.log('claimed reward');
+                console.log(claimedRewardData.value);
+                claimedRewards = new BigNumber(claimedRewardData.value.toString());
+            }
+            const keyOfAccDepositReward = this.address + '_userRewardAdj_deposit_' + userAddress;
+            const accDepositRewardData = await nodeInteraction.accountDataByKey(
+                keyOfAccDepositReward,
+                Config.rewardDistributor,
+                NodeUrl,
+            );
+            let accRewardForSupply = new BigNumber(rewardData.depositRewards)
                 .multipliedBy(assetTokenBalance)
-                .dividedBy(vaultInfo.totalDeposit)
-                .dividedBy(1e2);
+                .dividedBy(vaultInfo.totalDeposit);
+            if (accDepositRewardData) {
+                accRewardForSupply = accRewardForSupply.plus(accDepositRewardData.value.toString());
+            }
             logger.info(
-                `getVaultInfo > pending reward for supply: ${this.rewardToken
-                    .readableAmountFromBN(pendingRewardForSupply)
-                    .toFixed(7)} ${this.rewardToken.symbol}`,
-            );    
+                `getVaultInfo > accumulated reward for supply: ${this.rewardToken
+                    .readableAmountFromBN(accRewardForSupply)
+                    .toFixed(10)} ${this.rewardToken.symbol}`,
+            );
+            let accRewardForBorrow = new BigNumber(0);
             //获取当前vault中的借款数量
-            const keyOfDebt = userAddress + '_debt';
-            const debtAssetBalanceItem = await nodeInteraction.accountDataByKey(keyOfDebt, this.address, NodeUrl);
+            //const keyOfDebt = userAddress + '_debt';
+            //const debtAssetBalanceItem = await nodeInteraction.accountDataByKey(keyOfDebt, this.address, NodeUrl);
+            const userDebtBalance = await this.getUserDebtBalance(userAddress);
             //有借款
-            if(debtAssetBalanceItem) {
-                const debtAssetBalance = assetToken.readableAmount(debtAssetBalanceItem.value.toString());
-                logger.info(`getUserInfo > debt asset balance: ${debtAssetBalance.toFixed(4)} ${assetToken.symbol}`);
-                //计算借款产生的可领取奖励
-                const pendingRewardForBorrow = new BigNumber(rewardData.borrowRewards)
-                .multipliedBy(debtAssetBalance)
-                .dividedBy(vaultInfo.totalBorrow)
-                .dividedBy(1e2);
+            if (userDebtBalance.gt(0)) {
                 logger.info(
-                    `getVaultInfo > pending reward for borrow: ${this.rewardToken
-                        .readableAmountFromBN(pendingRewardForBorrow)
-                        .toFixed(7)} ${this.rewardToken.symbol}`,
-                );  
-            }     
-        } 
+                    `getUserInfo > debt asset balance: ${assetToken.readableAmountFromBN(userDebtBalance).toFixed(6)} ${
+                        assetToken.symbol
+                    }`,
+                );
+                //计算借款产生的可领取奖励
+                const keyOfAccBorrowReward = this.address + '_userRewardAdj_borrow_' + userAddress;
+                const accBorrowRewardData = await nodeInteraction.accountDataByKey(
+                    keyOfAccBorrowReward,
+                    Config.rewardDistributor,
+                    NodeUrl,
+                );
+                accRewardForBorrow = new BigNumber(rewardData.borrowRewards)
+                    .multipliedBy(userDebtBalance)
+                    .dividedBy(vaultInfo.totalBorrow);
+                console.log(accRewardForBorrow.toNumber().toFixed(10));
+                if (accBorrowRewardData) {
+                    console.log(accBorrowRewardData.value.toString());
+                    accRewardForBorrow = accRewardForBorrow.plus(accBorrowRewardData.value.toString());
+                }
+                logger.info(
+                    `getVaultInfo > accumulated reward for borrow: ${this.rewardToken
+                        .readableAmountFromBN(accRewardForBorrow)
+                        .toFixed(10)} ${this.rewardToken.symbol}`,
+                );
+            }
+            const totalAccRewards = BigNumber.max(0, accRewardForSupply.plus(accRewardForBorrow));
+            const availableRewards = BigNumber.max(0, totalAccRewards.minus(claimedRewards));
+            logger.info(
+                `getVaultInfo > total accumulated rewards: ${this.rewardToken
+                    .readableAmountFromBN(totalAccRewards)
+                    .toFixed(10)} ${this.rewardToken.symbol}`,
+            );
+            logger.info(
+                `getVaultInfo > available rewards: ${this.rewardToken
+                    .readableAmountFromBN(availableRewards)
+                    .toFixed(10)} ${this.rewardToken.symbol}`,
+            );
+        }
     }
 }
