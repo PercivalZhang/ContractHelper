@@ -1652,6 +1652,15 @@
         "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8": {
             "symbol": "USDC",
             "decimals": 6
+        },
+        "0x60d01ec2d5e98ac51c8b4cf84dfcce98d527c747": {
+            "symbol": "iZi",
+            "decimals": 18,
+            "address": "0x60D01EC2D5E98Ac51C8B4cF84DfCCE98D527c747"
+        },
+        "0x794baab6b878467f93ef17e2f2851ce04e3e34c8": {
+            "symbol": "YIN",
+            "decimals": 18
         }
     },
     "43114": {

@@ -11,6 +11,7 @@ import { SwissKnife } from '../../library/swiss.knife';
 import { Config } from './Config';
 import { ERC20Token } from '../../library/erc20.token';
 import { UniV3Helper } from '../../library/uni.v3';
+import { lchmodSync } from 'fs';
 
 const logger = LoggerFactory.getInstance().getLogger('FarmingPool');
 const gSwissKnife = new SwissKnife(Config.network);
@@ -41,6 +42,19 @@ export class FarmingPool {
         for (let id of ids) {
             const pos = await gUniV3Helper.getPositionById(id);
             console.log(pos);
+        }
+        if (ids.length > 0) {
+            const pendingRewardData = await this.itself.callReadMethod('pendingRewards', userAddress);
+            const rewardInfosLen = await this.itself.callReadMethod('rewardInfosLen');
+            for (let i = 0; i < Number.parseInt(rewardInfosLen); i++) {
+                const rewardTokenData = await this.itself.callReadMethod('rewardInfos', i);
+                const rewardToken = await gSwissKnife.syncUpTokenDB(rewardTokenData[0]);
+                logger.info(
+                    `pending reward - ${rewardToken.symbol} > ${rewardToken
+                        .readableAmount(pendingRewardData[i])
+                        .toFixed(6)}`,
+                );
+            }
         }
     }
 }
