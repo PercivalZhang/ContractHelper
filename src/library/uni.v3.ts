@@ -10,37 +10,28 @@ import { TickMath, SqrtPriceMath } from '@uniswap/v3-sdk';
 import { LoggerFactory } from '../library/LoggerFactory';
 import { ContractHelper } from '../library/contract.helper';
 
-type Position = {
+export type UniV3NFTPosition = {
     id: number;
     tickLower: number;
     tickUpper: number;
+    priceLower: number;
+    priceUpper: number;
     liquidity: string;
-    token0: string;
-    token1: string;
-    fee: number;
-    pool: string;
-    token0Amount: string;
-    token1Amount: string;
-};
-type PoolInfo = {
-    address: string;
     token0: {
         token: ERC20Token;
-        balance: string;
+        amount: string;
     };
     token1: {
         token: ERC20Token;
-        balance: string;
+        amount: string;
     };
-};
-type Receipt = {
-    pool: PoolInfo;
-    positions: Position[];
+    fee: number;
+    pool: string;
 };
 
 const POOL_INIT_CODE_HASH = '0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54';
 
-const logger = LoggerFactory.getInstance().getLogger('main');
+const logger = LoggerFactory.getInstance().getLogger('UniV3Helper');
 
 const PositionManagerMetadata = {
     address: '',
@@ -54,6 +45,7 @@ const PositionManagerMetadata = {
 };
 
 export class UniV3Helper {
+    private network: NetworkType;
     private positionNFTHelper: ERC721Helper;
     private positionManager: ContractHelper;
     private swissKnife: SwissKnife;
@@ -74,6 +66,7 @@ export class UniV3Helper {
         );
         this.swissKnife = new SwissKnife(network);
         this.factoryAddress = factoryAddress;
+        this.network = network;
     }
 
     static getInstance(factoryAddress: string, positionManagerAddress: string, network: NetworkType) {
@@ -81,10 +74,6 @@ export class UniV3Helper {
             UniV3Helper.instance = new UniV3Helper(factoryAddress, positionManagerAddress, network);
         }
         return UniV3Helper.instance;
-    }
-
-    public async getUserNFTReceipt(userAddress: string) {
-        const receipt = await this.positionNFTHelper.getMyNFTReceipts(userAddress, this.callbackPosition);
     }
 
     /**
@@ -112,7 +101,19 @@ export class UniV3Helper {
         return getCreate2Address(factoryAddress, salt, initCodeHashManualOverride ?? POOL_INIT_CODE_HASH);
     }
 
-    private async callbackPosition(tokenId: number, helper: ContractHelper): Promise<Position> {
+    public async getUserNFTPositions(userAddress: string): Promise<UniV3NFTPosition[]> {
+        const receipt = await this.positionNFTHelper.getMyNFTReceipts(userAddress);
+        const positions: UniV3NFTPosition[] = [];
+
+        for (let i = 0; i < receipt.tokenIds.length; i++) {
+            const pos = await this.getPositionById(receipt.tokenIds[0]);
+            positions.push(pos);
+        }
+
+        return positions;
+    }
+
+    public async getPositionById(tokenId: number): Promise<UniV3NFTPosition> {
         // 获取position信息
         const position = await this.positionManager.callReadMethod('positions', tokenId);
         const tickLower = Number.parseInt(position.tickLower);
@@ -127,18 +128,30 @@ export class UniV3Helper {
             const token1 = await this.swissKnife.syncUpTokenDB(token1Address);
             const poolAddress = UniV3Helper.computePoolAddress(this.factoryAddress, token0Address, token1Address, fee);
             logger.info(`callbackPosition > pool - ${token0.symbol}/${token1.symbol}: ${poolAddress}`);
-            return {
+
+            let pos: UniV3NFTPosition = {
                 id: tokenId,
                 pool: poolAddress,
                 tickLower,
                 tickUpper,
+                priceLower: 0.0,
+                priceUpper: 0.0,
                 liquidity: position.liquidity,
-                token0Amount: '',
-                token1Amount: '',
-                token0: token0Address,
-                token1: token1Address,
+                token0: {
+                    token: token0,
+                    amount: '0',
+                },
+                token1: {
+                    token: token1,
+                    amount: '0',
+                },
                 fee: fee,
             };
+            pos.priceLower = this.tick2PriceDecimal(pos.tickLower, token0.decimals, token1.decimals);
+            pos.priceUpper = this.tick2PriceDecimal(pos.tickUpper, token0.decimals, token1.decimals);
+            //计算并补齐position中缺失的两种token的数量
+            pos = await this.calPositionTokenAmount(pos);
+            return pos;
             /**
              * tokenId: position id/NFT tokenId
              * _user: user address
@@ -148,6 +161,82 @@ export class UniV3Helper {
             //const fees = await positionManager.callReadMethod('collect', [tokenId, '0x469bbafeb93480ee4c2cbff806bc504188335499', '9007199254740990000000', '9007199254740990000000'])
             //logger.info(`[reward] token0: ${token0.readableAmount(fees.amount0).toFixed(6)} ${token0.symbol}`)
             //logger.info(`[reward] token1: ${token1.readableAmount(fees.amount1).toFixed(6)} ${token1.symbol}`)
+        }
+    }
+    /**
+     * 计算tick对应的价格
+     * @param tick - position tick(lower/upper)
+     * @param tokenADecimals - base token(token0) decimals
+     * @param tokenBDecimals - quote token(token1) decimals
+     * @returns
+     */
+    private tick2PriceDecimal(tick: number, tokenADecimals: number, tokenBDecimals: number): number {
+        return Math.pow(1.0001, tick) * (10 ** tokenADecimals / 10 ** tokenBDecimals);
+    }
+    private async calPositionTokenAmount(position: UniV3NFTPosition): Promise<UniV3NFTPosition> {
+        try {
+            logger.info(`calPositionTokenAmount > ${position.pool}`);
+            const pool = new ContractHelper(position.pool, './Uniswap/v3/pool.json', this.network);
+            const token0 = position.token0.token;
+            const token1 = position.token1.token;
+
+            const slot0 = await pool.callReadMethod('slot0');
+
+            const tickCurrent = Number.parseInt(slot0.tick);
+            const sqrtPriceX96 = JSBI.BigInt(slot0.sqrtPriceX96);
+
+            const tickLower = position.tickLower;
+            const tickUpper = position.tickUpper;
+            const liquidity = JSBI.BigInt(position.liquidity);
+
+            // calculate token 0 amount
+            let token0Amount: JSBI;
+            if (tickCurrent < tickLower) {
+                token0Amount = SqrtPriceMath.getAmount0Delta(
+                    TickMath.getSqrtRatioAtTick(tickLower),
+                    TickMath.getSqrtRatioAtTick(tickUpper),
+                    liquidity,
+                    false,
+                );
+            } else if (tickCurrent < tickUpper) {
+                token0Amount = SqrtPriceMath.getAmount0Delta(
+                    sqrtPriceX96,
+                    TickMath.getSqrtRatioAtTick(tickUpper),
+                    liquidity,
+                    false,
+                );
+            } else {
+                token0Amount = JSBI.BigInt(0);
+            }
+
+            const intToken0Amount = token0.readableAmount(String(token0Amount));
+            logger.info(`token 0: ${intToken0Amount.toFixed(6)} ${token0.symbol}`);
+            position.token0.amount = intToken0Amount.toFixed(6);
+            // calculate token 1 amount
+            let token1Amount: JSBI;
+            if (tickCurrent < tickLower) {
+                token1Amount = JSBI.BigInt(0);
+            } else if (tickCurrent < tickUpper) {
+                token1Amount = SqrtPriceMath.getAmount1Delta(
+                    sqrtPriceX96,
+                    TickMath.getSqrtRatioAtTick(tickLower),
+                    liquidity,
+                    false,
+                );
+            } else {
+                token1Amount = SqrtPriceMath.getAmount1Delta(
+                    TickMath.getSqrtRatioAtTick(tickLower),
+                    TickMath.getSqrtRatioAtTick(tickUpper),
+                    liquidity,
+                    false,
+                );
+            }
+            const intToken1Amount = token1.readableAmount(String(token1Amount));
+            logger.info(`token 1: ${intToken1Amount.toFixed(6)} ${token1.symbol}`);
+            position.token1.amount = String(intToken1Amount.toFixed(6));
+            return position;
+        } catch (e) {
+            logger.error(`calPositionTokenAmount > ${e.message}`);
         }
     }
 }
