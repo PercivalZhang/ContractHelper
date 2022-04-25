@@ -1,14 +1,15 @@
-import { ERC721Helper } from './erc721.helper';
-import { NetworkType } from '../library/web3.factory';
-import { SwissKnife } from '../library/swiss.knife';
+import { ERC721Helper } from '../erc721.helper';
+import { NetworkType } from '../web3.factory';
+import { SwissKnife } from '../swiss.knife';
 import JSBI from 'jsbi';
-import { ERC20Token } from '../library/erc20.token';
+import { ERC20Token } from '../erc20.token';
 import { defaultAbiCoder } from '@ethersproject/abi';
 import { getCreate2Address } from '@ethersproject/address';
 import { keccak256 } from '@ethersproject/solidity';
 import { TickMath, SqrtPriceMath } from '@uniswap/v3-sdk';
-import { LoggerFactory } from '../library/LoggerFactory';
-import { ContractHelper } from '../library/contract.helper';
+import { LoggerFactory } from '../LoggerFactory';
+import { ContractHelper } from '../contract.helper';
+import { NFTDB } from './nft.db';
 
 export type UniV3NFTPosition = {
     id: number;
@@ -29,9 +30,15 @@ export type UniV3NFTPosition = {
     pool: string;
 };
 
+export type Slot0Data = {
+    sqrtPriceX96: string;
+    tick: string;
+};
+
 const POOL_INIT_CODE_HASH = '0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54';
 
 const logger = LoggerFactory.getInstance().getLogger('UniV3Helper');
+const gNFTDB = NFTDB.getInstance();
 
 const PositionManagerMetadata = {
     address: '',
@@ -102,66 +109,79 @@ export class UniV3Helper {
     }
 
     public async getUserNFTPositions(userAddress: string): Promise<UniV3NFTPosition[]> {
+        logger.debug(`getUserNFTPositions > user address: ${userAddress}`);
         const receipt = await this.positionNFTHelper.getMyNFTReceipts(userAddress);
         const positions: UniV3NFTPosition[] = [];
 
         for (let i = 0; i < receipt.tokenIds.length; i++) {
-            const pos = await this.getPositionById(receipt.tokenIds[0]);
+            const pos = await this.getPositionById(receipt.tokenIds[i]);
             positions.push(pos);
         }
 
         return positions;
     }
 
-    public async getPositionById(tokenId: number): Promise<UniV3NFTPosition> {
-        // 获取position信息
-        const position = await this.positionManager.callReadMethod('positions', tokenId);
-        const tickLower = Number.parseInt(position.tickLower);
-        const tickUpper = Number.parseInt(position.tickUpper);
-        const liquidity = JSBI.BigInt(position.liquidity);
-        const token0Address = position.token0;
-        const token1Address = position.token1;
-        const fee = Number.parseInt(position.fee);
-        // ignore流动性为0的position
-        if (JSBI.GT(liquidity, 0)) {
-            const token0 = await this.swissKnife.syncUpTokenDB(token0Address);
-            const token1 = await this.swissKnife.syncUpTokenDB(token1Address);
-            const poolAddress = UniV3Helper.computePoolAddress(this.factoryAddress, token0Address, token1Address, fee);
-            logger.info(`callbackPosition > pool - ${token0.symbol}/${token1.symbol}: ${poolAddress}`);
+    public async getPositionById(posId: number, ignoreTokenAmount = true): Promise<UniV3NFTPosition> {
+        let pos = await gNFTDB.getById(posId.toString());
+        if (!pos) {
+            // 获取position信息
+            const position = await this.positionManager.callReadMethod('positions', posId);
+            const tickLower = Number.parseInt(position.tickLower);
+            const tickUpper = Number.parseInt(position.tickUpper);
+            const liquidity = JSBI.BigInt(position.liquidity);
+            const token0Address = position.token0;
+            const token1Address = position.token1;
+            const fee = Number.parseInt(position.fee);
+            // ignore流动性为0的position
+            if (JSBI.GT(liquidity, 0)) {
+                const token0 = await this.swissKnife.syncUpTokenDB(token0Address);
+                const token1 = await this.swissKnife.syncUpTokenDB(token1Address);
+                const poolAddress = UniV3Helper.computePoolAddress(
+                    this.factoryAddress,
+                    token0Address,
+                    token1Address,
+                    fee,
+                );
+                logger.info(`getPositionById > pos id: ${posId}`);
+                logger.info(`getPositionById > pool - ${token0.symbol}/${token1.symbol}: ${poolAddress}`);
 
-            let pos: UniV3NFTPosition = {
-                id: tokenId,
-                pool: poolAddress,
-                tickLower,
-                tickUpper,
-                priceLower: 0.0,
-                priceUpper: 0.0,
-                liquidity: position.liquidity,
-                token0: {
-                    token: token0,
-                    amount: '0',
-                },
-                token1: {
-                    token: token1,
-                    amount: '0',
-                },
-                fee: fee,
-            };
-            pos.priceLower = this.tick2PriceDecimal(pos.tickLower, token0.decimals, token1.decimals);
-            pos.priceUpper = this.tick2PriceDecimal(pos.tickUpper, token0.decimals, token1.decimals);
+                pos = {
+                    id: posId,
+                    pool: poolAddress,
+                    tickLower,
+                    tickUpper,
+                    priceLower: 0.0,
+                    priceUpper: 0.0,
+                    liquidity: position.liquidity,
+                    token0: {
+                        token: token0,
+                        amount: '0',
+                    },
+                    token1: {
+                        token: token1,
+                        amount: '0',
+                    },
+                    fee: fee,
+                };
+                pos.priceLower = this.tick2PriceDecimal(pos.tickLower, token0.decimals, token1.decimals);
+                pos.priceUpper = this.tick2PriceDecimal(pos.tickUpper, token0.decimals, token1.decimals);
+                /**
+                 * tokenId: position id/NFT tokenId
+                 * _user: user address
+                 * _amount0Max: 最大值9007199254740990000000
+                 * _amount1Max: 最大值9007199254740990000000
+                 */
+                //const fees = await positionManager.callReadMethod('collect', [tokenId, '0x469bbafeb93480ee4c2cbff806bc504188335499', '9007199254740990000000', '9007199254740990000000'])
+                //logger.info(`[reward] token0: ${token0.readableAmount(fees.amount0).toFixed(6)} ${token0.symbol}`)
+                //logger.info(`[reward] token1: ${token1.readableAmount(fees.amount1).toFixed(6)} ${token1.symbol}`)
+            }
+        }
+        if (!ignoreTokenAmount) {
             //计算并补齐position中缺失的两种token的数量
             pos = await this.calPositionTokenAmount(pos);
-            return pos;
-            /**
-             * tokenId: position id/NFT tokenId
-             * _user: user address
-             * _amount0Max: 最大值9007199254740990000000
-             * _amount1Max: 最大值9007199254740990000000
-             */
-            //const fees = await positionManager.callReadMethod('collect', [tokenId, '0x469bbafeb93480ee4c2cbff806bc504188335499', '9007199254740990000000', '9007199254740990000000'])
-            //logger.info(`[reward] token0: ${token0.readableAmount(fees.amount0).toFixed(6)} ${token0.symbol}`)
-            //logger.info(`[reward] token1: ${token1.readableAmount(fees.amount1).toFixed(6)} ${token1.symbol}`)
         }
+        await gNFTDB.syncUp(pos);
+        return pos;
     }
     /**
      * 计算tick对应的价格
@@ -173,14 +193,14 @@ export class UniV3Helper {
     private tick2PriceDecimal(tick: number, tokenADecimals: number, tokenBDecimals: number): number {
         return Math.pow(1.0001, tick) * (10 ** tokenADecimals / 10 ** tokenBDecimals);
     }
-    private async calPositionTokenAmount(position: UniV3NFTPosition): Promise<UniV3NFTPosition> {
+    public async calPositionTokenAmount(position: UniV3NFTPosition, slot0Data?: Slot0Data): Promise<UniV3NFTPosition> {
         try {
-            logger.info(`calPositionTokenAmount > ${position.pool}`);
+            logger.info(`calPositionTokenAmount > pos id: ${position.id}`);
+            logger.info(`calPositionTokenAmount > pool: ${position.pool}`);
             const pool = new ContractHelper(position.pool, './Uniswap/v3/pool.json', this.network);
-            const token0 = position.token0.token;
-            const token1 = position.token1.token;
-
-            const slot0 = await pool.callReadMethod('slot0');
+            const token0 = await this.swissKnife.syncUpTokenDB(position.token0.token.address);
+            const token1 = await this.swissKnife.syncUpTokenDB(position.token1.token.address);
+            const slot0 = slot0Data == null ? await pool.callReadMethod('slot0') : slot0Data;
 
             const tickCurrent = Number.parseInt(slot0.tick);
             const sqrtPriceX96 = JSBI.BigInt(slot0.sqrtPriceX96);
