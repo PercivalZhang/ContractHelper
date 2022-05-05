@@ -160,27 +160,34 @@ const ABI = [
             ) pair
         ) data
     )`,
-    `function getUnsettledTrades (address exchangeAddress, address account, uint256[] epochs) view returns (
-        tuple[] (
-            tuple(uint256 frozenQuote, uint256 effectiveQuote, uint256 reservedBase) takerBuy,
-            tuple(uint256 frozenBase, uint256 effectiveBase, uint256 reservedQuote) takerSell,
-            tuple(uint256 frozenBase, uint256 effectiveBase, uint256 reservedQuote) makerBuy,
-            tuple(uint256 frozenQuote, uint256 effectiveQuote, uint256 reservedBase) makerSell
-        ) unsettledTradeM,
-        tuple[] (
-            tuple(uint256 frozenQuote, uint256 effectiveQuote, uint256 reservedBase) takerBuy,
-            tuple(uint256 frozenBase, uint256 effectiveBase, uint256 reservedQuote) takerSell,
-            tuple(uint256 frozenBase, uint256 effectiveBase, uint256 reservedQuote) makerBuy,
-            tuple(uint256 frozenQuote, uint256 effectiveQuote, uint256 reservedBase) makerSell
-        ) unsettledTradeA,
-        tuple[] (
-            tuple(uint256 frozenQuote, uint256 effectiveQuote, uint256 reservedBase) takerBuy,
-            tuple(uint256 frozenBase, uint256 effectiveBase, uint256 reservedQuote) takerSell,
-            tuple(uint256 frozenBase, uint256 effectiveBase, uint256 reservedQuote) makerBuy,
-            tuple(uint256 frozenQuote, uint256 effectiveQuote, uint256 reservedBase) makerSell
-        ) unsettledTradeB
-    )`,
+    // `function getUnsettledTrades (address exchangeAddress, address account, uint256[] epochs) view returns (
+    //     tuple[] (
+    //         tuple(uint256 frozenQuote, uint256 effectiveQuote, uint256 reservedBase) takerBuy,
+    //         tuple(uint256 frozenBase, uint256 effectiveBase, uint256 reservedQuote) takerSell,
+    //         tuple(uint256 frozenBase, uint256 effectiveBase, uint256 reservedQuote) makerBuy,
+    //         tuple(uint256 frozenQuote, uint256 effectiveQuote, uint256 reservedBase) makerSell
+    //     ) unsettledTradeM,
+    //     tuple[] (
+    //         tuple(uint256 frozenQuote, uint256 effectiveQuote, uint256 reservedBase) takerBuy,
+    //         tuple(uint256 frozenBase, uint256 effectiveBase, uint256 reservedQuote) takerSell,
+    //         tuple(uint256 frozenBase, uint256 effectiveBase, uint256 reservedQuote) makerBuy,
+    //         tuple(uint256 frozenQuote, uint256 effectiveQuote, uint256 reservedBase) makerSell
+    //     ) unsettledTradeA,
+    //     tuple[] (
+    //         tuple(uint256 frozenQuote, uint256 effectiveQuote, uint256 reservedBase) takerBuy,
+    //         tuple(uint256 frozenBase, uint256 effectiveBase, uint256 reservedQuote) takerSell,
+    //         tuple(uint256 frozenBase, uint256 effectiveBase, uint256 reservedQuote) makerBuy,
+    //         tuple(uint256 frozenQuote, uint256 effectiveQuote, uint256 reservedBase) makerSell
+    //     ) unsettledTradeB
+    // )`,
 ];
+/**
+ * abi格式转换
+ * 文档： https://docs.ethers.io/v5/api/utils/abi/formats/#abi-formats--converting-between-formats
+ * */
+// const readableInterface = new ethers.utils.Interface(ABI);
+// const jsonAbi = readableInterface.format(ethers.utils.FormatTypes.json);
+// console.log(JSON.stringify(jsonAbi));
 
 const Provider = new ethers.providers.JsonRpcProvider('https://bsc-dataseed.binance.org');
 
@@ -192,6 +199,7 @@ export class DataProviderHelper {
 
     private constructor() {
         this.itself = new ethers.Contract(Config.dataProvider, ABI, Provider);
+        this.itself.interface;
     }
 
     static getInstance() {
@@ -343,9 +351,8 @@ export class DataProviderHelper {
         exchangeInfo.account.weightedBalance = data['exchange']['account']['weightedBalance'].toString();
         exchangeInfo.account.workingBalance = data['exchange']['account']['workingBalance'].toString();
 
-        exchangeInfo.account.veSnapshot.veProportion = data['exchange']['account']['veSnapshot'][
-            'veProportion'
-        ].toString();
+        exchangeInfo.account.veSnapshot.veProportion =
+            data['exchange']['account']['veSnapshot']['veProportion'].toString();
         exchangeInfo.account.veSnapshot.veLocked = {
             token: chessToken,
             amount: data['exchange']['account']['veSnapshot']['veLocked']['amount'].toString(),
@@ -558,16 +565,16 @@ export class DataProviderHelper {
      * @param lockedChessAmount 锁定的chess token的数量
      * @param unlockTimestamp   解锁时间 millionseconds
      * @param timestamp         时间戳  millionseconds
-     * @returns 
+     * @returns
      */
     public getVotingPowerAtTimestamp = ({ lockedChessAmount = '', unlockTimestamp = 0, timestamp = 0 }) => {
-        const atMoment = timestamp == 0 ? moment().unix() : moment(timestamp).unix()
+        const atMoment = timestamp == 0 ? moment().unix() : moment(timestamp).unix();
         const timeDiffInSecond = moment(unlockTimestamp).unix() - atMoment;
-        logger.info(`getVotingPowerAtTimestamp > timeDiffInSecond : ${timeDiffInSecond}`)
+        logger.info(`getVotingPowerAtTimestamp > timeDiffInSecond : ${timeDiffInSecond}`);
         const votingPower = new BigNumber(lockedChessAmount)
             .multipliedBy(Math.max(timeDiffInSecond, 0))
             .dividedBy(Config.VOTING_ESCORW_MAX_TIME);
-            logger.info(`getVotingPowerAtTimestamp > votingPower : ${votingPower}`)    
+        logger.info(`getVotingPowerAtTimestamp > votingPower : ${votingPower}`);
         return votingPower.toNumber().toFixed(4);
     };
 }
@@ -579,16 +586,6 @@ const dataProvider = DataProviderHelper.getInstance();
 const main = async () => {
     const data = await dataProvider.getProtocolData(FundCategroy.BNBFund, userAddress);
     console.log(JSON.stringify(data));
-
-    // const bAPR = dataProvider.getBoostingFactorByVeProportion(
-    //     data.exchange.weightedSupply,
-    //     data.exchange.workingSupply,
-    //     data.exchange.account.available.tokenM.balance,
-    //     data.exchange.account.available.tokenA.balance,
-    //     data.exchange.account.available.tokenB.balance,
-    //     data.exchange.account.workingBalance,
-    //     new BigNumber(data.exchange.account.veSnapshot.veProportion).dividedBy(1e18).toNumber());
-    // console.log(bAPR);
 };
 
 main().catch((e) => {

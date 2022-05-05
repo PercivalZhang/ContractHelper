@@ -26,6 +26,11 @@ export enum NetworkType {
     ARBITRUM,
 }
 
+export type NetworkInfo = {
+    chainId: number;
+    rpcURI: number;
+};
+
 const Chains = {
     0: {
         rpcURI: 'https://mainnet.infura.io/v3/11ae2b7ff4c04391b71dd5a196c21b0d', // ETH Main
@@ -53,6 +58,7 @@ const Chains = {
         rpcURI: 'https://api.avax.network/ext/bc/C/rpc', // Avax
     },
     9: {
+        chainId: 42161,
         rpcURI: 'https://arb1.arbitrum.io/rpc', // Arbitrum
         blockDelta: 12.5,
     },
@@ -72,5 +78,13 @@ export class Web3Factory {
 
     getWeb3(network: NetworkType): Web3 {
         return new Web3(Chains[network].rpcURI);
+    }
+
+    getRPCURI(network: NetworkType): string {
+        return Chains[network].rpcURI;
+    }
+
+    getChainId(network: NetworkType): number {
+        return Chains[network].chainId;
     }
 }

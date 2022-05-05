@@ -51,12 +51,12 @@ const PositionManagerMetadata = {
     },
 };
 
-export class UniV3Helper {
+export class UniV3PM {
     private network: NetworkType;
     private positionNFTHelper: ERC721Helper;
     private positionManager: ContractHelper;
     private swissKnife: SwissKnife;
-    private static instance: UniV3Helper;
+    private static instance: UniV3PM;
     private factoryAddress: string;
 
     private constructor(factoryAddress: string, positionManagerAddress: string, network: NetworkType) {
@@ -77,10 +77,10 @@ export class UniV3Helper {
     }
 
     static getInstance(factoryAddress: string, positionManagerAddress: string, network: NetworkType) {
-        if (!UniV3Helper.instance) {
-            UniV3Helper.instance = new UniV3Helper(factoryAddress, positionManagerAddress, network);
+        if (!UniV3PM.instance) {
+            UniV3PM.instance = new UniV3PM(factoryAddress, positionManagerAddress, network);
         }
-        return UniV3Helper.instance;
+        return UniV3PM.instance;
     }
 
     /**
@@ -136,12 +136,7 @@ export class UniV3Helper {
             if (JSBI.GT(liquidity, 0)) {
                 const token0 = await this.swissKnife.syncUpTokenDB(token0Address);
                 const token1 = await this.swissKnife.syncUpTokenDB(token1Address);
-                const poolAddress = UniV3Helper.computePoolAddress(
-                    this.factoryAddress,
-                    token0Address,
-                    token1Address,
-                    fee,
-                );
+                const poolAddress = UniV3PM.computePoolAddress(this.factoryAddress, token0Address, token1Address, fee);
                 logger.info(`getPositionById > pos id: ${posId}`);
                 logger.info(`getPositionById > pool - ${token0.symbol}/${token1.symbol}: ${poolAddress}`);
 
@@ -163,8 +158,8 @@ export class UniV3Helper {
                     },
                     fee: fee,
                 };
-                pos.priceLower = this.tick2PriceDecimal(pos.tickLower, token0.decimals, token1.decimals);
-                pos.priceUpper = this.tick2PriceDecimal(pos.tickUpper, token0.decimals, token1.decimals);
+                //pos.priceLower = this.tick2PriceDecimal(pos.tickLower, token0.decimals, token1.decimals);
+                //pos.priceUpper = this.tick2PriceDecimal(pos.tickUpper, token0.decimals, token1.decimals);
                 /**
                  * tokenId: position id/NFT tokenId
                  * _user: user address
