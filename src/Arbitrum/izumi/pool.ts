@@ -69,32 +69,35 @@ export class FarmingPool {
         const ids = await this.itself.callReadMethod('getTokenIds', userAddress); // this.itself izumi质押池合约
         logger.info(`getUserInfo > detected ${ids.length} staked NFT`);
         for (let id of ids) {
-            const pos = await gUniV3PM.getPositionById(id);
-            //调用univ3 SDK获取池子/POS信息
-            //构造V3池子对象
-            const uniV3Pool = await UniV3Util.getInstance(Config.network).getPoolInstance(pos.pool);
-            //构造V3头寸对象
+            //通过position id(UniV3 LP NFT token id)访问UniV3 Position Manager合约获取position的基本信息
+            const nftPOS = await gUniV3PM.getPositionById(id);
+            /**
+             * 调用Univ3 SDK构造V3池子对象
+             * UniV3Util - UniV3 SDK封装类
+             */
+            const uniV3Pool = await UniV3Util.getInstance(Config.network).getPoolInstance(nftPOS.pool);
+            //调用Univ3 SDK构造V3头寸对象
             const univ3POS = new UniV3POS({
                 pool: uniV3Pool,
-                liquidity: pos.liquidity,
-                tickLower: pos.tickLower,
-                tickUpper: pos.tickUpper,
+                liquidity: nftPOS.liquidity,
+                tickLower: nftPOS.tickLower,
+                tickUpper: nftPOS.tickUpper,
             });
             //获取两种token的数量
             const amount0 = univ3POS.amount0.quotient.toString();
             const amount1 = univ3POS.amount1.quotient.toString();
-            pos.token0.amount = amount0;
-            pos.token1.amount = amount1;
-            logger.info(`pos[${id}] > token0 - ${pos.token0.token.symbol} amount: ${amount0}`);
-            logger.info(`pos[${id}] > token0 - ${pos.token1.token.symbol} amount: ${amount1}`);
+            nftPOS.token0.amount = amount0;
+            nftPOS.token1.amount = amount1;
+            logger.info(`pos[${id}] > token0 - ${nftPOS.token0.token.symbol} amount: ${amount0}`);
+            logger.info(`pos[${id}] > token0 - ${nftPOS.token1.token.symbol} amount: ${amount1}`);
             //获取token0的下限和上限价格
             const priceLower = univ3POS.token0PriceLower.toFixed(6);
             const priceUpper = univ3POS.token0PriceUpper.toFixed(6);
-            pos.priceLower = Number.parseFloat(priceLower);
-            pos.priceUpper = Number.parseFloat(priceUpper);
+            nftPOS.priceLower = Number.parseFloat(priceLower);
+            nftPOS.priceUpper = Number.parseFloat(priceUpper);
             logger.info(`pos[${id}] > price lower: ${priceLower} ${uniV3Pool.token1.symbol}`);
             logger.info(`pos[${id}] > price upper: ${priceUpper} ${uniV3Pool.token1.symbol}`);
-            console.log(pos);
+            console.log(nftPOS);
 
             const status = await this.itself.callReadMethod('tokenStatus', id);
             const vLQ = status['vLiquidity'];
@@ -109,7 +112,7 @@ export class FarmingPool {
              */
             const boostFactor = new BigNumber(validVLQ).dividedBy(vLQ).dividedBy(0.4);
             logger.info(`pos[${id}] boost factor:  ${boostFactor.toNumber().toFixed(4)}`);
-            //获取每个NFT质押的待领取奖励信息
+            //获取每个UniV3 LP NFT质押的待领取奖励信息
             const pendingRewardData = await this.itself.callReadMethod('pendingReward', id);
             const rewardInfosLen = await this.itself.callReadMethod('rewardInfosLen');
             for (let i = 0; i < Number.parseInt(rewardInfosLen); i++) {

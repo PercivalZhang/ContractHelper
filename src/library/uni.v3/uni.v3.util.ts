@@ -4,7 +4,6 @@ import { defaultAbiCoder } from '@ethersproject/abi';
 import { getCreate2Address } from '@ethersproject/address';
 import { keccak256 } from '@ethersproject/solidity';
 import { LoggerFactory } from '../LoggerFactory';
-import { NFTDB } from './nft.db';
 
 import { ethers } from 'ethers';
 import { Pool as UniV3Pool } from '@uniswap/v3-sdk';
@@ -33,8 +32,7 @@ interface PoolState {
 
 const POOL_INIT_CODE_HASH = '0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54';
 
-const logger = LoggerFactory.getInstance().getLogger('UniV3Helper');
-const gNFTDB = NFTDB.getInstance();
+const logger = LoggerFactory.getInstance().getLogger('UniV3Util');
 
 export class UniV3Util {
     private network: NetworkType;
