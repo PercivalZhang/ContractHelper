@@ -744,6 +744,10 @@
         "0x97749c9b61f878a880dfe312d2594ae07aed7656": {
             "symbol": "MMF",
             "decimals": 18
+        },
+        "0xba452a1c0875d33a440259b1ea4dca8f5d86d9ae": {
+            "symbol": "MEERKAT-LP",
+            "decimals": 18
         }
     },
     "56": {
@@ -1752,6 +1756,15 @@
         },
         "0xf72beacc6fd334e14a7ddac25c3ce1eb8a827e10": {
             "symbol": "DefrostH2O3CRV-f",
+            "decimals": 18
+        },
+        "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7": {
+            "symbol": "WAVAX",
+            "decimals": 18,
+            "address": "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7"
+        },
+        "0x47536f17f4ff30e64a96a7555826b8f9e66ec468": {
+            "symbol": "CRV",
             "decimals": 18
         }
     }

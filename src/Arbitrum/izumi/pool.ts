@@ -76,6 +76,7 @@ export class FarmingPool {
              * UniV3Util - UniV3 SDK封装类
              */
             const uniV3Pool = await UniV3Util.getInstance(Config.network).getPoolInstance(nftPOS.pool);
+            console.log(uniV3Pool.tickCurrent);
             //调用Univ3 SDK构造V3头寸对象
             const univ3POS = new UniV3POS({
                 pool: uniV3Pool,

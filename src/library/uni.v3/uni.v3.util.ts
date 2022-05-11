@@ -9,6 +9,7 @@ import { ethers } from 'ethers';
 import { Pool as UniV3Pool } from '@uniswap/v3-sdk';
 import { Token } from '@uniswap/sdk-core';
 import { abi as IUniswapV3PoolABI } from '@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json';
+import { abi as IUniswapV3PositionManager } from '@uniswap/v3-periphery/artifacts/contracts/interfaces/INonfungiblePositionManager.sol/INonfungiblePositionManager.json';
 
 interface PoolImmutables {
     factory: string;
@@ -80,6 +81,9 @@ export class UniV3Util {
 
     public async getPoolImmutables(poolAddress: string): Promise<PoolImmutables> {
         const poolContract = new ethers.Contract(poolAddress, IUniswapV3PoolABI, this.provider);
+        const factoryAddress = await poolContract.factory();
+        logger.info(`pool factory: ${factoryAddress}`);
+
         const [factory, token0, token1, fee, tickSpacing, maxLiquidityPerTick] = await Promise.all([
             poolContract.factory(),
             poolContract.token0(),
@@ -103,7 +107,7 @@ export class UniV3Util {
     public async getPoolState(poolAddress: string): Promise<PoolState> {
         const poolContract = new ethers.Contract(poolAddress, IUniswapV3PoolABI, this.provider);
         const [liquidity, slot] = await Promise.all([poolContract.liquidity(), poolContract.slot0()]);
-
+        
         const poolState: PoolState = {
             liquidity,
             sqrtPriceX96: slot[0],
@@ -119,6 +123,7 @@ export class UniV3Util {
     }
 
     public async getPoolInstance(poolAddress: string): Promise<UniV3Pool> {
+        logger.info(`getPoolInstance > pool address: ${poolAddress}`);
         const [immutables, state] = await Promise.all([
             this.getPoolImmutables(poolAddress),
             this.getPoolState(poolAddress),
