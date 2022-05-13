@@ -145,8 +145,8 @@ export class FarmingPool {
 
 const main = async () => {
     const pool = new FarmingPool('0xb2decea19d58ebe10ab215a04db2edbe52e37fa4');
-    //await pool.getPoolInfo();
-    await pool.getUserInfo('0x881897b1FC551240bA6e2CAbC7E59034Af58428a');
+    await pool.getPoolInfo();
+    //await pool.getUserInfo('0x881897b1FC551240bA6e2CAbC7E59034Af58428a');
 
     // const pool = await UniV3Util.getInstance(Config.network).getPoolInstance(
     //     '0x13398E27a21Be1218b6900cbEDF677571df42A48',

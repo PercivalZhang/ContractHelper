@@ -1,0 +1,30 @@
+{
+    "token.v2.ref-finance.near": {
+        "symbol": "REF",
+        "decimals": 18
+    },
+    "abr.a11bd.near": {
+        "symbol": "ABR",
+        "decimals": 24
+    },
+    "celo.token.a11bd.near": {
+        "symbol": "CELO",
+        "decimals": 24
+    },
+    "usn": {
+        "symbol": "USN",
+        "decimals": 18
+    },
+    "dac17f958d2ee523a2206206994597c13d831ec7.factory.bridge.near": {
+        "symbol": "USDT",
+        "decimals": 6
+    },
+    "cusd.token.a11bd.near": {
+        "symbol": "cUSD",
+        "decimals": 24
+    },
+    "a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.factory.bridge.near": {
+        "symbol": "USDC",
+        "decimals": 6
+    }
+}

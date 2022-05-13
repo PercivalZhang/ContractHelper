@@ -7903,6 +7903,32 @@
         },
         "fee": 500
     },
+    "42354": {
+        "id": "42354",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "7194240852",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
     "42364": {
         "id": "42364",
         "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
@@ -8301,6 +8327,32 @@
         "priceLower": 0.9950127279292514,
         "priceUpper": 1.0050122696230506,
         "liquidity": "2142398582",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "42522": {
+        "id": "42522",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "31234444156",
         "token0": {
             "token": {
                 "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
@@ -10485,6 +10537,32 @@
         "priceLower": 0.994018262239491,
         "priceUpper": 1.0050122696230506,
         "liquidity": "1983507989",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "44488": {
+        "id": "44488",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "4358967610",
         "token0": {
             "token": {
                 "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
@@ -14065,6 +14143,136 @@
         },
         "fee": 500
     },
+    "46653": {
+        "id": "46653",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "7879920304",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "46654": {
+        "id": "46654",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "7879920304",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "46660": {
+        "id": "46660",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "3983683270",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "46716": {
+        "id": "46716",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "101075904587",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "46770": {
+        "id": "46770",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "15333229130",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
     "46849": {
         "id": "46849",
         "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
@@ -14088,6 +14296,5050 @@
                 "decimals": 6
             },
             "amount": "0.102226"
+        },
+        "fee": 500
+    },
+    "46908": {
+        "id": "46908",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "388161939",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47035": {
+        "id": "47035",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "1941641204",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47064": {
+        "id": "47064",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "1654214491",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47187": {
+        "id": "47187",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "4299012595",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47191": {
+        "id": "47191",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "7581621672",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47313": {
+        "id": "47313",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "16491071443",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47317": {
+        "id": "47317",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "567754346453",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47324": {
+        "id": "47324",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "16504955971",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47363": {
+        "id": "47363",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "25476406762",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47400": {
+        "id": "47400",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "5972240967",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47459": {
+        "id": "47459",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "55043900952",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47466": {
+        "id": "47466",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "44156254238",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47467": {
+        "id": "47467",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "36783132220",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47494": {
+        "id": "47494",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "27729129057",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47571": {
+        "id": "47571",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "41416459460",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47576": {
+        "id": "47576",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "36020436896",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47764": {
+        "id": "47764",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "38368086",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47794": {
+        "id": "47794",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "4627286759",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47806": {
+        "id": "47806",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "2079884462",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47843": {
+        "id": "47843",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "33231507339",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47861": {
+        "id": "47861",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "415682762",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47863": {
+        "id": "47863",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "4570419617",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47918": {
+        "id": "47918",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "386721007",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47919": {
+        "id": "47919",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "415389165",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47922": {
+        "id": "47922",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "6230022053",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "47957": {
+        "id": "47957",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "4153639978",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "48002": {
+        "id": "48002",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "4394899030",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "48163": {
+        "id": "48163",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "38705097",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "48177": {
+        "id": "48177",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "38705097",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "48180": {
+        "id": "48180",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "38705097",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "48359": {
+        "id": "48359",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "2327983261",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "48428": {
+        "id": "48428",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "46702728860",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "48480": {
+        "id": "48480",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "4154513540",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "48492": {
+        "id": "48492",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "4153208672",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "48525": {
+        "id": "48525",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "15495469615",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "48527": {
+        "id": "48527",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "16560213132",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "48683": {
+        "id": "48683",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "861708983",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "48854": {
+        "id": "48854",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "16535504930",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "48860": {
+        "id": "48860",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "42955643401",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49091": {
+        "id": "49091",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "5616414949",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49145": {
+        "id": "49145",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "200055210",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49148": {
+        "id": "49148",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49149": {
+        "id": "49149",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49150": {
+        "id": "49150",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49151": {
+        "id": "49151",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49152": {
+        "id": "49152",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49153": {
+        "id": "49153",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49154": {
+        "id": "49154",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49155": {
+        "id": "49155",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49156": {
+        "id": "49156",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49157": {
+        "id": "49157",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49158": {
+        "id": "49158",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49159": {
+        "id": "49159",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49160": {
+        "id": "49160",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49161": {
+        "id": "49161",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49162": {
+        "id": "49162",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49164": {
+        "id": "49164",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49165": {
+        "id": "49165",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49166": {
+        "id": "49166",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49167": {
+        "id": "49167",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49168": {
+        "id": "49168",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49169": {
+        "id": "49169",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49170": {
+        "id": "49170",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49171": {
+        "id": "49171",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49172": {
+        "id": "49172",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49173": {
+        "id": "49173",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49174": {
+        "id": "49174",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49175": {
+        "id": "49175",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49176": {
+        "id": "49176",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49177": {
+        "id": "49177",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49178": {
+        "id": "49178",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49179": {
+        "id": "49179",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49180": {
+        "id": "49180",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49181": {
+        "id": "49181",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49182": {
+        "id": "49182",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49183": {
+        "id": "49183",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49184": {
+        "id": "49184",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49185": {
+        "id": "49185",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49186": {
+        "id": "49186",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49187": {
+        "id": "49187",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49188": {
+        "id": "49188",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49189": {
+        "id": "49189",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49190": {
+        "id": "49190",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49191": {
+        "id": "49191",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49192": {
+        "id": "49192",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49193": {
+        "id": "49193",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49194": {
+        "id": "49194",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49195": {
+        "id": "49195",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49196": {
+        "id": "49196",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49197": {
+        "id": "49197",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49198": {
+        "id": "49198",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49199": {
+        "id": "49199",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49200": {
+        "id": "49200",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49201": {
+        "id": "49201",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49202": {
+        "id": "49202",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49203": {
+        "id": "49203",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49204": {
+        "id": "49204",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49205": {
+        "id": "49205",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49206": {
+        "id": "49206",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49207": {
+        "id": "49207",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49208": {
+        "id": "49208",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49209": {
+        "id": "49209",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49210": {
+        "id": "49210",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49211": {
+        "id": "49211",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49212": {
+        "id": "49212",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49213": {
+        "id": "49213",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49214": {
+        "id": "49214",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49215": {
+        "id": "49215",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49216": {
+        "id": "49216",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49217": {
+        "id": "49217",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49218": {
+        "id": "49218",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49219": {
+        "id": "49219",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49220": {
+        "id": "49220",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49221": {
+        "id": "49221",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49222": {
+        "id": "49222",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49223": {
+        "id": "49223",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49224": {
+        "id": "49224",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49225": {
+        "id": "49225",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49226": {
+        "id": "49226",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49227": {
+        "id": "49227",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49228": {
+        "id": "49228",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49229": {
+        "id": "49229",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49230": {
+        "id": "49230",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49231": {
+        "id": "49231",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49232": {
+        "id": "49232",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49233": {
+        "id": "49233",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49234": {
+        "id": "49234",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49235": {
+        "id": "49235",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49236": {
+        "id": "49236",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49237": {
+        "id": "49237",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49238": {
+        "id": "49238",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49239": {
+        "id": "49239",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49240": {
+        "id": "49240",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49241": {
+        "id": "49241",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49242": {
+        "id": "49242",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49243": {
+        "id": "49243",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49244": {
+        "id": "49244",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49245": {
+        "id": "49245",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "100048607",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49266": {
+        "id": "49266",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "2001814325",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49290": {
+        "id": "49290",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "4004114967",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49321": {
+        "id": "49321",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "5712633297",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49378": {
+        "id": "49378",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "796157541",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49383": {
+        "id": "49383",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "805936118",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49384": {
+        "id": "49384",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "805936118",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49478": {
+        "id": "49478",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "15816461147",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49480": {
+        "id": "49480",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "15816538886",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49717": {
+        "id": "49717",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "15884613255",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49719": {
+        "id": "49719",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "15884480651",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49721": {
+        "id": "49721",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "15884569418",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49724": {
+        "id": "49724",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "15884121795",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49729": {
+        "id": "49729",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "15882318028",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49732": {
+        "id": "49732",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "15876449888",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49735": {
+        "id": "49735",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "15877036687",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49776": {
+        "id": "49776",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -10,
+        "tickUpper": 10,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "18671770183",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49780": {
+        "id": "49780",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "132501802",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49786": {
+        "id": "49786",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "3577578114",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49798": {
+        "id": "49798",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "4376616669",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49844": {
+        "id": "49844",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "3983165722",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49859": {
+        "id": "49859",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -887270,
+        "tickUpper": 887270,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "1420599",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49870": {
+        "id": "49870",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "39822926734",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49953": {
+        "id": "49953",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -10,
+        "tickUpper": 10,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "17630413012",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49968": {
+        "id": "49968",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -10,
+        "tickUpper": 10,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "17690644140",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49970": {
+        "id": "49970",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -10,
+        "tickUpper": 10,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "17710600880",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "49997": {
+        "id": "49997",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "3954987550",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "50066": {
+        "id": "50066",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "1791126793",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "50286": {
+        "id": "50286",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "3991178423",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "50287": {
+        "id": "50287",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "1585127641",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "50359": {
+        "id": "50359",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -10,
+        "tickUpper": 10,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "18364382096",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "50379": {
+        "id": "50379",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -10,
+        "tickUpper": 10,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "18367277047",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "50552": {
+        "id": "50552",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -10,
+        "tickUpper": 10,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "17350200651",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "50675": {
+        "id": "50675",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -10,
+        "tickUpper": 10,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "16524248609",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "50893": {
+        "id": "50893",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "52229708513",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "50894": {
+        "id": "50894",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "10769576069",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "50896": {
+        "id": "50896",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "1069218447",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "50993": {
+        "id": "50993",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "14812012398",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "51056": {
+        "id": "51056",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "160680327536",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "51147": {
+        "id": "51147",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "8189241519",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "51204": {
+        "id": "51204",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "3995430132",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "51205": {
+        "id": "51205",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "4195217594",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "51207": {
+        "id": "51207",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "4195091156",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "51209": {
+        "id": "51209",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "4155377951",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "51210": {
+        "id": "51210",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "4127405554",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "51212": {
+        "id": "51212",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "3284114514",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "51213": {
+        "id": "51213",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "2041599255",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "51252": {
+        "id": "51252",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "99856448990",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "51633": {
+        "id": "51633",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "861731333",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "51744": {
+        "id": "51744",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "35520300840",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "51803": {
+        "id": "51803",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "1826092635",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "51839": {
+        "id": "51839",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "36672022550",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "51859": {
+        "id": "51859",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "51452863464",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "51913": {
+        "id": "51913",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "236513177749",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "51954": {
+        "id": "51954",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "10737402563",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "52101": {
+        "id": "52101",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -50,
+        "tickUpper": 50,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "18415575434",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "fee": 500
+    },
+    "52354": {
+        "id": "52354",
+        "pool": "0x13398E27a21Be1218b6900cbEDF677571df42A48",
+        "tickLower": -200,
+        "tickUpper": 200,
+        "priceLower": 0,
+        "priceUpper": 0,
+        "liquidity": "1044995542",
+        "token0": {
+            "token": {
+                "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+                "symbol": "USDT",
+                "decimals": 6
+            },
+            "amount": "0"
+        },
+        "token1": {
+            "token": {
+                "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+                "symbol": "USDC",
+                "decimals": 6
+            },
+            "amount": "0"
         },
         "fee": 500
     }
