@@ -5,6 +5,7 @@ import { ProjectConfig as Config } from './config';
 import { ChainConfig } from '../config';
 import BigNumber from "bignumber.js";
 import { ERC20Token } from "src/library/erc20.token";
+import Decimal from "decimal.js";
 
 const logger = LoggerFactory.getInstance().getLogger('Pool');
 
@@ -28,12 +29,13 @@ export type PoolInfo = {
     /// List of tokens in the pool.
     tokens: TokenBalance[]
     totalSupply: string,
+    sharePrice: number,
     shareDecimals: number
 }
 
 export type TokenBalance = {
     token: ERC20Token,
-    balance: string
+    amount: string
 }
 
 const gTokenDB = TokenDB.getInstance(ChainConfig.mainnet);
@@ -78,7 +80,7 @@ export class PoolHelper {
      * @returns PoolInfo
      * for more interface, check https://github.com/ref-finance/ref-contracts/blob/main/ref-exchange/src/views.rs
      */
-     public async getPoolRawInfo(poolId: number): Promise<PoolRawInfo> {
+    public async getPoolRawInfo(poolId: number): Promise<PoolRawInfo> {
         await this.checkConnection();
         const poolInfoData = await this.defaultAccount.viewFunction(Config.contract.exchange, 'get_pool', { pool_id: poolId });
         const poolInfo: PoolRawInfo = {
@@ -86,24 +88,25 @@ export class PoolHelper {
             token_account_ids: poolInfoData['token_account_ids'],
             amounts: poolInfoData['amounts'],
             total_fee: poolInfoData['total_fee'],
-            shares_total_supply: new BigNumber(poolInfoData['shares_total_supply']).toString(),
+            shares_total_supply: poolInfoData['shares_total_supply'],
             amp: poolInfoData['amp']
         }
         return poolInfo;
     }
 
     public async getPoolInfo(poolId: number, decimals = 8): Promise<PoolInfo> {
-        const poolRawInfo = await this.getPoolRawInfo(poolId);
+        const poolRawInfo = await this.getPoolRawInfo(poolId)
+        const sharePrice = await this.getSharePrice(poolId)
         const poolInfo: PoolInfo = {
             id: poolId,
             name: "",
             poolType: "",
             tokens: [],
             totalSupply: "",
+            sharePrice: Number.parseFloat(sharePrice.toNumber().toFixed(decimals)),
             shareDecimals: 18
         }
         poolInfo.poolType = poolRawInfo.pool_kind
-        poolInfo.totalSupply = poolRawInfo.shares_total_supply
         const tokenSymbols = [];
         let i = 0
         for (const tokenId of poolRawInfo.token_account_ids) {
@@ -111,12 +114,13 @@ export class PoolHelper {
             tokenSymbols.push(token.symbol);
             poolInfo.tokens.push({
                 token,
-                balance: token.readableAmount(poolRawInfo.amounts[i]).toFixed(decimals)
+                amount: token.readableAmount(poolRawInfo.amounts[i]).toFixed(decimals)
             })
             i = i + 1
         }
         poolInfo.name = tokenSymbols.join('-')
-        poolInfo.shareDecimals = poolInfo.poolType === 'STABLE_SWAP' ? 18: 24
+        poolInfo.shareDecimals = poolInfo.poolType === 'STABLE_SWAP' ? 18 : 24
+        poolInfo.totalSupply = new BigNumber(poolRawInfo.shares_total_supply).dividedBy(Math.pow(10, poolInfo.shareDecimals)).toNumber().toFixed(6)
         return poolInfo;
     }
 
@@ -126,16 +130,23 @@ export class PoolHelper {
         return new BigNumber(shares);
     }
 
+    public async getSharePrice(poolId: number): Promise<BigNumber> {
+        await this.checkConnection();
+        // decimals = 1e8
+        const price = await this.defaultAccount.viewFunction(Config.contract.exchange, 'get_pool_share_price', { pool_id: poolId });
+        return new BigNumber(price).dividedBy(1e8);
+    }
+
     public async getPoolBalanceDetails(poolInfo: PoolInfo, shareBalance: BigNumber): Promise<TokenBalance[]> {
         const balances: TokenBalance[] = [];
-        const ratio = shareBalance.dividedBy(poolInfo.totalSupply);
+        const ratio = shareBalance.dividedBy(Math.pow(10, poolInfo.shareDecimals)).dividedBy(poolInfo.totalSupply);
         for (const tokenBalance of poolInfo.tokens) {
             const token = tokenBalance.token;
-            const tokenAmount = ratio.multipliedBy(tokenBalance.balance);
+            const tokenAmount = ratio.multipliedBy(tokenBalance.amount);
             logger.info(`getPoolBalanceDetails > token - ${token.symbol}: ${tokenAmount}`)
             balances.push({
                 token,
-                balance: tokenAmount.toNumber().toString()
+                amount: tokenAmount.toNumber().toString()
             })
         }
         return balances;
