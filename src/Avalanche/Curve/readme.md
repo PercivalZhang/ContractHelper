@@ -4,6 +4,7 @@ aave: aDAI+aUSDC+aUSDT
 pool: https://snowtrace.io/address/0x7f90122BF0700F9E7e1F688fe926940E8839F353#readContract
 lpt: https://snowtrace.io/address/0x1337bedc9d22ecbe766df105c9623922a27963ec#readContract
 gauge: https://snowtrace.io/address/0x5B5CFE992AdAC0C9D48E05854B2d91C73a003858#readContract
+rewardContract: https://snowtrace.io/address/0xb504b6eb06760019801a91b451d3f7bd9f027fc9#readContract
 
 Defrost H20: H20+av3CRV
 pool = LPT: https://snowtrace.io/address/0xf72beacc6fd334e14a7ddac25c3ce1eb8a827e10#readContract

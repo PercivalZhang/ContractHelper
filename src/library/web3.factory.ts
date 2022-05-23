@@ -24,6 +24,7 @@ export enum NetworkType {
     CRONOS,
     AVALANCHE,
     ARBITRUM,
+    AURORA
 }
 
 export type NetworkInfo = {
@@ -61,6 +62,10 @@ const Chains = {
         chainId: 42161,
         rpcURI: 'https://arb1.arbitrum.io/rpc', // Arbitrum
         blockDelta: 12.5,
+    },
+    10: {
+        chainId: 1313161554,
+        rpcURI: 'https://mainnet.aurora.dev', // Aurora
     },
 };
 

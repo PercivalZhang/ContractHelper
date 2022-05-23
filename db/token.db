@@ -1767,5 +1767,20 @@
             "symbol": "CRV",
             "decimals": 18
         }
+    },
+    "1313161554": {
+        "0xca9511b610ba5fc7e311fdef9ce16050ee4449e9": {
+            "symbol": "auETH",
+            "decimals": 8,
+            "address": "0xca9511b610ba5fc7e311fdef9ce16050ee4449e9"
+        },
+        "0xc9011e629c9d0b8b1e4a2091e123fbb87b3a792c": {
+            "symbol": "auPLY",
+            "decimals": 8
+        },
+        "0x4f0d864b1abf4b701799a0b30b57a22dfeb5917b": {
+            "symbol": "auUSDC",
+            "decimals": 8
+        }
     }
 }

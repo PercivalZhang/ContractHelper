@@ -5,7 +5,6 @@ import { ProjectConfig as Config } from './config';
 import { ChainConfig } from '../config';
 import BigNumber from "bignumber.js";
 import { ERC20Token } from "src/library/erc20.token";
-import Decimal from "decimal.js";
 
 const logger = LoggerFactory.getInstance().getLogger('Pool');
 

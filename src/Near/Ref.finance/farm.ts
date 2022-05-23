@@ -271,6 +271,7 @@ export class FarmingHelper {
                 //遍历所有farm pool item, 获取多个奖励token的信息
                 for (const farm of farms) {
                     if (farm.farm_status === 'Running') { //只关注当前状态是“Running”的farming pool
+                        logger.info(`farm > ${farm.farm_id}`);
                         //获取奖励token的metadata信息
                         const rewardToken = await gTokenDB.syncUp(farm.reward_token);
                         farmInfo.rewardTokens.push(rewardToken);
