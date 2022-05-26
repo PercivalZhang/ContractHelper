@@ -650,5 +650,9 @@
     "token.pembrock.near": {
         "symbol": "PEM",
         "decimals": 18
+    },
+    "0316eb71485b0ab14103307bf65a021042c6d380.factory.bridge.near": {
+        "symbol": "HBTC",
+        "decimals": 18
     }
 }

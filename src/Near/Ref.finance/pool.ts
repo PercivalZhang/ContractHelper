@@ -160,7 +160,7 @@ export class PoolHelper {
         }
         poolInfo.name = tokenSymbols.join('-')
         poolInfo.shareDecimals = poolInfo.poolType === 'STABLE_SWAP' ? 18 : 24
-        poolInfo.totalSupply = new BigNumber(poolRawInfo.shares_total_supply).dividedBy(Math.pow(10, poolInfo.shareDecimals)).toNumber().toFixed(6)
+        poolInfo.totalSupply = new BigNumber(poolRawInfo.shares_total_supply).dividedBy(Math.pow(10, poolInfo.shareDecimals)).toNumber().toFixed(decimals)
         return poolInfo;
     }
 
@@ -171,6 +171,9 @@ export class PoolHelper {
         logger.info(`findPools > total ${poolLength} pools`)
         for(let pid = start; pid < poolLength; pid++) {
             const poolInfo = await this.getPoolInfo(pid)
+            if(new BigNumber(poolInfo.totalSupply).eq(0)) {
+                continue //忽略流动性为0的pool
+            }
             const poolTokenSymbols = poolInfo.name.split('-')
             logger.info(`findPools > scanning pool[${pid}]...`)
             for(const tokenSymbolCP of  tokenSymbolCPs) {
@@ -203,12 +206,12 @@ const main = async () => {
     const poolHelper = new PoolHelper(ChainConfig.mainnet)
     //const receipts = await farmingHelper.getUserFarmingReceipts('4a04621225d430f5939a265d4995c1e6cb60768c1a8e4c7b8a4da1f7fac982ce');
     //console.log(JSON.stringify(receipts));
-    const pools = await poolHelper.findPools([['wbtc', 'eth'], ['usdt', 'usdc', 'dai'], ['wbtc', 'hbtc']], 3036)
-    console.log(JSON.stringify(pools))
-    // for(const pid of [1910, 2734, 2761]) {
-    //     const poolInfo = await poolHelper.getPoolInfo(pid);
-    //     console.log(JSON.stringify(poolInfo))
-    // }
+    // const pools = await poolHelper.findPools([['wbtc', 'eth'], ['usdt', 'usdc', 'dai'], ['wbtc', 'hbtc']], 3036)
+    // console.log(JSON.stringify(pools))
+    for(const pid of [1910, 2734, 3333]) {
+        const poolInfo = await poolHelper.getPoolInfo(pid);
+        console.log(JSON.stringify(poolInfo))
+    }
     
 };
 

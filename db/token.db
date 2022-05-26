@@ -698,6 +698,14 @@
         "0x0316eb71485b0ab14103307bf65a021042c6d380": {
             "symbol": "HBTC",
             "decimals": 18
+        },
+        "0xc8871267e07408b89aa5aecc58adca5e574557f8": {
+            "symbol": "iUSDC",
+            "decimals": 6
+        },
+        "0xae7ab96520de3a18e5e111b5eaab095312d7fe84": {
+            "symbol": "stETH",
+            "decimals": 18
         }
     },
     "25": {
