@@ -26,5 +26,629 @@
     "a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.factory.bridge.near": {
         "symbol": "USDC",
         "decimals": 6
+    },
+    "token.skyward.near": {
+        "symbol": "SKYWARD",
+        "decimals": 18
+    },
+    "wrap.near": {
+        "symbol": "wNEAR",
+        "decimals": 24
+    },
+    "c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2.factory.bridge.near": {
+        "symbol": "WETH",
+        "decimals": 18
+    },
+    "6b175474e89094c44da98b954eedeac495271d0f.factory.bridge.near": {
+        "symbol": "DAI",
+        "decimals": 18
+    },
+    "berryclub.ek.near": {
+        "symbol": "BANANA",
+        "decimals": 18
+    },
+    "hak.tkn.near": {
+        "symbol": "HAK",
+        "decimals": 18
+    },
+    "rekt.tkn.near": {
+        "symbol": "REKT",
+        "decimals": 18
+    },
+    "marmaj.tkn.near": {
+        "symbol": "marmaj",
+        "decimals": 18
+    },
+    "de30da39c46104798bb5aa3fe8b9e0e1f348163f.factory.bridge.near": {
+        "symbol": "GTC",
+        "decimals": 18
+    },
+    "mrktng.tkn.near": {
+        "symbol": "MRKTNG",
+        "decimals": 6
+    },
+    "avb.tkn.near": {
+        "symbol": "AVB",
+        "decimals": 18
+    },
+    "f5cfbc74057c610c8ef151a439252680ac68c6dc.factory.bridge.near": {
+        "symbol": "OCT",
+        "decimals": 18
+    },
+    "nvc.tkn.near": {
+        "symbol": "NVC",
+        "decimals": 18
+    },
+    "kvlad.tkn.near": {
+        "symbol": "KVLAD",
+        "decimals": 18
+    },
+    "mika.tkn.near": {
+        "symbol": "MIKA",
+        "decimals": 18
+    },
+    "blaze.tkn.near": {
+        "symbol": "BLAZE",
+        "decimals": 18
+    },
+    "slush.tkn.near": {
+        "symbol": "SLUSH",
+        "decimals": 18
+    },
+    "farm.berryclub.ek.near": {
+        "symbol": "CUCUMBER",
+        "decimals": 18
+    },
+    "asc.tkn.near": {
+        "symbol": "ASC",
+        "decimals": 10
+    },
+    "taliban.tkn.near": {
+        "symbol": "TALIBAN",
+        "decimals": 18
+    },
+    "groove.tkn.near": {
+        "symbol": "GROOVE",
+        "decimals": 18
+    },
+    "mbga.tkn.near": {
+        "symbol": "MBGA",
+        "decimals": 18
+    },
+    "111111111117dc0aa78b770fa6a738034120c302.factory.bridge.near": {
+        "symbol": "1INCH",
+        "decimals": 18
+    },
+    "c944e90c64b2c07662a292be6244bdf05cda44a7.factory.bridge.near": {
+        "symbol": "GRT",
+        "decimals": 18
+    },
+    "magic.tkn.near": {
+        "symbol": "MAGIC",
+        "decimals": 18
+    },
+    "ntrash.tkn.near": {
+        "symbol": "nTRASH",
+        "decimals": 18
+    },
+    "ngmi.tkn.near": {
+        "symbol": "NGMI",
+        "decimals": 10
+    },
+    "lfg.tkn.near": {
+        "symbol": "LFG",
+        "decimals": 18
+    },
+    "hongdou.tkn.near": {
+        "symbol": "hongdou",
+        "decimals": 18
+    },
+    "hodl.tkn.near": {
+        "symbol": "HODL",
+        "decimals": 1
+    },
+    "514910771af9ca656af840dff83e8264ecf986ca.factory.bridge.near": {
+        "symbol": "LINK",
+        "decimals": 18
+    },
+    "ikenga.tkn.near": {
+        "symbol": "IKENGA",
+        "decimals": 24
+    },
+    "flct.tkn.near": {
+        "symbol": "FLCT",
+        "decimals": 0
+    },
+    "shit.tkn.near": {
+        "symbol": "SHIT",
+        "decimals": 18
+    },
+    "azerotha.near": {
+        "symbol": "FLA",
+        "decimals": 8
+    },
+    "padthai.near": {
+        "symbol": "PADTHAI",
+        "decimals": 8
+    },
+    "avrit.near": {
+        "symbol": "AVRIT",
+        "decimals": 18
+    },
+    "1f9840a85d5af5bf1d1762f925bdaddc4201f984.factory.bridge.near": {
+        "symbol": "UNI",
+        "decimals": 18
+    },
+    "pixiv.tkn.near": {
+        "symbol": "pixiv",
+        "decimals": 18
+    },
+    "dan.tkn.near": {
+        "symbol": "dan",
+        "decimals": 18
+    },
+    "cat.tkn.near": {
+        "symbol": "CAT",
+        "decimals": 18
+    },
+    "beer.tkn.near": {
+        "symbol": "BEER",
+        "decimals": 18
+    },
+    "d9c2d319cd7e6177336b0a9c93c21cb48d84fb54.factory.bridge.near": {
+        "symbol": "HAPI",
+        "decimals": 18
+    },
+    "neardoge.tkn.near": {
+        "symbol": "neardoge",
+        "decimals": 18
+    },
+    "czdog.tkn.near": {
+        "symbol": "CZDOG",
+        "decimals": 18
+    },
+    "bed4ab0019ff361d83ddeb74883dac8a70f5ea1e.factory.bridge.near": {
+        "symbol": "MRCH",
+        "decimals": 18
+    },
+    "a4ef4b0b23c1fc81d3f9ecf93510e64f58a4a016.factory.bridge.near": {
+        "symbol": "1MIL",
+        "decimals": 18
+    },
+    "socialmeet.tkn.near": {
+        "symbol": "SOCIALMEET",
+        "decimals": 18
+    },
+    "mz.tkn.near": {
+        "symbol": "mz",
+        "decimals": 0
+    },
+    "meritocracy.tkn.near": {
+        "symbol": "MERITOCRACY",
+        "decimals": 18
+    },
+    "token.paras.near": {
+        "symbol": "PARAS",
+        "decimals": 18
+    },
+    "wst.tkn.near": {
+        "symbol": "WST",
+        "decimals": 18
+    },
+    "nk.tkn.near": {
+        "symbol": "NK",
+        "decimals": 18
+    },
+    "288f5c0fc03d073378d004201129bc145a4a82fc.factory.bridge.near": {
+        "symbol": "GWJ",
+        "decimals": 18
+    },
+    "nut.tkn.near": {
+        "symbol": "NUT",
+        "decimals": 18
+    },
+    "jbouw.tkn.near": {
+        "symbol": "JBOUW",
+        "decimals": 0
+    },
+    "0d8775f648430679a709e98d2b0cb6250d2887ef.factory.bridge.near": {
+        "symbol": "BAT",
+        "decimals": 18
+    },
+    "gachi.tkn.near": {
+        "symbol": "GACHI",
+        "decimals": 18
+    },
+    "gza.tkn.near": {
+        "symbol": "GZA",
+        "decimals": 18
+    },
+    "putt.tkn.near": {
+        "symbol": "PUTT",
+        "decimals": 18
+    },
+    "adtoken.near": {
+        "symbol": "AD",
+        "decimals": 18
+    },
+    "pw.tkn.near": {
+        "symbol": "PW",
+        "decimals": 10
+    },
+    "illiapolosukhin.tkn.near": {
+        "symbol": "IlliaPolosukhin",
+        "decimals": 18
+    },
+    "meta-pool.near": {
+        "symbol": "STNEAR",
+        "decimals": 24
+    },
+    "pixeltoken.near": {
+        "symbol": "PXT",
+        "decimals": 6
+    },
+    "6f259637dcd74c767781e37bc6133cd6a68aa161.factory.bridge.near": {
+        "symbol": "HT",
+        "decimals": 18
+    },
+    "2260fac5e5542a773aa44fbcfedf7c193bc2c599.factory.bridge.near": {
+        "symbol": "WBTC",
+        "decimals": 8
+    },
+    "indulgency.tkn.near": {
+        "symbol": "Indulgency",
+        "decimals": 18
+    },
+    "token.cheddar.near": {
+        "symbol": "Cheddar",
+        "decimals": 24
+    },
+    "52a047ee205701895ee06a375492490ec9c597ce.factory.bridge.near": {
+        "symbol": "PULSE",
+        "decimals": 18
+    },
+    "damn.tkn.near": {
+        "symbol": "DAMN",
+        "decimals": 18
+    },
+    "token.shrm.near": {
+        "symbol": "SHRM",
+        "decimals": 18
+    },
+    "nearbit.tkn.near": {
+        "symbol": "NEARBIT",
+        "decimals": 18
+    },
+    "neir.tkn.near": {
+        "symbol": "NEIR",
+        "decimals": 18
+    },
+    "floki.tkn.near": {
+        "symbol": "FLOKI",
+        "decimals": 18
+    },
+    "d3g3n.tkn.near": {
+        "symbol": "D3G3N",
+        "decimals": 18
+    },
+    "boo.tkn.near": {
+        "symbol": "BOO",
+        "decimals": 18
+    },
+    "nvp.tkn.near": {
+        "symbol": "NVP",
+        "decimals": 18
+    },
+    "net.tkn.near": {
+        "symbol": "Net",
+        "decimals": 18
+    },
+    "feral.tkn.near": {
+        "symbol": "FERAL",
+        "decimals": 18
+    },
+    "aurora": {
+        "symbol": "ETH",
+        "decimals": 18
+    },
+    "nearpunk.tkn.near": {
+        "symbol": "NEARPUNK",
+        "decimals": 18
+    },
+    "neardog.tkn.near": {
+        "symbol": "NEARDOG",
+        "decimals": 18
+    },
+    "duck.tkn.near": {
+        "symbol": "DUCK",
+        "decimals": 18
+    },
+    "nearkat.tkn.near": {
+        "symbol": "NEARKAT",
+        "decimals": 18
+    },
+    "nd.tkn.near": {
+        "symbol": "ND",
+        "decimals": 8
+    },
+    "infinity.tkn.near": {
+        "symbol": "INFINITY",
+        "decimals": 10
+    },
+    "dbio.near": {
+        "symbol": "DBIO",
+        "decimals": 18
+    },
+    "tipjargon.near": {
+        "symbol": "JAR",
+        "decimals": 7
+    },
+    "aaaaaa20d9e0e2461697782ef11675f668207961.factory.bridge.near": {
+        "symbol": "AURORA",
+        "decimals": 18
+    },
+    "ter.tkn.near": {
+        "symbol": "TER",
+        "decimals": 10
+    },
+    "firerune.tkn.near": {
+        "symbol": "FIRERUNE",
+        "decimals": 9
+    },
+    "ralfusha.tkn.near": {
+        "symbol": "Ralfusha",
+        "decimals": 18
+    },
+    "lgbt.tkn.near": {
+        "symbol": "LGBT",
+        "decimals": 18
+    },
+    "bsa.tkn.near": {
+        "symbol": "BSA",
+        "decimals": 18
+    },
+    "meta-token.near": {
+        "symbol": "$META",
+        "decimals": 24
+    },
+    "panda.tkn.near": {
+        "symbol": "PANDA",
+        "decimals": 18
+    },
+    "ctzn.tkn.near": {
+        "symbol": "CTZN",
+        "decimals": 18
+    },
+    "o.tkn.near": {
+        "symbol": "O",
+        "decimals": 0
+    },
+    "nvision.tkn.near": {
+        "symbol": "NVISION",
+        "decimals": 18
+    },
+    "far.tkn.near": {
+        "symbol": "FAR",
+        "decimals": 8
+    },
+    "v1.dacha-finance.near": {
+        "symbol": "POTATO",
+        "decimals": 18
+    },
+    "bxf.tkn.near": {
+        "symbol": "BXF",
+        "decimals": 18
+    },
+    "v3.oin_finance.near": {
+        "symbol": "nUSDO",
+        "decimals": 8
+    },
+    "9aeb50f542050172359a0e1a25a9933bc8c01259.factory.bridge.near": {
+        "symbol": "OIN",
+        "decimals": 8
+    },
+    "metacoin.tkn.near": {
+        "symbol": "METACOIN",
+        "decimals": 18
+    },
+    "bones.tkn.near": {
+        "symbol": "bones",
+        "decimals": 18
+    },
+    "tckt.tkn.near": {
+        "symbol": "TCKT",
+        "decimals": 18
+    },
+    "stke.tkn.near": {
+        "symbol": "STKE",
+        "decimals": 18
+    },
+    "pixel.tkn.near": {
+        "symbol": "PIXEL",
+        "decimals": 18
+    },
+    "meme.tkn.near": {
+        "symbol": "MEME",
+        "decimals": 8
+    },
+    "flobo.tkn.near": {
+        "symbol": "FLOBO",
+        "decimals": 18
+    },
+    "3ea8ea4237344c9931214796d9417af1a1180770.factory.bridge.near": {
+        "symbol": "FLX",
+        "decimals": 18
+    },
+    "wafi.tkn.near": {
+        "symbol": "WAFI",
+        "decimals": 10
+    },
+    "xtoken.ref-finance.near": {
+        "symbol": "xREF",
+        "decimals": 18
+    },
+    "nmeme.tkn.near": {
+        "symbol": "nMEME",
+        "decimals": 18
+    },
+    "myriadcore.near": {
+        "symbol": "MYRIA",
+        "decimals": 18
+    },
+    "b8919522331c59f5c16bdfaa6a121a6e03a91f62.factory.bridge.near": {
+        "symbol": "bHOME",
+        "decimals": 6
+    },
+    "tamil.tkn.near": {
+        "symbol": "TAMIL",
+        "decimals": 18
+    },
+    "zod.near": {
+        "symbol": "ZOD",
+        "decimals": 24
+    },
+    "skyward-pixeltoken.near": {
+        "symbol": "sPXT",
+        "decimals": 6
+    },
+    "lucky_nft.near": {
+        "symbol": "LUCK",
+        "decimals": 2
+    },
+    "whales.tkn.near": {
+        "symbol": "WHALES",
+        "decimals": 4
+    },
+    "gems.l2e.near": {
+        "symbol": "GEM",
+        "decimals": 4
+    },
+    "gold.l2e.near": {
+        "symbol": "GOLD",
+        "decimals": 0
+    },
+    "elixir.l2e.near": {
+        "symbol": "ELIXIR",
+        "decimals": 0
+    },
+    "shmeks.tkn.near": {
+        "symbol": "SHMEKS",
+        "decimals": 18
+    },
+    "cheems.tkn.near": {
+        "symbol": "cheems",
+        "decimals": 18
+    },
+    "frigg.tkn.near": {
+        "symbol": "frigg",
+        "decimals": 18
+    },
+    "chf.tkn.near": {
+        "symbol": "CHF",
+        "decimals": 18
+    },
+    "501ace9c35e60f03a2af4d484f49f9b1efde9f40.factory.bridge.near": {
+        "symbol": "SOLACE",
+        "decimals": 18
+    },
+    "themunkymonkey.near": {
+        "symbol": "PSNG",
+        "decimals": 8
+    },
+    "gold.tkn.near": {
+        "symbol": "GOLD",
+        "decimals": 10
+    },
+    "token.jumbo_exchange.near": {
+        "symbol": "JUMBO",
+        "decimals": 18
+    },
+    "sol.token.a11bd.near": {
+        "symbol": "SOL",
+        "decimals": 24
+    },
+    "rimjob.tkn.near": {
+        "symbol": "RIMJOB",
+        "decimals": 18
+    },
+    "token.pnx_test.near": {
+        "symbol": "PNX",
+        "decimals": 18
+    },
+    "ynp.tkn.near": {
+        "symbol": "YNP",
+        "decimals": 18
+    },
+    "dogsheng.tkn.near": {
+        "symbol": "dogsheng",
+        "decimals": 18
+    },
+    "hooba.tkn.near": {
+        "symbol": "HOOBA",
+        "decimals": 18
+    },
+    "koro.tkn.near": {
+        "symbol": "KORO",
+        "decimals": 18
+    },
+    "utopia.secretskelliessociety.near": {
+        "symbol": "UTO",
+        "decimals": 8
+    },
+    "ust.token.a11bd.near": {
+        "symbol": "UST",
+        "decimals": 24
+    },
+    "kongztoken.near": {
+        "symbol": "KONGZ",
+        "decimals": 8
+    },
+    "caxap.tkn.near": {
+        "symbol": "CAXAP",
+        "decimals": 18
+    },
+    "ndn.electrik.near": {
+        "symbol": "ELECTRIK",
+        "decimals": 2
+    },
+    "token.pumpopoly.near": {
+        "symbol": "PUMPOPOLY",
+        "decimals": 24
+    },
+    "stake.tkn.near": {
+        "symbol": "Stake",
+        "decimals": 18
+    },
+    "token.bwitter.near": {
+        "symbol": "BT",
+        "decimals": 18
+    },
+    "newfy-token.near": {
+        "symbol": "NEWFY",
+        "decimals": 24
+    },
+    "deip-token.near": {
+        "symbol": "DEIP",
+        "decimals": 18
+    },
+    "linear-protocol.near": {
+        "symbol": "LINEAR",
+        "decimals": 24
+    },
+    "4691937a7508860f876c9c0a2a617e7d9e945d4b.factory.bridge.near": {
+        "symbol": "WOO",
+        "decimals": 18
+    },
+    "dojos.near": {
+        "symbol": "DOJO",
+        "decimals": 18
+    },
+    "ft.nekotoken.near": {
+        "symbol": "NEKO",
+        "decimals": 0
+    },
+    "token.pembrock.near": {
+        "symbol": "PEM",
+        "decimals": 18
     }
 }

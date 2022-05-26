@@ -38,29 +38,51 @@ export class FarmingPool {
         //获取质押到izumi池子里的所有univ3 NFT的头寸信息
         const positions = await gUniV3PM.getUserNFTPositions(this.address); // this.address izumi质押池合约地址
         logger.info(`getPoolInfo > total staked ${positions.length} user NFT LP`);
-
+        console.log(JSON.stringify(positions[0]))
         if (positions && positions.length > 0) {
-            const token0 = positions[0].token0.token;
-            const token1 = positions[0].token1.token;
-            //加载univ3 pool合约
-            const pool = new ContractHelper(positions[0].pool, './Uniswap/v3/pool.json', Config.network);
-            //获取池子slot0数据
-            const slot0Info = await pool.callReadMethod('slot0');
-            const slot0Data: Slot0Data = {
-                sqrtPriceX96: slot0Info[0],
-                tick: slot0Info[1],
-            };
-            let amountOfToken0 = 0.0;
-            let amount1fToken1 = 0.0;
+            //const token0 = positions[0].token0.token;
+            //const token1 = positions[0].token1.token;
+    
+            // //加载univ3 pool合约
+            // const pool = new ContractHelper(positions[0].pool, './Uniswap/v3/pool.json', Config.network);
+            // //获取池子slot0数据
+            // const slot0Info = await pool.callReadMethod('slot0');
+            // const slot0Data: Slot0Data = {
+            //     sqrtPriceX96: slot0Info[0],
+            //     tick: slot0Info[1],
+            // };
+
+            /**
+             * 调用Univ3 SDK构造V3池子对象
+             * UniV3Util - UniV3 SDK封装类
+             */
+             const uniV3Pool = await UniV3Util.getInstance(Config.network).getPoolInstance(positions[0].pool);
+
+             const token0 = await gSwissKnife.syncUpTokenDB(uniV3Pool.token0.address);
+             const token1 = await gSwissKnife.syncUpTokenDB(uniV3Pool.token1.address);
+
+            let amountOfToken0 = new BigNumber(0.0);
+            let amountOfToken1 = new BigNumber(0.0);
             //遍历每个NFT头寸，分别计算每个头寸对应的两个token的数量，将其分别累加，最后得到的两个累加和，就是质押池TVL中的两种token的数量
             for (let i = 0; i < positions.length; i++) {
-                const newPOS = await gUniV3PM.calPositionTokenAmount(positions[i], slot0Data);
-                amountOfToken0 += Number.parseFloat(newPOS.token0.amount);
-                amount1fToken1 += Number.parseFloat(newPOS.token1.amount);
-            }
+                //调用Univ3 SDK构造V3头寸对象
+                const univ3POS = new UniV3POS({
+                    pool: uniV3Pool,
+                    liquidity: positions[i].liquidity,
+                    tickLower: positions[i].tickLower,
+                    tickUpper: positions[i].tickUpper,
+                });
+                //获取两种token的数量
+                const amount0 = univ3POS.amount0.quotient.toString();
+                const amount1 = univ3POS.amount1.quotient.toString();
 
-            logger.info(`getPoolInfo > token0 - ${token0.symbol}: ${amountOfToken0}`);
-            logger.info(`getPoolInfo > token1 - ${token1.symbol}: ${amount1fToken1}`);
+                //const newPOS = await gUniV3PM.calPositionTokenAmount(positions[i], slot0Data);
+                amountOfToken0 = amountOfToken0.plus(amount0);
+                amountOfToken1 = amountOfToken1.plus(amount1);
+            }
+            
+            logger.info(`getPoolInfo > token0 - ${token0.symbol}: ${token0.readableAmountFromBN(amountOfToken0).toFixed(6)}`);
+            logger.info(`getPoolInfo > token1 - ${token1.symbol}: ${token1.readableAmountFromBN(amountOfToken1).toFixed(6)}`);
         }
     }
 

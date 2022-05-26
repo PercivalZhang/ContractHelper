@@ -133,43 +133,43 @@ export class UniV3PM {
             const token1Address = position.token1;
             const fee = Number.parseInt(position.fee);
             // ignore流动性为0的position
-            if (JSBI.GT(liquidity, 0)) {
-                const token0 = await this.swissKnife.syncUpTokenDB(token0Address);
-                const token1 = await this.swissKnife.syncUpTokenDB(token1Address);
-                const poolAddress = UniV3PM.computePoolAddress(this.factoryAddress, token0Address, token1Address, fee);
-                logger.info(`getPositionById > pos id: ${posId}`);
-                logger.info(`getPositionById > pool - ${token0.symbol}/${token1.symbol}: ${poolAddress}`);
+            //if (JSBI.GT(liquidity, 0)) {
+            const token0 = await this.swissKnife.syncUpTokenDB(token0Address);
+            const token1 = await this.swissKnife.syncUpTokenDB(token1Address);
+            const poolAddress = UniV3PM.computePoolAddress(this.factoryAddress, token0Address, token1Address, fee);
+            logger.info(`getPositionById > pos id: ${posId}`);
+            logger.info(`getPositionById > pool - ${token0.symbol}/${token1.symbol}: ${poolAddress}`);
 
-                pos = {
-                    id: posId,
-                    pool: poolAddress,
-                    tickLower,
-                    tickUpper,
-                    priceLower: 0.0,
-                    priceUpper: 0.0,
-                    liquidity: position.liquidity,
-                    token0: {
-                        token: token0,
-                        amount: '0',
-                    },
-                    token1: {
-                        token: token1,
-                        amount: '0',
-                    },
-                    fee: fee,
-                };
-                //pos.priceLower = this.tick2PriceDecimal(pos.tickLower, token0.decimals, token1.decimals);
-                //pos.priceUpper = this.tick2PriceDecimal(pos.tickUpper, token0.decimals, token1.decimals);
-                /**
-                 * tokenId: position id/NFT tokenId
-                 * _user: user address
-                 * _amount0Max: 最大值9007199254740990000000
-                 * _amount1Max: 最大值9007199254740990000000
-                 */
-                //const fees = await positionManager.callReadMethod('collect', [tokenId, '0x469bbafeb93480ee4c2cbff806bc504188335499', '9007199254740990000000', '9007199254740990000000'])
-                //logger.info(`[reward] token0: ${token0.readableAmount(fees.amount0).toFixed(6)} ${token0.symbol}`)
-                //logger.info(`[reward] token1: ${token1.readableAmount(fees.amount1).toFixed(6)} ${token1.symbol}`)
-            }
+            pos = {
+                id: posId,
+                pool: poolAddress,
+                tickLower,
+                tickUpper,
+                priceLower: 0.0,
+                priceUpper: 0.0,
+                liquidity: position.liquidity,
+                token0: {
+                    token: token0,
+                    amount: '0',
+                },
+                token1: {
+                    token: token1,
+                    amount: '0',
+                },
+                fee: fee,
+            };
+            //pos.priceLower = this.tick2PriceDecimal(pos.tickLower, token0.decimals, token1.decimals);
+            //pos.priceUpper = this.tick2PriceDecimal(pos.tickUpper, token0.decimals, token1.decimals);
+            /**
+             * tokenId: position id/NFT tokenId
+             * _user: user address
+             * _amount0Max: 最大值9007199254740990000000
+             * _amount1Max: 最大值9007199254740990000000
+             */
+            //const fees = await positionManager.callReadMethod('collect', [tokenId, '0x469bbafeb93480ee4c2cbff806bc504188335499', '9007199254740990000000', '9007199254740990000000'])
+            //logger.info(`[reward] token0: ${token0.readableAmount(fees.amount0).toFixed(6)} ${token0.symbol}`)
+            //logger.info(`[reward] token1: ${token1.readableAmount(fees.amount1).toFixed(6)} ${token1.symbol}`)
+        //}
         }
         if (!ignoreTokenAmount) {
             //计算并补齐position中缺失的两种token的数量

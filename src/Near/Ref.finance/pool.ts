@@ -4,9 +4,11 @@ import { TokenDB } from '../db.token';
 import { ProjectConfig as Config } from './config';
 import { ChainConfig } from '../config';
 import BigNumber from "bignumber.js";
+import sleep from 'sleep';
 import { ERC20Token } from "src/library/erc20.token";
 
 const logger = LoggerFactory.getInstance().getLogger('Pool');
+export type symbolCP = string[]
 
 export type PoolRawInfo = {
     pool_kind: string,
@@ -93,17 +95,56 @@ export class PoolHelper {
         return poolInfo;
     }
 
-    public async getPoolInfo(poolId: number, decimals = 8): Promise<PoolInfo> {
+    public async getNumberOfPools(): Promise<number> {
+        await this.checkConnection();
+        const numberOfPools = await this.defaultAccount.viewFunction(Config.contract.exchange, 'get_number_of_pools');
+        return Number.parseInt(numberOfPools);
+    }
+
+    public async getPoolShareBalance(poolId: number, accountId: string): Promise<BigNumber> {
+        await this.checkConnection();
+        const shares = await this.defaultAccount.viewFunction(Config.contract.exchange, 'get_pool_shares', { pool_id: poolId, account_id: accountId });
+        return new BigNumber(shares);
+    }
+
+    public async getSharePrice(poolId: number): Promise<BigNumber> {
+        await this.checkConnection();
+        // decimals = 1e8
+        const price = await this.defaultAccount.viewFunction(Config.contract.exchange, 'get_pool_share_price', { pool_id: poolId });
+        logger.info(`getSharePrice > pool[${poolId}] share price: ${new BigNumber(price).dividedBy(1e8).toNumber().toFixed(6)} USD`)
+        return new BigNumber(price).dividedBy(1e8);
+    }
+
+    public async getPoolBalanceDetails(poolInfo: PoolInfo, shareBalance: BigNumber): Promise<TokenBalance[]> {
+        const balances: TokenBalance[] = [];
+        const ratio = shareBalance.dividedBy(Math.pow(10, poolInfo.shareDecimals)).dividedBy(poolInfo.totalSupply);
+        for (const tokenBalance of poolInfo.tokens) {
+            const token = tokenBalance.token;
+            const tokenAmount = ratio.multipliedBy(tokenBalance.amount);
+            logger.info(`getPoolBalanceDetails > token - ${token.symbol}: ${tokenAmount}`)
+            balances.push({
+                token,
+                amount: tokenAmount.toNumber().toString()
+            })
+        }
+        return balances;
+    }
+
+    public async getPoolInfo(poolId: number, ignoreSharePrice = true, decimals = 8): Promise<PoolInfo> {
         const poolRawInfo = await this.getPoolRawInfo(poolId)
-        const sharePrice = await this.getSharePrice(poolId)
+        
         const poolInfo: PoolInfo = {
             id: poolId,
             name: "",
             poolType: "",
             tokens: [],
             totalSupply: "",
-            sharePrice: Number.parseFloat(sharePrice.toNumber().toFixed(decimals)),
+            sharePrice: 0.0,
             shareDecimals: 18
+        }
+        if(!ignoreSharePrice) {
+            const sharePrice = await this.getSharePrice(poolId)
+            poolInfo.sharePrice = Number.parseFloat(sharePrice.toNumber().toFixed(decimals))
         }
         poolInfo.poolType = poolRawInfo.pool_kind
         const tokenSymbols = [];
@@ -123,31 +164,54 @@ export class PoolHelper {
         return poolInfo;
     }
 
-    public async getPoolShareBalance(poolId: number, accountId: string): Promise<BigNumber> {
-        await this.checkConnection();
-        const shares = await this.defaultAccount.viewFunction(Config.contract.exchange, 'get_pool_shares', { pool_id: poolId, account_id: accountId });
-        return new BigNumber(shares);
-    }
-
-    public async getSharePrice(poolId: number): Promise<BigNumber> {
-        await this.checkConnection();
-        // decimals = 1e8
-        const price = await this.defaultAccount.viewFunction(Config.contract.exchange, 'get_pool_share_price', { pool_id: poolId });
-        return new BigNumber(price).dividedBy(1e8);
-    }
-
-    public async getPoolBalanceDetails(poolInfo: PoolInfo, shareBalance: BigNumber): Promise<TokenBalance[]> {
-        const balances: TokenBalance[] = [];
-        const ratio = shareBalance.dividedBy(Math.pow(10, poolInfo.shareDecimals)).dividedBy(poolInfo.totalSupply);
-        for (const tokenBalance of poolInfo.tokens) {
-            const token = tokenBalance.token;
-            const tokenAmount = ratio.multipliedBy(tokenBalance.amount);
-            logger.info(`getPoolBalanceDetails > token - ${token.symbol}: ${tokenAmount}`)
-            balances.push({
-                token,
-                amount: tokenAmount.toNumber().toString()
-            })
+    public async findPools(tokenSymbolCPs: symbolCP[], start = 0): Promise<PoolInfo[]> {
+        let pools : PoolInfo[] = []
+        let detectedNumber = 0
+        const poolLength = await this.getNumberOfPools()
+        logger.info(`findPools > total ${poolLength} pools`)
+        for(let pid = start; pid < poolLength; pid++) {
+            const poolInfo = await this.getPoolInfo(pid)
+            const poolTokenSymbols = poolInfo.name.split('-')
+            logger.info(`findPools > scanning pool[${pid}]...`)
+            for(const tokenSymbolCP of  tokenSymbolCPs) {
+                let detected = true
+                for(const tokenSymbol of tokenSymbolCP) {
+                    const index = poolTokenSymbols.findIndex(poolTokenSymbol => {
+                        return poolTokenSymbol.toLowerCase() === tokenSymbol.toLowerCase();
+                    });
+                    detected = detected && (index !== -1)
+                }
+                if(detected) {
+                    logger.info(`findPools > detected pool[${pid}]: ${poolInfo.name}`)
+                    pools.push(poolInfo)
+                    console.log(poolInfo)
+                    sleep.sleep(3);
+                    detectedNumber = detectedNumber + 1
+                    break
+                }
+            }
+            if(detectedNumber >= tokenSymbolCPs.length) {
+                logger.info(`findPools > all ${detectedNumber} pools have been detected`)
+                break
+            }
         }
-        return balances;
+        return pools;
     }
 }
+
+const main = async () => {
+    const poolHelper = new PoolHelper(ChainConfig.mainnet)
+    //const receipts = await farmingHelper.getUserFarmingReceipts('4a04621225d430f5939a265d4995c1e6cb60768c1a8e4c7b8a4da1f7fac982ce');
+    //console.log(JSON.stringify(receipts));
+    const pools = await poolHelper.findPools([['wbtc', 'eth'], ['usdt', 'usdc', 'dai'], ['wbtc', 'hbtc']], 3036)
+    console.log(JSON.stringify(pools))
+    // for(const pid of [1910, 2734, 2761]) {
+    //     const poolInfo = await poolHelper.getPoolInfo(pid);
+    //     console.log(JSON.stringify(poolInfo))
+    // }
+    
+};
+
+main().catch((e) => {
+    logger.error(e.message);
+});
