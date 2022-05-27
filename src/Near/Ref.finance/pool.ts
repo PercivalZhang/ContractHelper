@@ -208,7 +208,7 @@ const main = async () => {
     //console.log(JSON.stringify(receipts));
     // const pools = await poolHelper.findPools([['wbtc', 'eth'], ['usdt', 'usdc', 'dai'], ['wbtc', 'hbtc']], 3036)
     // console.log(JSON.stringify(pools))
-    for(const pid of [1910, 2734, 3333]) {
+    for(const pid of [3333, 3364]) {
         const poolInfo = await poolHelper.getPoolInfo(pid);
         console.log(JSON.stringify(poolInfo))
     }

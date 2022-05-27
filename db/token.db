@@ -27,7 +27,7 @@
         "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2": {
             "symbol": "WETH",
             "decimals": 18,
-            "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+            "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
         },
         "0x26fa3fffb6efe8c1e69103acb4044c26b9a106a9": {
             "symbol": "sSPELL",
@@ -705,7 +705,16 @@
         },
         "0xae7ab96520de3a18e5e111b5eaab095312d7fe84": {
             "symbol": "stETH",
+            "decimals": 18,
+            "address": "0xae7ab96520de3a18e5e111b5eaab095312d7fe84"
+        },
+        "0xc383a3833a87009fd9597f8184979af5edfad019": {
+            "symbol": "iETH",
             "decimals": 18
+        },
+        "0xec363faa5c4dd0e51f3d9b5d0101263760e7cdeb": {
+            "symbol": "iWBTC",
+            "decimals": 8
         }
     },
     "25": {

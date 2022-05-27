@@ -305,7 +305,7 @@ const main = async () => {
     const farmingHelper = new FarmingHelper(ChainConfig.mainnet)
     //const receipts = await farmingHelper.getUserFarmingReceipts('4a04621225d430f5939a265d4995c1e6cb60768c1a8e4c7b8a4da1f7fac982ce');
     //console.log(JSON.stringify(receipts));
-    const farmInfo = await farmingHelper.getFarmInforByPoolId(3020)
+    const farmInfo = await farmingHelper.getFarmInforByPoolId(3364)
     console.log(JSON.stringify(farmInfo))
 };
 
