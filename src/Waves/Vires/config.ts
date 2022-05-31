@@ -1,5 +1,6 @@
 export const Config = {
     nodeURI: 'https://nodes.wavesnodes.com/', //节点URL
+    boost: '3PFraDBNUFry9mgcfMo3hGcr3dm43TuYmN6',
     vaults: { //金库信息
         usdt: '3PEiD1zJWTMZNWSCyzhvBw9pxxAWeEwaghR', 
         waves: '3P8G747fnB1DTQ4d5uD114vjAaeezCW4FaM',

@@ -3,7 +3,7 @@ import { Vault } from './vault';
 import { Config } from './Config';
 
 const userAddress = '3P5V82NzawM19QPrs8JoFFSctzxzjduUQUZ';
-//const userAddress = '3PBYybAKc9M9hsFE47S8pxdg9obJJsVotAs';
+//const userAddress = '3PPEM6EqVwkHhCZwUMonxj5dgEkzLW9g1Lu';
 
 const vault = new Vault(Config.vaults.usdt); //USDT
 //const vault = new Vault('3P8G747fnB1DTQ4d5uD114vjAaeezCW4FaM'); //WAVES

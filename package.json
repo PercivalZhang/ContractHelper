@@ -48,6 +48,7 @@
         "@solana/spl-token-registry": "^0.2.703",
         "@solana/web3.js": "^1.31.0",
         "@solendprotocol/solend-sdk": "^0.5.5",
+        "@waves/node-api-js": "^1.2.6",
         "@waves/waves-transactions": "^4.2.5-beta.3",
         "axios": "^0.21.1",
         "bignumber.js": "^9.0.1",

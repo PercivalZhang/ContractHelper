@@ -715,6 +715,10 @@
         "0xec363faa5c4dd0e51f3d9b5d0101263760e7cdeb": {
             "symbol": "iWBTC",
             "decimals": 8
+        },
+        "0x40a9d39aa50871df092538c5999b107f34409061": {
+            "symbol": "iDAI",
+            "decimals": 18
         }
     },
     "25": {

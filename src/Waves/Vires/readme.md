@@ -114,3 +114,21 @@ func getViresPrice () = {
     fraction(balanceB, (100 * dollar), balanceA)
     }
 ```
+
+
+
+lock
+
+https://new.wavesexplorer.com/addresses/3PFraDBNUFry9mgcfMo3hGcr3dm43TuYmN6
+
+locked balance:
+key: [user address] + '_' + [vires lp token address] + '_amt'
+
+unlock height:
+key: [user address] + '_' + [vires lp token address] + '_unlockHeight'
+
+weightFactor
+key: [user address] + '_' + [vires lp token address] + '_weightFactor'
+
+weight
+key: [user address] + '_' + [vires lp token address] + '_weight'

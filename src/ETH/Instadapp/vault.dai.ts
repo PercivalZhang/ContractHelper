@@ -2,11 +2,11 @@ import { Vault } from './vault'
 import { Config } from './config'
 import { LoggerFactory } from '../../library/LoggerFactory'
 
-const logger = LoggerFactory.getInstance().getLogger('vault.usdc');
+const logger = LoggerFactory.getInstance().getLogger('vault.dai');
 
 const main = async () => {
-    const userAddress = '0x881897b1FC551240bA6e2CAbC7E59034Af58428a'
-    const vault = new Vault(Config.vaults.usdc)
+    const userAddress = '0x7d9a8c475b55e70f2d9837c853ee145ccca9d249'
+    const vault = new Vault(Config.vaults.dai)
     await vault.getVaultInfo()
     await vault.getUserReceipt(userAddress)
 };

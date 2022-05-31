@@ -163,21 +163,21 @@ export class Vault {
         return rewardInfo;
     }
 
-    private async getVTokenInfo(): Promise<TokenInfo> {
+    public static async getVTokenInfo(vaultAddress: string): Promise<TokenInfo> {
         try {
             const keyOfTokenId = 'aTokenId';
             const keyOfTokenDecimals = 'aTokenDecimals';
             const keyOfTokenName = 'aTokenName';
             const keyOfTokenCirculation = 'aTokenCirculation';
 
-            const vTokenId = await nodeInteraction.accountDataByKey(keyOfTokenId, this.address, NodeUrl);
+            const vTokenId = await nodeInteraction.accountDataByKey(keyOfTokenId, vaultAddress, NodeUrl);
             let vToken = await tokenDB.getByAddress(vTokenId.value.toString());
             if (!vToken) {
                 logger.debug(`getVTokenInfo > token - ${vTokenId.value.toString()} does not exist in token db.`);
-                const aTokenName = await nodeInteraction.accountDataByKey(keyOfTokenName, this.address, NodeUrl);
+                const aTokenName = await nodeInteraction.accountDataByKey(keyOfTokenName, vaultAddress, NodeUrl);
                 const aTokenDecimals = await nodeInteraction.accountDataByKey(
                     keyOfTokenDecimals,
-                    this.address,
+                    vaultAddress,
                     NodeUrl,
                 );
 
@@ -190,7 +190,7 @@ export class Vault {
                 await tokenDB.syncUp(vToken);
             }
             logger.info(`getVTokenInfo > token - ${vTokenId.value.toString()} already existed in token db.`);
-            const totalSupply = await nodeInteraction.accountDataByKey(keyOfTokenCirculation, this.address, NodeUrl);
+            const totalSupply = await nodeInteraction.accountDataByKey(keyOfTokenCirculation, vaultAddress, NodeUrl);
             return {
                 token: vToken,
                 balance: totalSupply.value.toString(),
@@ -203,6 +203,7 @@ export class Vault {
     public getConfig(): ConfigInfo {
         return this.config;
     }
+
     public async loadBasicInfo() {
         try {
             const assetIdItem = await nodeInteraction.accountDataByKey('assetId', this.address, NodeUrl);
@@ -222,7 +223,7 @@ export class Vault {
             }
             logger.info(`loadBasicInfo > asset - ${this.assetToken.symbol}: ${this.assetToken.address}`);
 
-            const vTokenInfo = await this.getVTokenInfo();
+            const vTokenInfo = await Vault.getVTokenInfo(this.address);
             this.vToken = vTokenInfo.token;
             logger.info(`loadBasicInfo > vToken - ${this.vToken.symbol}: ${this.vToken.address}`);
 
@@ -329,7 +330,7 @@ export class Vault {
             vaultInfo.asset = this.assetToken;
         }
         logger.info(`getVaultInfo > asset - ${this.assetToken.symbol}: ${this.assetToken.address}`);
-        const vTokenInfo = await this.getVTokenInfo();
+        const vTokenInfo = await Vault.getVTokenInfo(this.address);
         vaultInfo.aToken = vTokenInfo.token;
         vaultInfo.aTokenSupply = vTokenInfo.balance;
         logger.info(`getVaultInfo > vToken - ${vTokenInfo.token.symbol}: ${vTokenInfo.token.address}`);
@@ -424,18 +425,27 @@ export class Vault {
         const assetToken = this.assetToken;
         const vToken = this.vToken;
         //获取用户存款aToken数量
-        const keyOfATokenBalance = userAddress + '_aTokenBalance';
-        const aTokenBalanceItem = await nodeInteraction.accountDataByKey(keyOfATokenBalance, this.address, NodeUrl);
-        if (aTokenBalanceItem) {
-            const aTokenBalance = aTokenBalanceItem.value.toString();
-            logger.info(
-                `getUserInfo > vToken balance: ${vToken
-                    .readableAmount(aTokenBalanceItem.value.toString())
-                    .toFixed(4)} ${vToken.symbol}`,
-            );
+        const keyOfVTokenBalance = userAddress + '_aTokenBalance';
+        const vTokenBalanceItem = await nodeInteraction.accountDataByKey(keyOfVTokenBalance, this.address, NodeUrl)
+        //获取用户固定时间锁仓aToken数量
+        const keyOfLockedVTokenBalance = userAddress + '_' + vaultInfo.aToken.address + '_amt'
+        const lockedVTokenBalanceItem = await nodeInteraction.accountDataByKey(keyOfLockedVTokenBalance, '3PFraDBNUFry9mgcfMo3hGcr3dm43TuYmN6', NodeUrl)
+        let vTokenBalance = new BigNumber(0)
+        if (vTokenBalance ) {
+            vTokenBalance = vTokenBalance.plus(vTokenBalanceItem.value.toString())
+        }  
+        if (lockedVTokenBalanceItem ) {
+            vTokenBalance = vTokenBalance.plus(lockedVTokenBalanceItem.value.toString())
+        }  
+        logger.info(
+            `getUserInfo > vToken balance: ${vToken
+                .readableAmountFromBN(vTokenBalance)
+                .toFixed(4)} ${vToken.symbol}`,
+        );
+        if(vTokenBalance.gt(0)) {
             //计算assetToken和vToken的兑换关系
             const assetPerVToken = new BigNumber(vaultInfo.totalDeposit).dividedBy(vaultInfo.aTokenSupply);
-            const assetTokenBalance = assetPerVToken.multipliedBy(aTokenBalance);
+            const assetTokenBalance = assetPerVToken.multipliedBy(vTokenBalance);
             logger.info(
                 `getUserInfo > supply asset balance: ${assetToken
                     .readableAmount(assetTokenBalance.toString())
@@ -477,7 +487,7 @@ export class Vault {
                 accRewardForSupply = accRewardForSupply.plus(accDepositRewardData.value.toString());
             }
             logger.info(
-                `getVaultInfo > accumulated reward for supply: ${this.rewardToken
+                `getUserInfo > accumulated reward for supply: ${this.rewardToken
                     .readableAmountFromBN(accRewardForSupply)
                     .toFixed(10)} ${this.rewardToken.symbol}`,
             );
@@ -509,7 +519,7 @@ export class Vault {
                     accRewardForBorrow = accRewardForBorrow.plus(accBorrowRewardData.value.toString());
                 }
                 logger.info(
-                    `getVaultInfo > accumulated reward for borrow: ${this.rewardToken
+                    `getUserInfo > accumulated reward for borrow: ${this.rewardToken
                         .readableAmountFromBN(accRewardForBorrow)
                         .toFixed(10)} ${this.rewardToken.symbol}`,
                 );
@@ -517,12 +527,12 @@ export class Vault {
             const totalAccRewards = BigNumber.max(0, accRewardForSupply.plus(accRewardForBorrow));
             const availableRewards = BigNumber.max(0, totalAccRewards.minus(claimedRewards));
             logger.info(
-                `getVaultInfo > total accumulated rewards: ${this.rewardToken
+                `getUserInfo > total accumulated rewards: ${this.rewardToken
                     .readableAmountFromBN(totalAccRewards)
                     .toFixed(10)} ${this.rewardToken.symbol}`,
             );
             logger.info(
-                `getVaultInfo > available rewards: ${this.rewardToken
+                `getUserInfo > available rewards: ${this.rewardToken
                     .readableAmountFromBN(availableRewards)
                     .toFixed(10)} ${this.rewardToken.symbol}`,
             );
