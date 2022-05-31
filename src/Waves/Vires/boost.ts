@@ -59,7 +59,7 @@ export class Boost {
 
         const keyOfSpeed = vToken.address + '_speed'
         const speedItem = await nodeInteraction.accountDataByKey(keyOfSpeed, this.address, NodeUrl)
-        const speed = (speedItem !== null) === true ? Number.parseInt(storedRewardItem.value.toString()) : 0
+        const speed = (speedItem !== null) === true ? Number.parseInt(speedItem.value.toString()) : 0
         logger.info(`currentRewards > reward speed: ${speed} per block`)
         const accumulatedReward = new BigNumber(blockHeight - syncHeight).multipliedBy(speed)
 
@@ -136,10 +136,10 @@ export class Boost {
     }
 }
 
-const main = async () => {
-    const boost = new Boost()
-    await boost.getUserBoostInfo('3PPEM6EqVwkHhCZwUMonxj5dgEkzLW9g1Lu', Config.vaults.usdt);
-};
-main().catch((e) => {
-    console.error(e.message);
-});
+// const main = async () => {
+//     const boost = new Boost()
+//     await boost.getUserBoostInfo('3P5V82NzawM19QPrs8JoFFSctzxzjduUQUZ', Config.vaults.usdt);
+// };
+// main().catch((e) => {
+//     console.error(e.message);
+// });

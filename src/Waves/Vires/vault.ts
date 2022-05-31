@@ -5,6 +5,7 @@ import { TokenDB } from '../db.token';
 import BigNumber from 'bignumber.js';
 import { Config } from './Config';
 import { CDNTokenListResolutionStrategy } from '@solana/spl-token-registry';
+import { Boost } from './boost';
 
 type TokenInfo = {
     token: ERC20Token;
@@ -36,6 +37,7 @@ type RewardInfo = {
 };
 
 const NodeUrl = Config.nodeURI;
+const boost = new Boost()
 const tokenDB = TokenDB.getInstance();
 const logger = LoggerFactory.getInstance().getLogger('vault');
 
@@ -426,35 +428,51 @@ export class Vault {
         const vToken = this.vToken;
         //获取用户存款aToken数量
         const keyOfVTokenBalance = userAddress + '_aTokenBalance';
-        const vTokenBalanceItem = await nodeInteraction.accountDataByKey(keyOfVTokenBalance, this.address, NodeUrl)
-        //获取用户固定时间锁仓aToken数量
-        const keyOfLockedVTokenBalance = userAddress + '_' + vaultInfo.aToken.address + '_amt'
-        const lockedVTokenBalanceItem = await nodeInteraction.accountDataByKey(keyOfLockedVTokenBalance, '3PFraDBNUFry9mgcfMo3hGcr3dm43TuYmN6', NodeUrl)
-        let vTokenBalance = new BigNumber(0)
-        if (vTokenBalance ) {
-            vTokenBalance = vTokenBalance.plus(vTokenBalanceItem.value.toString())
+        const unlockVTokenBalanceItem = await nodeInteraction.accountDataByKey(keyOfVTokenBalance, this.address, NodeUrl)
+        
+        const userLockedReceipt = await boost.getUserBoostInfo(userAddress, this.address)
+        // //获取用户固定时间锁仓aToken数量
+        // const keyOfLockedVTokenBalance = userAddress + '_' + vaultInfo.aToken.address + '_amt'
+        // const lockedVTokenBalanceItem = await nodeInteraction.accountDataByKey(keyOfLockedVTokenBalance, '3PFraDBNUFry9mgcfMo3hGcr3dm43TuYmN6', NodeUrl)
+
+        let unlockVTokenBalance = new BigNumber(0)
+        if (unlockVTokenBalanceItem) {
+            unlockVTokenBalance = unlockVTokenBalance.plus(unlockVTokenBalanceItem.value.toString())
         }  
-        if (lockedVTokenBalanceItem ) {
-            vTokenBalance = vTokenBalance.plus(lockedVTokenBalanceItem.value.toString())
+        let lockedVTokenBalance = new BigNumber(0)
+        if (userLockedReceipt) {
+            lockedVTokenBalance = lockedVTokenBalance.plus(userLockedReceipt.balance)
         }  
         logger.info(
-            `getUserInfo > vToken balance: ${vToken
-                .readableAmountFromBN(vTokenBalance)
+            `getUserInfo > unlock vToken balance: ${vToken
+                .readableAmountFromBN(unlockVTokenBalance)
                 .toFixed(4)} ${vToken.symbol}`,
         );
-        if(vTokenBalance.gt(0)) {
+        logger.info(
+            `getUserInfo > locked vToken balance: ${vToken
+                .readableAmountFromBN(lockedVTokenBalance)
+                .toFixed(4)} ${vToken.symbol}`,
+        );
+        if(unlockVTokenBalance.gt(0) || lockedVTokenBalance.gt(0)) {
             //计算assetToken和vToken的兑换关系
             const assetPerVToken = new BigNumber(vaultInfo.totalDeposit).dividedBy(vaultInfo.aTokenSupply);
-            const assetTokenBalance = assetPerVToken.multipliedBy(vTokenBalance);
+            const unlockAssetTokenBalance = assetPerVToken.multipliedBy(unlockVTokenBalance)
+            const assetTokenBalance = assetPerVToken.multipliedBy(unlockVTokenBalance.plus(lockedVTokenBalance));
             logger.info(
                 `getUserInfo > supply asset balance: ${assetToken
                     .readableAmount(assetTokenBalance.toString())
-                    .toFixed(5)} ${assetToken.symbol}`,
+                    .toFixed(5)} ${assetToken.symbol}`
             );
             //获取用户是否将资产启用抵押
-            const keyOfUseAsCollateral = userAddress + '_useAsCollateral';
-            let useAsCollateral = await nodeInteraction.accountDataByKey(keyOfUseAsCollateral, this.address, NodeUrl);
-            logger.info(`getUserInfo > use as collateral: ${useAsCollateral.value}`);
+            const keyOfUseAsCollateral = userAddress + '_useAsCollateral'
+            let useAsCollateral = await nodeInteraction.accountDataByKey(keyOfUseAsCollateral, this.address, NodeUrl)
+            logger.info(`getUserInfo > use as collateral: ${useAsCollateral.value}`)
+
+            if(unlockVTokenBalance.gt(0) && useAsCollateral.value) {
+                logger.info(`getUserInfo > available assets as collateral: ${true}`)
+            } else {
+                logger.info(`getUserInfo > available assets as collateral: ${false}`)
+            }
             //获取该金库的奖励情况
             const rewardData = vaultInfo.rewardInfo;
             /*
@@ -481,7 +499,7 @@ export class Vault {
                 NodeUrl,
             );
             let accRewardForSupply = new BigNumber(rewardData.depositRewards)
-                .multipliedBy(assetTokenBalance)
+                .multipliedBy(unlockAssetTokenBalance)
                 .dividedBy(vaultInfo.totalDeposit);
             if (accDepositRewardData) {
                 accRewardForSupply = accRewardForSupply.plus(accDepositRewardData.value.toString());
