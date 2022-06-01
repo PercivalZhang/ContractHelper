@@ -4,8 +4,8 @@ import { LoggerFactory } from '../../library/LoggerFactory';
 import { TokenDB } from '../db.token';
 import BigNumber from 'bignumber.js';
 import { Config } from './Config';
-import { CDNTokenListResolutionStrategy } from '@solana/spl-token-registry';
 import { Boost } from './boost';
+import { Utils } from './utils';
 
 type TokenInfo = {
     token: ERC20Token;
@@ -53,48 +53,6 @@ export class Vault {
         this.address = address;
     }
 
-    public static async getViresPrice(): Promise<number> {
-        const keyBalanceA = 'A_asset_balance';
-        const keyBalanceB = 'B_asset_balance';
-        const balanceAData = await nodeInteraction.accountDataByKey(keyBalanceA, Config.swopfiPair, NodeUrl);
-        const balanceBData = await nodeInteraction.accountDataByKey(keyBalanceB, Config.swopfiPair, NodeUrl);
-
-        const balanceA = new BigNumber(balanceAData.value.toString());
-        const balanceB = new BigNumber(balanceBData.value.toString());
-
-        const priceVires = balanceB.multipliedBy(100).dividedBy(balanceA);
-        logger.info(`getViresPrice > ${priceVires.toNumber().toFixed(4)} USD`);
-        return priceVires.toNumber();
-    }
-    public static async getAssetPrice(assetId: string): Promise<number> {
-        const keyPrice = Config.KeyOfPriceMap[assetId];
-        if (keyPrice) {
-            logger.info(`getAssetPrice > key: ${keyPrice}`);
-            if (keyPrice === '%s%s__price__EUR') {
-                //EUR
-                const priceData = await nodeInteraction.accountDataByKey(keyPrice, Config.eurOracle, NodeUrl);
-                return new BigNumber(1000000).dividedBy(priceData.value.toString()).toNumber();
-            }
-            //其他币种BTC/ETH/Waves
-            const priceData = await nodeInteraction.accountDataByKey(keyPrice, Config.oracle, NodeUrl);
-            logger.info(`getAssetPrice > ${priceData.value.toString()}`);
-            return new BigNumber(priceData.value.toString()).dividedBy(1e6).toNumber();
-        } else {
-            logger.info(`getAssetPrice > stable coin: ${1} USD`); //稳定币
-            return 1;
-        }
-    }
-
-    public static async getAssetInfo(assetId: string): Promise<ERC20Token> {
-        const assetInfo = await nodeInteraction.transactionById(assetId, NodeUrl);
-        const assetToken = new ERC20Token(
-            assetInfo['assetId'],
-            assetInfo['name'],
-            Number.parseInt(assetInfo['decimals']),
-        );
-        await tokenDB.syncUp(assetToken);
-        return assetToken;
-    }
     //参考https://docs.vires.finance/faq/asset-parameters
     public static calculateBorrowSupplyAPR(
         utilizationRatio: number,
@@ -163,43 +121,6 @@ export class Vault {
         rewardInfo.borrowRewardSpeed = borrowRewardSpeed;
 
         return rewardInfo;
-    }
-
-    public static async getVTokenInfo(vaultAddress: string): Promise<TokenInfo> {
-        try {
-            const keyOfTokenId = 'aTokenId';
-            const keyOfTokenDecimals = 'aTokenDecimals';
-            const keyOfTokenName = 'aTokenName';
-            const keyOfTokenCirculation = 'aTokenCirculation';
-
-            const vTokenId = await nodeInteraction.accountDataByKey(keyOfTokenId, vaultAddress, NodeUrl);
-            let vToken = await tokenDB.getByAddress(vTokenId.value.toString());
-            if (!vToken) {
-                logger.debug(`getVTokenInfo > token - ${vTokenId.value.toString()} does not exist in token db.`);
-                const aTokenName = await nodeInteraction.accountDataByKey(keyOfTokenName, vaultAddress, NodeUrl);
-                const aTokenDecimals = await nodeInteraction.accountDataByKey(
-                    keyOfTokenDecimals,
-                    vaultAddress,
-                    NodeUrl,
-                );
-
-                vToken = new ERC20Token(
-                    vTokenId.value.toString(),
-                    aTokenName.value.toString(),
-                    Number.parseInt(aTokenDecimals.value.toString()),
-                );
-                logger.debug(`getVTokenInfo > added token - ${vTokenId.value.toString()} to db.`);
-                await tokenDB.syncUp(vToken);
-            }
-            logger.info(`getVTokenInfo > token - ${vTokenId.value.toString()} already existed in token db.`);
-            const totalSupply = await nodeInteraction.accountDataByKey(keyOfTokenCirculation, vaultAddress, NodeUrl);
-            return {
-                token: vToken,
-                balance: totalSupply.value.toString(),
-            };
-        } catch (e) {
-            logger.error(`getVTokenInfo > ${e.toString()}`);
-        }
     }
 
     public getConfig(): ConfigInfo {
@@ -323,16 +244,16 @@ export class Vault {
             rewardInfo: null,
         };
         if (!this.assetToken) {
-            const assetIdItem = await nodeInteraction.accountDataByKey('assetId', this.address, NodeUrl);
-            const assetId = assetIdItem.value.toString();
-            const assetToken = await Vault.getAssetInfo(assetId);
+            const assetId = await Utils.getVaultAssetId(this.address)
+            const assetToken = await Utils.getAssetToken(assetId)
             vaultInfo.asset = assetToken;
             this.assetToken = assetToken;
         } else {
             vaultInfo.asset = this.assetToken;
         }
-        logger.info(`getVaultInfo > asset - ${this.assetToken.symbol}: ${this.assetToken.address}`);
-        const vTokenInfo = await Vault.getVTokenInfo(this.address);
+        logger.info(`getVaultInfo > asset - ${this.assetToken.symbol}: ${this.assetToken.address}`)
+        //获取凭证token - vToken信息
+        const vTokenInfo = await Utils.getVTokenInfo(this.address);
         vaultInfo.aToken = vTokenInfo.token;
         vaultInfo.aTokenSupply = vTokenInfo.balance;
         logger.info(`getVaultInfo > vToken - ${vTokenInfo.token.symbol}: ${vTokenInfo.token.address}`);
@@ -355,7 +276,7 @@ export class Vault {
             }`,
         );
         //获取资产token的价格
-        const priceAsset = await Vault.getAssetPrice(this.assetToken.address);
+        const priceAsset = await Utils.getAssetPrice(this.assetToken.address);
         logger.info(`getVaultInfo > asset - ${this.assetToken.symbol} price: ${priceAsset.toFixed(4)} USD`);
         //该池子的资金使用率
         const utilizationRatio = totalBorrow.dividedBy(totalDeposit);
@@ -376,7 +297,7 @@ export class Vault {
         //获取池子的奖励信息
         const rewardInfo = await Vault.getDepositBorrowRewardInfo(this.address);
         vaultInfo.rewardInfo = rewardInfo;
-        const priceVires = await Vault.getViresPrice();
+        const priceVires = await Utils.getViresPrice();
         //计算存款的挖矿APR
         const supplyViresAPR = new BigNumber(rewardInfo.depositRewardSpeed)
             .multipliedBy(3600 * 24 * 365)
@@ -426,14 +347,11 @@ export class Vault {
         const vaultInfo = await this.getVaultInfo();
         const assetToken = this.assetToken;
         const vToken = this.vToken;
-        //获取用户存款aToken数量
-        const keyOfVTokenBalance = userAddress + '_aTokenBalance';
-        const unlockVTokenBalanceItem = await nodeInteraction.accountDataByKey(keyOfVTokenBalance, this.address, NodeUrl)
-        
+        //获取用户存款未锁仓的vToken数量
+        const keyOfUnlockVTokenBalance = userAddress + '_aTokenBalance';
+        const unlockVTokenBalanceItem = await nodeInteraction.accountDataByKey(keyOfUnlockVTokenBalance, this.address, NodeUrl)
+        //获取用户参加锁仓boost的vToken的数量
         const userLockedReceipt = await boost.getUserBoostInfo(userAddress, this.address)
-        // //获取用户固定时间锁仓aToken数量
-        // const keyOfLockedVTokenBalance = userAddress + '_' + vaultInfo.aToken.address + '_amt'
-        // const lockedVTokenBalanceItem = await nodeInteraction.accountDataByKey(keyOfLockedVTokenBalance, '3PFraDBNUFry9mgcfMo3hGcr3dm43TuYmN6', NodeUrl)
 
         let unlockVTokenBalance = new BigNumber(0)
         if (unlockVTokenBalanceItem) {
@@ -457,17 +375,17 @@ export class Vault {
             //计算assetToken和vToken的兑换关系
             const assetPerVToken = new BigNumber(vaultInfo.totalDeposit).dividedBy(vaultInfo.aTokenSupply);
             const unlockAssetTokenBalance = assetPerVToken.multipliedBy(unlockVTokenBalance)
-            const assetTokenBalance = assetPerVToken.multipliedBy(unlockVTokenBalance.plus(lockedVTokenBalance));
+            const totalAssetTokenBalance = assetPerVToken.multipliedBy(unlockVTokenBalance.plus(lockedVTokenBalance));
             logger.info(
                 `getUserInfo > supply asset balance: ${assetToken
-                    .readableAmount(assetTokenBalance.toString())
+                    .readableAmount(totalAssetTokenBalance.toString())
                     .toFixed(5)} ${assetToken.symbol}`
             );
             //获取用户是否将资产启用抵押
             const keyOfUseAsCollateral = userAddress + '_useAsCollateral'
             let useAsCollateral = await nodeInteraction.accountDataByKey(keyOfUseAsCollateral, this.address, NodeUrl)
             logger.info(`getUserInfo > use as collateral: ${useAsCollateral.value}`)
-
+            //结合未锁仓vToken的数量，显示实际collatera标志        
             if(unlockVTokenBalance.gt(0) && useAsCollateral.value) {
                 logger.info(`getUserInfo > available assets as collateral: ${true}`)
             } else {
@@ -498,9 +416,11 @@ export class Vault {
                 Config.rewardDistributor,
                 NodeUrl,
             );
+            //计算用户存款奖励
+            //一定要用unlock asset token balance
             let accRewardForSupply = new BigNumber(rewardData.depositRewards)
                 .multipliedBy(unlockAssetTokenBalance)
-                .dividedBy(vaultInfo.totalDeposit);
+                .dividedBy(vaultInfo.totalDeposit)
             if (accDepositRewardData) {
                 accRewardForSupply = accRewardForSupply.plus(accDepositRewardData.value.toString());
             }
