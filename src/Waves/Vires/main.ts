@@ -8,16 +8,16 @@ const userAddress = '3P5V82NzawM19QPrs8JoFFSctzxzjduUQUZ';
 
 const boost = new Boost()
 
-const vault = new Vault(Config.vaults.usdt); //USDT
+//const vault = new Vault(Config.vaults.usdt); //USDT
 //const vault = new Vault('3P8G747fnB1DTQ4d5uD114vjAaeezCW4FaM'); //WAVES
 //const vault = new Vault('3PGCkrHBxFMi7tz1xqnxgBpeNvn5E4M4g8S'); //USDC
-//const vault = new Vault('3PCwFXSq8vj8iKitA5zrrLRbuqehfmimpce');     //USDN
+const vault = new Vault('3PCwFXSq8vj8iKitA5zrrLRbuqehfmimpce');     //USDN
 //const vault = new Vault('3PBjqiMwwag72VWUtHNnVrxTBrNK8D7bVcN'); //EUR
 const main = async () => {
-    // await vault.loadBasicInfo();
-    // await vault.getConfigInfo();
+    await vault.loadBasicInfo();
+    await vault.getConfigInfo();
     // await vault.getUserInfo(userAddress);
-    await boost.getVaultBoostInfo(Config.vaults.usdt)
+    //await boost.getVaultBoostInfo(Config.vaults.usdt)
 };
 main().catch((e) => {
     console.error(e.message);

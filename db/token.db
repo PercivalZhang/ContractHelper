@@ -719,6 +719,10 @@
         "0x40a9d39aa50871df092538c5999b107f34409061": {
             "symbol": "iDAI",
             "decimals": 18
+        },
+        "0xb19059ebb43466c323583928285a49f558e572fd": {
+            "symbol": "hCRV",
+            "decimals": 18
         }
     },
     "25": {

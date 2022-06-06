@@ -42,7 +42,8 @@ const Chains = {
         blockDelta: 12.5,
     },
     3: {
-        rpcURI: 'https://bsc-dataseed.binance.org', // BSC
+        //rpcURI: 'https://bsc-dataseed.binance.org', // BSC
+        rpcURI: 'https://bscrpc.com',
         blockDelta: 3,
     },
     4: {

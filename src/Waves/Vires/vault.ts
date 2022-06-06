@@ -133,7 +133,7 @@ export class Vault {
             const assetId = assetIdItem.value.toString();
             if (assetId !== 'WAVES') {
                 const assetInfo = await nodeInteraction.transactionById(assetId, NodeUrl);
-
+                console.log(JSON.stringify(assetInfo))
                 const assetToken = new ERC20Token(
                     assetInfo['assetId'],
                     assetInfo['name'],
@@ -144,9 +144,10 @@ export class Vault {
                 const assetToken = new ERC20Token('WAVES', 'WAVES', 8);
                 this.assetToken = assetToken;
             }
+            await tokenDB.syncUp(this.assetToken)
             logger.info(`loadBasicInfo > asset - ${this.assetToken.symbol}: ${this.assetToken.address}`);
 
-            const vTokenInfo = await Vault.getVTokenInfo(this.address);
+            const vTokenInfo = await Utils.getVTokenInfo(this.address);
             this.vToken = vTokenInfo.token;
             logger.info(`loadBasicInfo > vToken - ${this.vToken.symbol}: ${this.vToken.address}`);
 
@@ -343,6 +344,22 @@ export class Vault {
         return new BigNumber(0);
     }
     //获取用户借贷信息
+    public async getMaxWithdrawableAmount(): Promise<BigNumber> {
+        const keyOfTotalDebtStore = "totalBorrow"
+        const totalDebtItem = await nodeInteraction.accountDataByKey(keyOfTotalDebtStore, this.address, NodeUrl)
+        const totalDebt = (totalDebtItem !== null) === true ? new BigNumber(totalDebtItem.value.toString()) : new BigNumber(0)
+        
+        const keyOfTotalDepositStore = "totalDeposit"
+        const totalDepositItem = await nodeInteraction.accountDataByKey(keyOfTotalDepositStore, this.address, NodeUrl)
+        const totalDeposit = (totalDepositItem !== null) === true ? new BigNumber(totalDepositItem.value.toString()) : new BigNumber(0)
+        
+        const keyOfTotalReserveStore = "totalReserve"
+        const totalReserveItem = await nodeInteraction.accountDataByKey(keyOfTotalReserveStore, this.address, NodeUrl)
+        const totalReserve = (totalReserveItem !== null) === true ? new BigNumber(totalReserveItem.value.toString()) : new BigNumber(0)
+
+        return totalDeposit.plus(totalReserve).minus(totalDebt)
+    }
+    //获取用户借贷信息
     public async getUserInfo(userAddress: string) {
         const vaultInfo = await this.getVaultInfo();
         const assetToken = this.assetToken;
@@ -373,7 +390,7 @@ export class Vault {
         );
         if(unlockVTokenBalance.gt(0) || lockedVTokenBalance.gt(0)) {
             //计算assetToken和vToken的兑换关系
-            const assetPerVToken = new BigNumber(vaultInfo.totalDeposit).dividedBy(vaultInfo.aTokenSupply);
+            const assetPerVToken = await Utils.getExchangeRate(this.address)
             const unlockAssetTokenBalance = assetPerVToken.multipliedBy(unlockVTokenBalance)
             const totalAssetTokenBalance = assetPerVToken.multipliedBy(unlockVTokenBalance.plus(lockedVTokenBalance));
             logger.info(

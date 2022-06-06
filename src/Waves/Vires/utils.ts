@@ -15,7 +15,7 @@ const tokenDB = TokenDB.getInstance();
 const logger = LoggerFactory.getInstance().getLogger('utils');
 
 export class Utils {
-    
+    //获取金库的凭证token - vToken信息
     public static async getVTokenInfo(vaultAddress: string): Promise<TokenInfo> {
         try {
             const keyOfTokenId = 'aTokenId';
@@ -52,7 +52,7 @@ export class Utils {
             logger.error(`getVTokenInfo > ${e.toString()}`);
         }
     }
-
+    //获取金库的凭证token与资产token的兑换率
     public static async getExchangeRate(vaultAddress: string): Promise<BigNumber> {
         const vTokenInfo = await Utils.getVTokenInfo(vaultAddress)
         const vTokenSupply = vTokenInfo.balance
@@ -62,7 +62,7 @@ export class Utils {
 
         return totalDepositAssets.dividedBy(vTokenSupply)
     }
-
+    //获取平台币vires的价格
     public static async getViresPrice(): Promise<number> {
         const keyBalanceA = 'A_asset_balance';
         const keyBalanceB = 'B_asset_balance';
@@ -76,12 +76,12 @@ export class Utils {
         logger.info(`getViresPrice > ${priceVires.toNumber().toFixed(4)} USD`);
         return priceVires.toNumber();
     }
-
+    //获取金库资产token的地址
     public static async getVaultAssetId(vaultAddress: string): Promise<string> {
         const assetIdItem = await nodeInteraction.accountDataByKey('assetId', vaultAddress, NodeUrl)
         return (assetIdItem !== null) === true ? assetIdItem.value.toString() : null
     }
-
+    //获取资产token的价格
     public static async getAssetPrice(assetId: string): Promise<number> {
         const keyPrice = Config.KeyOfPriceMap[assetId];
         if (keyPrice) {
@@ -100,7 +100,7 @@ export class Utils {
             return 1;
         }
     }
-
+    //获取资产token信息
     public static async getAssetToken(assetId: string): Promise<ERC20Token> {
         let assetToken : ERC20Token = null
         if(assetId === 'WAVES') {

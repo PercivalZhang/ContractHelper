@@ -1,7 +1,11 @@
 export const Config = {
     nodeURI: 'https://nodes.wavesnodes.com/', //节点URL
-    boost: '3PFraDBNUFry9mgcfMo3hGcr3dm43TuYmN6',
-    vaults: { //金库信息
+    main: '3PAZv9tgK1PX7dKR7b4kchq5qdpUS3G5sYT', //main合约(入口合约)   
+    limit: '3PRBVq52csUvTx77NYwLTULrt2e9jdsHfRB', //借款，取款额度限制合约  
+    config: '3P2rJGfb5MbeivZNSqdVmsD1Y2Mz8y6Jr3Z', //config配置管理合约
+    boost: '3PFraDBNUFry9mgcfMo3hGcr3dm43TuYmN6', //固定锁仓(3/6/12)质押
+    vaults: { //金库合约信息
+        usdc: '3PGCkrHBxFMi7tz1xqnxgBpeNvn5E4M4g8S',
         usdt: '3PEiD1zJWTMZNWSCyzhvBw9pxxAWeEwaghR', 
         waves: '3P8G747fnB1DTQ4d5uD114vjAaeezCW4FaM',
         usdn: '3PCwFXSq8vj8iKitA5zrrLRbuqehfmimpce',

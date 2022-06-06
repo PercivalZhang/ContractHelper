@@ -26,5 +26,9 @@
     "dsbbhlsstedg5lsiufk2aneh3djvqjupr2m9uu1gwy5p": {
         "symbol": "VIRES",
         "decimals": 8
+    },
+    "dg2xfkpddwkuobkzgahqtlpsgzfxlicypezekh2ad24p": {
+        "symbol": "USD-N",
+        "decimals": 6
     }
 }
