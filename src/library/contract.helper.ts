@@ -43,6 +43,13 @@ export class ContractHelper {
         return this.web3.eth.getBlockNumber();
     }
     
+    public getCallData(
+        methodName: string,
+        ...args: any[]
+    ) {
+        return this.contract.methods[methodName](...args).encodeABI();
+    }
+
     public async callWriteMethod(
         signer: Account,
         methodName: string,

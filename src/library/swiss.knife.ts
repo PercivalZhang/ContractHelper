@@ -7,6 +7,7 @@ import { LoggerFactory } from './LoggerFactory';
 import { JSONDBBuilder } from './db.json';
 import { NetworkType, Web3Factory } from './web3.factory';
 import { ERC20Token } from './erc20.token';
+import { ContractHelper } from './contract.helper';
 const logger = LoggerFactory.getInstance().getLogger('SwissKnife');
 
 // export interface Token {
@@ -14,7 +15,11 @@ const logger = LoggerFactory.getInstance().getLogger('SwissKnife');
 //     symbol: string;
 //     decimals: number;
 // }
-
+export enum EVMDataType {
+    STRING,
+    UINT256,
+    ADDRESS
+}
 export interface LPToken {
     token0: ERC20Token;
     token1: ERC20Token;
@@ -30,6 +35,20 @@ export class SwissKnife {
     public constructor(network: NetworkType) {
         this.web3 = Web3Factory.getInstance().getWeb3(network);
         this.tokenDB = new JSONDBBuilder(path.resolve('db/token.db'), true, true, '/');
+    }
+
+    public decode(pType: EVMDataType, hex: string) {
+        switch(pType) {
+            case EVMDataType.STRING:
+                return this.web3.eth.abi.decodeParameter('string', hex)
+            case EVMDataType.UINT256:  
+                return this.web3.eth.abi.decodeParameter('uint256', hex)  
+            case EVMDataType.ADDRESS:
+                return this.web3.eth.abi.decodeParameter('address', hex)    
+        }
+    }
+    public decodeArray(typesArray: Array<String|Object>, hex: string) {
+        return this.web3.eth.abi.decodeParameters(typesArray, hex)    
     }
 
     public async syncUpTokenDB(tokenAddress: string, contract?: Contract): Promise<ERC20Token> {

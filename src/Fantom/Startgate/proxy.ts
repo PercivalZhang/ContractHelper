@@ -4,7 +4,7 @@ import { Web3Factory } from '../../library/web3.factory';
 
 const logger = LoggerFactory.getInstance().getLogger('proxy');
 
-
+// 文档： https://docs.openzeppelin.com/contracts/3.x/api/proxy
 const main = async () => {
 //    const proxyAdminAddress = await proxy.callReadMethod('admin')
 //     logger.info(`proxy admin: ${proxyAdminAddress}`)

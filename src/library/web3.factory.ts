@@ -36,6 +36,7 @@ const Chains = {
     0: {
         rpcURI: 'https://mainnet.infura.io/v3/11ae2b7ff4c04391b71dd5a196c21b0d', // ETH Main
         blockDelta: 12.5,
+        multicall: '0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441'
     },
     1: {
         rpcURI: 'https://http-mainnet-node.huobichain.com', // HECO
@@ -92,5 +93,9 @@ export class Web3Factory {
 
     getChainId(network: NetworkType): number {
         return Chains[network].chainId;
+    }
+
+    getMultiCallAddress(network: NetworkType): string {
+        return Chains[network].multicall;
     }
 }
