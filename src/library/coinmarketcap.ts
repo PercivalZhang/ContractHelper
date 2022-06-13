@@ -14,14 +14,7 @@ export class CoinMarketcap {
         }
         return CoinMarketcap.instance;
     }
-
-    // await axios.get('https://sandbox-api.coinmarketcap.com/v1/cryptocurrency/listings/latest', {
-    //   headers: {
-    //     'X-CMC_PRO_API_KEY': 'b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c',
-    //   },
-    // });
   
-
     public async fetchData(uri: string): Promise<any> {
         try {
             const res = await axios.get(uri, {

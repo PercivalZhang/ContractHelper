@@ -189,7 +189,7 @@ const ABI = [
 // const jsonAbi = readableInterface.format(ethers.utils.FormatTypes.json);
 // console.log(JSON.stringify(jsonAbi));
 
-const Provider = new ethers.providers.JsonRpcProvider('https://bsc-dataseed.binance.org');
+const Provider = new ethers.providers.JsonRpcProvider('https://bscrpc.com');
 
 export class DataProviderHelper {
     public readonly address: string;
@@ -395,7 +395,7 @@ export class DataProviderHelper {
             },
         };
         const prices = await chef.getPrices();
-
+        
         const baseDailyReward = new BigNumber(governInfo.chessRate)
             .multipliedBy(3600 * 24)
             .multipliedBy(Config.chessPrice)

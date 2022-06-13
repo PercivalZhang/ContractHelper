@@ -7,6 +7,7 @@ export const Config = {
     pools: {
         v2: [
             '0x4CA9b3063Ec5866A4B82E437059D2C43d1be596F', //hbtc
+            '0xdc24316b9ae028f1497c275eb9192a3ea0f67022', //stETH
         ]
     }
 };

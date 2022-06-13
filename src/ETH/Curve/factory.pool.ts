@@ -84,7 +84,7 @@ export class FactoryPool {
         //获取pool lp token地址
         const callData2 = this.registry.getCallData('get_lp_token', this.address)
         //获取wrap coin和underlying coin的个数
-        const callData3 = this.registry.getCallData('get_n_coins', this.address) 
+        const callData3 = this.registry.getCallData('get_n_coins', this.address)
         //获取wrap coin地址列表
         const callData4 = this.registry.getCallData('get_coins', this.address)
         //获取underlying coin的地址列表
@@ -131,7 +131,15 @@ export class FactoryPool {
         const a = gSwissKnife.decode(EVMDataType.UINT256, datas['1'][8]).toString()
         const gaugeData = gSwissKnife.decodeArray(['address[10]', 'int128[10]'], datas['1'][9])
         logger.info(`getPoolInfo > gauge address: ${gaugeData[0][0]}`)
-      
+
+        poolInfo.fees = {
+            pool: new BigNumber(fees[0]).dividedBy(1e10).multipliedBy(100).toNumber().toFixed(3) + '%',
+            admin: new BigNumber(fees[1]).dividedBy(1e10).multipliedBy(100).toNumber().toFixed(3) + '%' // percentage of pool fee
+        }
+        poolInfo.a = a
+        const gaugeInfo = await this.getGaugeInfo(gaugeData[0][0])
+        poolInfo.gauge = gaugeInfo
+
         //获取wrap coins numbers
         const wCoinNumber = Number.parseInt(numsOfcoins[0])
         //获取underlying coins numbers
@@ -147,45 +155,36 @@ export class FactoryPool {
                 amount: wCoinBalance
             })
         }
-       
+
         let TVL = new BigNumber(0)
         //获取underlying coin的Token信息和余额  
         for (let i = 0; i < underlyingCoinNumber; i++) {
             const uCoinAddress = uCoins[i]
             const uCoin = await gSwissKnife.syncUpTokenDB(uCoinAddress)
             const uCoinBalance = uCoin.readableAmount(uCoinBalances[i]).toFixed(4)
-            
-            // const uCoinPrice = await cmp.getTokenUSDPrice(uCoin.symbol)
-            
-            // const uCoinUSDValue = new BigNumber(uCoinBalance).multipliedBy(uCoinPrice)
-            // TVL = TVL.plus(uCoinUSDValue)
+
+            const uCoinPrice = await cmp.getTokenUSDPrice(uCoin.symbol)
+
+            const uCoinUSDValue = new BigNumber(uCoinBalance).multipliedBy(uCoinPrice)
+            TVL = TVL.plus(uCoinUSDValue)
             poolInfo.underlyingCoins.push({
                 token: uCoin,
                 amount: uCoinBalance
             })
         }
-        //poolInfo.TVL = TVL.toNumber().toFixed(4)
-        poolInfo.fees = {
-            pool: new BigNumber(fees[0]).dividedBy(1e10).multipliedBy(100).toNumber().toFixed(3) + '%',
-            admin: new BigNumber(fees[1]).dividedBy(1e10).multipliedBy(100).toNumber().toFixed(3) + '%' // percentage of pool fee
-        }
+        poolInfo.TVL = TVL.toNumber().toFixed(4)
 
-        poolInfo.a = a
+        const lptContract = new ContractHelper(lpTokenAddress, './erc20.json', Config.network)
+        const totalSupplyOfLP = await lptContract.callReadMethod('totalSupply')
 
-        const gaugeInfo = await this.getGaugeInfo(gaugeData[0][0])
-        poolInfo.gauge = gaugeInfo
+        const totalStakedUSD = TVL.multipliedBy(gaugeInfo.workingSupply).dividedBy(totalSupplyOfLP)
 
-        // const lptContract = new ContractHelper(lpTokenAddress, './erc20.json', Config.network)
-        // const totalSupplyOfLP = await lptContract.callReadMethod('totalSupply')
+        const crvToken = await gSwissKnife.syncUpTokenDB(Config.crv)
+        const crvPrice = await cmp.getTokenUSDPrice(crvToken.symbol)
 
-        // const totalStakedUSD = TVL.multipliedBy(gaugeInfo.workingSupply).dividedBy(totalSupplyOfLP)
-
-        // const crvToken = await gSwissKnife.syncUpTokenDB(Config.crv)
-        // const crvPrice = await cmp.getTokenUSDPrice(crvToken.symbol)
-
-        // const aprBN = new BigNumber(gaugeInfo.reward.annualRewards).multipliedBy(crvPrice).dividedBy(totalStakedUSD)
-        // logger.info(`getPoolInfo > apr: ${aprBN.multipliedBy(100).toNumber().toFixed(4)}%`)
-        // poolInfo.APR = `${aprBN.multipliedBy(100).toNumber().toFixed(4)}%`
+        const aprBN = new BigNumber(gaugeInfo.reward.annualRewards).multipliedBy(crvPrice).dividedBy(totalStakedUSD)
+        logger.info(`getPoolInfo > apr: ${aprBN.multipliedBy(100).toNumber().toFixed(4)}%`)
+        poolInfo.APR = `${aprBN.multipliedBy(100).toNumber().toFixed(4)}%`
 
         return poolInfo
     }
@@ -214,15 +213,64 @@ export class FactoryPool {
 
         gaugeInfo.workingSupply = await gauge.callReadMethod('working_supply')
         return gaugeInfo;
-    };
+    }
+
+    public async getUserGaugeInfo(userAddress: string, gaugeAddress: string) {
+        const gauge = new ContractHelper(gaugeAddress, './ETH/Curve/gauge.json', Config.network)
+        const claimable_tokens = await gauge.callReadMethod('claimable_tokens', userAddress) // 待领取奖励CRV
+        console.log(claimable_tokens)
+    }
+
+    /**
+     * 获取实施兑换价格
+     * @param poolAddress 池子合约地址
+     * @param fromIndex   input token的coins数组下标
+     * @param toIndex     output token的coins数组下标
+     * @param fromAmountGWei input token的数量，最小单位1Gwei，eg. 1 = 1e18
+     * @returns 兑换出的output token的数量
+     */
+    public static async getExchangePrice(poolAddress: string, fromIndex: number, toIndex: number, fromAmountGWei: number): Promise<number> {
+        const abiJSONStr = `[
+            {"name":"get_dy","outputs":[{"type":"uint256","name":""}],"inputs":[{"type":"int128","name":"i"},{"type":"int128","name":"j"},{"type":"uint256","name":"dx"}],"stateMutability":"view","type":"function","gas":2654541},
+            {
+                "name": "coins",
+                "outputs": [{ "type": "address", "name": "" }],
+                "inputs": [{ "type": "uint256", "name": "arg0" }],
+                "stateMutability": "view",
+                "type": "function"
+            }
+        ]`
+        try {
+            const pool = ContractHelper.getContractInstanceFromABI(poolAddress, abiJSONStr, Config.network)
+            
+            const inputTokenAddress = await pool.methods.coins(fromIndex).call()
+            const inputToken = await gSwissKnife.syncUpTokenDB(inputTokenAddress)
+            logger.info(`getExchangePrice > from coin[${fromIndex}]: ${inputToken.symbol}`)
+
+            const outputTokenAddress = await pool.methods.coins(toIndex).call()
+            const outputToken = await gSwissKnife.syncUpTokenDB(outputTokenAddress)
+            logger.info(`getExchangePrice > to coin[${toIndex}]: ${outputToken.symbol}`)
+
+            const outputAmount = await pool.methods.get_dy(fromIndex, toIndex, new BigNumber(fromAmountGWei).multipliedBy(Math.pow(10, inputToken.decimals))).call()
+            
+            logger.info(`getExchangePrice > swap ${fromAmountGWei} ${inputToken.symbol} to ${outputToken.readableAmount(outputAmount).toFixed(6)} ${outputToken.symbol}`)
+
+            return outputToken.readableAmount(outputAmount)
+        } catch(e) {
+            logger.error(`getExchangePrice > ${e.toString()}`)
+        }
+    }
 }
 
 const cmp = CoinMarketcap.getInstance()
 
 const main = async () => {
     const pool = new FactoryPool(Config.pools.v2[0]); // hbtc: hbtc/wbtc
-    const poolInfo = await pool.getPoolInfo();
-    console.log(poolInfo)
+    // const poolInfo = await pool.getPoolInfo();
+    // console.log(poolInfo)
+    //await pool.getUserGaugeInfo('0xb40c45b605171c6991171649d6b14852243ff156', '0x4c18E409Dc8619bFb6a1cB56D114C3f592E0aE79')
+
+    await FactoryPool.getExchangePrice('0xdc24316b9ae028f1497c275eb9192a3ea0f67022', 1, 0, 1)
     // const priceData = await cmp.getTokenUSDPrice('btc')
     // console.log(priceData)
 };

@@ -723,6 +723,15 @@
         "0xb19059ebb43466c323583928285a49f558e572fd": {
             "symbol": "hCRV",
             "decimals": 18
+        },
+        "0x06325440d014e39736583c165c2963ba99faf14e": {
+            "symbol": "steCRV",
+            "decimals": 18,
+            "address": "0x06325440D014e39736583c165C2963BA99fAf14E"
+        },
+        "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee": {
+            "symbol": "ETH",
+            "decimals": 18
         }
     },
     "25": {

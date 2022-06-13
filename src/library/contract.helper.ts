@@ -18,7 +18,7 @@ export class ContractHelper {
     private abiFileName: string;
     private contract: Contract;
     private hideExceptionOutput: boolean;
-
+    
     constructor(address: string, abiFileName: string, network: NetworkType) {
         this.abiFileName = abiFileName;
         this.address = address;
@@ -29,6 +29,12 @@ export class ContractHelper {
         const apiInterfaceContract = JSON.parse(fs.readFileSync(pathABIFile).toString());
         this.contract = new this.web3.eth.Contract(apiInterfaceContract, address);
         this.hideExceptionOutput = false;
+    }
+
+    public static getContractInstanceFromABI(address: string, abiJSONString: string, network: NetworkType): Contract {
+        const apiInterfaceContract = JSON.parse(abiJSONString);
+        const web3 = Web3Factory.getInstance().getWeb3(network);
+        return new web3.eth.Contract(apiInterfaceContract, address);
     }
 
     public setDefaultBlock(blockNumber: number) {

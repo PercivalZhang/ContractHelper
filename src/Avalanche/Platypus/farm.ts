@@ -188,10 +188,13 @@ export class PlatypusChef extends MasterChefHelper {
 }
 
 const main = async () => {
-    const masterChef = new PlatypusChef(Config.network, Config.farmChef, './Avalanche/platypus/master.chef.json');
-    await masterChef.getFarmingReceipts('0x881897b1FC551240bA6e2CAbC7E59034Af58428a');
-    await masterChef.getPoolBaseAPR(1);
-    await masterChef.getUserBoostedAPR(1, '0x881897b1FC551240bA6e2CAbC7E59034Af58428a');
+    // const masterChef = new PlatypusChef(Config.network, Config.farmChef, './Avalanche/platypus/master.chef.json');
+    // await masterChef.getFarmingReceipts('0x881897b1FC551240bA6e2CAbC7E59034Af58428a');
+    // await masterChef.getPoolBaseAPR(1);
+    // await masterChef.getUserBoostedAPR(1, '0x881897b1FC551240bA6e2CAbC7E59034Af58428a');
+
+    const proxyAdminAddress = await swissKnife.getProxyAdminAddress(Config.farmChef.address)
+    logger.info(`proxy admin: ${proxyAdminAddress}`)
 };
 
 main().catch((e) => {

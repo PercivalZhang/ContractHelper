@@ -7,7 +7,7 @@ import { LoggerFactory } from './LoggerFactory';
 import { JSONDBBuilder } from './db.json';
 import { NetworkType, Web3Factory } from './web3.factory';
 import { ERC20Token } from './erc20.token';
-import { ContractHelper } from './contract.helper';
+
 const logger = LoggerFactory.getInstance().getLogger('SwissKnife');
 
 // export interface Token {
@@ -37,6 +37,10 @@ export class SwissKnife {
         this.tokenDB = new JSONDBBuilder(path.resolve('db/token.db'), true, true, '/');
     }
 
+    public async getProxyAdminAddress(proxyAddress: string): Promise<string> {
+        const proxyAdminAddress = await this.web3.eth.getStorageAt(proxyAddress, '0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103')
+        return proxyAdminAddress
+    }
     public decode(pType: EVMDataType, hex: string) {
         switch(pType) {
             case EVMDataType.STRING:
@@ -68,7 +72,17 @@ export class SwissKnife {
                             });
                             break;
                     }
-                } else {
+                } else if(tokenAddress.toLowerCase() === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {
+                    switch (chainId) {
+                        case 1:
+                            this.tokenDB.push('/' + chainId + '/' + tokenAddress.toLowerCase(), {
+                                symbol: 'ETH',
+                                decimals: 18,
+                            });
+                            break;
+                    }
+                } 
+                else {
                     if (!tokenContract) {
                         logger.debug(`no contract provided`);
                         logger.debug(`loading contract by token address: ${tokenAddress}`);

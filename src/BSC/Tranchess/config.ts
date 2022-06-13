@@ -47,7 +47,7 @@ export const Config = {
     chessToken: '0x20de22029ab63cf9a7cf5feb2b737ca1ee4c82a6',
     votingEscow: '0x95A2bBCD64E2859d40E2Ad1B5ba49Dc0e1Abc6C2',
     VOTING_ESCORW_MAX_TIME: 125798400, // 通过voting escow合约可以获取到
-    chessPrice: 0.6679,
+    chessPrice: 0.3322,
     rewardWeight: {
         M: 3,
         B: 2,
