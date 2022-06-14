@@ -81,7 +81,7 @@ const main = async () => {
     const userAddress = '0x7bdff8af765637783a3e012012f147a6930dd7e8'
     const vault = new ETHVault()
     await vault.getVaultInfo()
-    await vault.getUserReceipt(userAddress)
+    //await vault.getUserReceipt(userAddress)
 };
 
 main().catch((e) => {

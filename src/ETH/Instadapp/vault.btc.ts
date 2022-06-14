@@ -12,7 +12,7 @@ const logger = LoggerFactory.getInstance().getLogger('vault.usdc');
  * - deposit stETH into AAVE to get aStETH
  */
 const main = async () => {
-    const userAddress = '0x7bdff8af765637783a3e012012f147a6930dd7e8'
+    const userAddress = '0x9dca89D771Ab3F07AFB7A66d9eB75FAe54cE19e5'
     const vault = new Vault(Config.vaults.btc)
     await vault.getVaultInfo()
     await vault.getUserReceipt(userAddress)
