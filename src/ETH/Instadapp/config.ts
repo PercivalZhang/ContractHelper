@@ -16,14 +16,14 @@ export const Config = {
         },        
         btc: {
             address: '0xEC363faa5c4dd0e51f3D9B5d0101263760E7cdeB',
-            price: 30364.5
+            price: 20134.5
         },
         eth: {
             address: '0xc383a3833a87009fd9597f8184979af5edfad019',
-            price: 1902.04
+            price: 1022.04
         },
     },
     price: {
-        eth: 1902.04
+        eth: 1022.04
     }
 };

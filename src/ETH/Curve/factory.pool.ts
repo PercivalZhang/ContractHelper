@@ -272,7 +272,7 @@ const main = async () => {
     // console.log(poolInfo)
     //await pool.getUserGaugeInfo('0xb40c45b605171c6991171649d6b14852243ff156', '0x4c18E409Dc8619bFb6a1cB56D114C3f592E0aE79')
 
-    await FactoryPool.getExchangePrice('0xdc24316b9ae028f1497c275eb9192a3ea0f67022', 1, 0, 1000)
+    await FactoryPool.getExchangePrice('0xdc24316b9ae028f1497c275eb9192a3ea0f67022', 1, 0, 17388)
     // const priceData = await cmp.getTokenUSDPrice('btc')
     // console.log(priceData)
 };

@@ -3,9 +3,11 @@ import BigNumber from 'bignumber.js';
 import { ContractHelper } from '../../library/contract.helper';
 import { SwissKnife } from '../../library/swiss.knife';
 import { Config } from './config';
+import { CoinMarketcap } from '../../library/coinmarketcap';
 
 const logger = LoggerFactory.getInstance().getLogger('Vault');
 const gSwissKnife = new SwissKnife(Config.network);
+const gCMP = CoinMarketcap.getInstance()
 
 type VaultConfig = {
     address: string;
@@ -33,6 +35,7 @@ export class Vault {
         //Asset Token - eg. USDC
         const assetTokenAddress = await this.itself.callReadMethod('token')
         const assetToken = await gSwissKnife.syncUpTokenDB(assetTokenAddress)
+
         //AAVE凭证token - eg. aUSDC
         const aTokenAddress = await this.itself.callReadMethod('atoken')
         //Vault凭证token - eg. iUSDC
@@ -50,6 +53,8 @@ export class Vault {
         //Asset Token - eg. USDC
         const assetAddress = await this.itself.callReadMethod('token')
         const assetToken = await gSwissKnife.syncUpTokenDB(assetAddress)
+        const assetPrice = Number.parseFloat(await gCMP.getTokenUSDPrice(assetToken.symbol))
+        logger.info(`getVaultInfo > asset price: ${assetPrice}`)
         //AAVE凭证Token - eg. aUSDC
         const aAssetAddress = await this.itself.callReadMethod('atoken')
         const aAssetToken = await gSwissKnife.syncUpTokenDB(aAssetAddress)
@@ -85,20 +90,23 @@ export class Vault {
         const assetTokenAmountInDSA = assetToken.readableAmount(vaultBalances[4])
         logger.info(`getVaultInfo > DSA account asset token - ${assetToken.symbol} balance: ${assetTokenAmountInDSA.toFixed(4)}`)
 
-        //const withdrawableAssetTokenAmount = assetTokenAmountInVault + assetTokenAmountInDSA
-        //logger.info(`getVaultInfo > withrawable asset token - ${assetToken.symbol} balance: ${withdrawableAssetTokenAmount.toFixed(4)}`)
+        const withdrawableAssetTokenAmount = assetTokenAmountInVault + assetTokenAmountInDSA
+        logger.info(`getVaultInfo > withrawable asset token - ${assetToken.symbol} balance: ${withdrawableAssetTokenAmount.toFixed(4)}`)
 
         const netAssetTokenAmount = assetToken.readableAmount(vaultBalances[5])
         logger.info(`getVaultInfo > total net asset token - ${assetToken.symbol} balance: ${netAssetTokenAmount.toFixed(4)}`)
 
-        const withdrawableAssetTokenAmount = netAssetTokenAmount - collateralAssetBalance
-        logger.info(`getVaultInfo > withrawable asset token - ${assetToken.symbol} balance: ${withdrawableAssetTokenAmount.toFixed(4)}`)
+        // const withdrawableAssetTokenAmount = netAssetTokenAmount - collateralAssetBalance
+        // logger.info(`getVaultInfo > withrawable asset token - ${assetToken.symbol} balance: ${withdrawableAssetTokenAmount.toFixed(4)}`)
+
+        const ethPrice = Number.parseFloat(await gCMP.getTokenUSDPrice('weth'))
+        logger.info(`getVaultInfo > eth price: ${ethPrice}`)
 
         //净锁仓价值（去掉债务）
-        const netTVL = netAssetTokenAmount * this.assetPrice  + stETHBalance * Config.price.eth - debtWETHBalance * Config.price.eth
+        const netTVL = netAssetTokenAmount * assetPrice  + stETHBalance * Config.price.eth - debtWETHBalance * ethPrice
         logger.info(`getVaultInfo > net TVL: ${netTVL.toFixed(4)} USD`)
         //总锁仓量（没有去掉债务） 
-        const tvl = netAssetTokenAmount * this.assetPrice + stETHBalance * Config.price.eth
+        const tvl = netAssetTokenAmount * assetPrice + stETHBalance * Config.price.eth
         logger.info(`getVaultInfo > TVL: ${tvl.toFixed(4)} USD`)
         //杠杆率
         const leverageRatio = tvl / netTVL

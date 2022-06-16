@@ -7,6 +7,7 @@ import { LoggerFactory } from './LoggerFactory';
 import { JSONDBBuilder } from './db.json';
 import { NetworkType, Web3Factory } from './web3.factory';
 import { ERC20Token } from './erc20.token';
+import { ContractHelper } from './contract.helper';
 
 const logger = LoggerFactory.getInstance().getLogger('SwissKnife');
 
@@ -145,6 +146,15 @@ export class SwissKnife {
             logger.warn(e.message);
             return false;
         }
+    }
+
+    public async getERC20TokenBalance(erc20TokenAddress: string, userAddress: string): Promise<number> {
+        const token = await this.syncUpTokenDB(erc20TokenAddress)
+        const pathABIFile = path.resolve('abi', 'erc20.json');
+        const apiInterfaceContract = JSON.parse(fs.readFileSync(pathABIFile).toString());
+        const erc20 = new this.web3.eth.Contract(apiInterfaceContract, erc20TokenAddress);
+        const balance = await erc20.methods.balanceOf(userAddress).call()
+        return token.readableAmount(balance)
     }
 
     public async getLPTokenDetails(address: string): Promise<LPToken> {
