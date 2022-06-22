@@ -209,6 +209,25 @@ export class DataProviderHelper {
         return DataProviderHelper.instance;
     }
 
+    public async testProtocolData(fundCategory: FundCategroy, userAddress: string) {
+        let configData =  Config.v2.BNBFund;
+
+        const chessToken = await swissKnife.syncUpTokenDB(Config.chessToken);
+        const tokenM = await swissKnife.syncUpTokenDB(configData['tokens'][0]);
+        const tokenA = await swissKnife.syncUpTokenDB(configData['tokens'][1]);
+        const tokenB = await swissKnife.syncUpTokenDB(configData['tokens'][2]);
+
+        const data = await this.itself.getProtocolData(
+            configData['primaryMarket'],
+            configData['exchange'],
+            ethers.constants.AddressZero,
+            ethers.constants.AddressZero,
+            userAddress,
+            1,
+        );
+        console.log(data)
+    }
+    
     public async getProtocolData(fundCategory: FundCategroy, userAddress: string): Promise<ProtocalDataInfo> {
         let configData;
         switch (fundCategory) {

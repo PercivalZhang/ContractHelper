@@ -900,6 +900,20 @@
         "0x3a632b713637d837ff3b0e34d093a21da1ef9fb1": {
             "symbol": "nROOK+",
             "decimals": 18
+        },
+        "0xa5b75770ffbcac62aac621d57d7ce9f4ea60d7e7": {
+            "symbol": "nQUEEN",
+            "decimals": 18,
+            "address": "0xA5b75770FfBCaC62AaC621d57D7ce9f4EA60D7e7"
+        },
+        "0x20d269c5bf15b6679d832ed05734e30a7657ddf3": {
+            "symbol": "nBISHOP",
+            "decimals": 18,
+            "address": "0x20D269c5bF15B6679D832ED05734E30a7657dDF3"
+        },
+        "0x89035eb6dc4d3bb504c39e05f6cf25a7c8f68bbc": {
+            "symbol": "nROOK",
+            "decimals": 18
         }
     },
     "128": {
@@ -1679,6 +1693,377 @@
         "0xd5fa400a24eb2ea55bc5bd29c989e70fbc626fff": {
             "symbol": "Spooky LP",
             "decimals": 18
+        }
+    },
+    "1818": {
+        "0xebe08f2a587e4f231f50d6957658dd09a8deaa7e": {
+            "symbol": "TEST",
+            "decimals": 18,
+            "address": "0xebe08f2a587e4f231f50d6957658dd09a8deaa7e"
+        },
+        "0x00f0d8595797943c12605cd59bc0d9f63d750ccf": {
+            "symbol": "USDC",
+            "decimals": 18,
+            "address": "0x00f0d8595797943c12605cd59bc0d9f63d750ccf"
+        },
+        "0x3a1f6e3e6f26e92bb0d07841eb68f8e84f39751e": {
+            "symbol": "DAI",
+            "decimals": 18,
+            "address": "0x3a1f6e3e6f26e92bb0d07841eb68f8e84f39751e"
+        },
+        "0x9d3f61338d6eb394e378d28c1fd17d5909ac6591": {
+            "symbol": "WCUBE",
+            "decimals": 18,
+            "address": "0x9d3f61338d6eb394e378d28c1fd17d5909ac6591"
+        },
+        "0x8347af0119a76915c6f5aebd6aee7dce62d24318": {
+            "symbol": "TT1",
+            "decimals": 18,
+            "address": "0x8347af0119a76915c6f5aebd6aee7dce62d24318"
+        },
+        "0x63fe0b62471911d16439ffdd065314e2bee68d82": {
+            "symbol": "HealthChain",
+            "decimals": 18,
+            "address": "0x63fe0b62471911d16439ffdd065314e2bee68d82"
+        },
+        "0x1faae12efbcedd345104a5300b9347698f9df559": {
+            "symbol": "Cook Token",
+            "decimals": 18,
+            "address": "0x1faae12efbcedd345104a5300b9347698f9df559"
+        },
+        "0x72b9908f755183d0ba64e89377a96840dfce39ed": {
+            "symbol": "ShitCoin",
+            "decimals": 18,
+            "address": "0x72b9908f755183d0ba64e89377a96840dfce39ed"
+        },
+        "0xb6fdda5948daa3a94b7a93e904940b8b14765918": {
+            "symbol": "Yield",
+            "decimals": 18,
+            "address": "0xb6fdda5948daa3a94b7a93e904940b8b14765918"
+        },
+        "0x2325092febf879e0efd338162a6557dda7bbfc2f": {
+            "symbol": "Blood",
+            "decimals": 18,
+            "address": "0x2325092febf879e0efd338162a6557dda7bbfc2f"
+        },
+        "0x02b8063c8296b3d809c3191a94ab09b26ff1497d": {
+            "symbol": "SNP Token",
+            "decimals": 18,
+            "address": "0x02b8063c8296b3d809c3191a94ab09b26ff1497d"
+        },
+        "0x4126da12ed0fc33165c6a8b05deb5ac861673b3b": {
+            "symbol": "Xels Token",
+            "decimals": 18,
+            "address": "0x4126da12ed0fc33165c6a8b05deb5ac861673b3b"
+        },
+        "0x7573f57af59378dd7042af031266452afb2c42a9": {
+            "symbol": "CUBEC",
+            "decimals": 18,
+            "address": "0x7573f57af59378dd7042af031266452afb2c42a9"
+        },
+        "0xd2c592fab6bbd087418847a4c81b4226eb974f0e": {
+            "symbol": "SPAC3X",
+            "decimals": 18,
+            "address": "0xd2c592fab6bbd087418847a4c81b4226eb974f0e"
+        },
+        "0xc94ecddccabd1698582acd7c1ea21a5297fd11fc": {
+            "symbol": "Era Token",
+            "decimals": 18,
+            "address": "0xc94ecddccabd1698582acd7c1ea21a5297fd11fc"
+        },
+        "0xdea265ef79b03a1dd0eb8f5027f8a7393aa5f34d": {
+            "symbol": "Lion Token",
+            "decimals": 18,
+            "address": "0xdea265ef79b03a1dd0eb8f5027f8a7393aa5f34d"
+        },
+        "0x6fd81dedcc5508c633aff2062d2e74219dc3342b": {
+            "symbol": "Freedom Protocol Token",
+            "decimals": 18,
+            "address": "0x6fd81dedcc5508c633aff2062d2e74219dc3342b"
+        },
+        "0x5ae6ba5204e686bb282c6fb8c2728727cab6b3c2": {
+            "symbol": "BookShib",
+            "decimals": 18,
+            "address": "0x5ae6ba5204e686bb282c6fb8c2728727cab6b3c2"
+        },
+        "0xc54f61a27ddf09ca97f1f57d7e71d61d5974d039": {
+            "symbol": "The age of dinosaurs",
+            "decimals": 18,
+            "address": "0xc54f61a27ddf09ca97f1f57d7e71d61d5974d039"
+        },
+        "0x0249282d5d46d2c686d4906480e9be870cd73176": {
+            "symbol": "MeMeBank",
+            "decimals": 18,
+            "address": "0x0249282d5d46d2c686d4906480e9be870cd73176"
+        },
+        "0x0da86e82e7a728dece1f4e3c9ca42d9169552f36": {
+            "symbol": "Drip Token",
+            "decimals": 18,
+            "address": "0x0da86e82e7a728dece1f4e3c9ca42d9169552f36"
+        },
+        "0xf47dc2199336d5b93b611cd214c827a68a0f6b43": {
+            "symbol": "CFI",
+            "decimals": 18,
+            "address": "0xf47dc2199336d5b93b611cd214c827a68a0f6b43"
+        },
+        "0xa124bd9a116b916a5dbf5660e7f66bf20b4ae259": {
+            "symbol": "METH",
+            "decimals": 18,
+            "address": "0xa124bd9a116b916a5dbf5660e7f66bf20b4ae259"
+        },
+        "0xcf1f99a67b75d6af2235c38c01d39ef196205ee9": {
+            "symbol": "cBTC",
+            "decimals": 18,
+            "address": "0xcf1f99a67b75d6af2235c38c01d39ef196205ee9"
+        },
+        "0xcf20fffe5f1d6f9b37e592dedac61c55513f081a": {
+            "symbol": "cDAI",
+            "decimals": 18,
+            "address": "0xcf20fffe5f1d6f9b37e592dedac61c55513f081a"
+        },
+        "0x8ff4c0cb649c35059ebe4985c26739d9c29da3d6": {
+            "symbol": "CubeMoon",
+            "decimals": 9,
+            "address": "0x8ff4c0cb649c35059ebe4985c26739d9c29da3d6"
+        },
+        "0xb23626e06ce4eb6a6de75a452bd416b50b507c2c": {
+            "symbol": "USDT",
+            "decimals": 18,
+            "address": "0xb23626e06ce4eb6a6de75a452bd416b50b507c2c"
+        },
+        "0x5b02fab80a2fbc2876a1d9ce7f3cc35885f7d837": {
+            "symbol": "TEST",
+            "decimals": 18,
+            "address": "0x5b02fab80a2fbc2876a1d9ce7f3cc35885f7d837"
+        },
+        "0x040ea5c10e6ba4badb6c433a365ccc4968697230": {
+            "symbol": "BTC",
+            "decimals": 18,
+            "address": "0x040ea5c10e6ba4badb6c433a365ccc4968697230"
+        },
+        "0x57eea49ec1087695274a9c4f341e414eb64328c2": {
+            "symbol": "ETH",
+            "decimals": 18,
+            "address": "0x57eea49ec1087695274a9c4f341e414eb64328c2"
+        },
+        "0x51a4b2639c3a138bddd29be6768672137b00e897": {
+            "symbol": "WCUBE",
+            "decimals": 18,
+            "address": "0x51a4b2639c3a138bddd29be6768672137b00e897"
+        },
+        "0x42b4ccc33d15c7b912ec9db03c2f4a1bf9b39fe4": {
+            "symbol": "dIKE",
+            "decimals": 18,
+            "address": "0x42b4ccc33d15c7b912ec9db03c2f4a1bf9b39fe4"
+        },
+        "0x334fafe39f73e66023d3f6d3da2681611ab07a20": {
+            "symbol": "TT",
+            "decimals": 18,
+            "address": "0x334fafe39f73e66023d3f6d3da2681611ab07a20"
+        },
+        "0xd653862274884e61dcf05dc29d766a5ddf1eb2b6": {
+            "symbol": "Cult DAO",
+            "decimals": 18,
+            "address": "0xd653862274884e61dcf05dc29d766a5ddf1eb2b6"
+        },
+        "0x401c5fb67879520f17166255b27cdef761edb256": {
+            "symbol": "ArcMaMainframe Token",
+            "decimals": 18,
+            "address": "0x401c5fb67879520f17166255b27cdef761edb256"
+        },
+        "0xf4ca09d135831e7894c644fbd55c7c31216aee18": {
+            "symbol": "KOK Coin",
+            "decimals": 18,
+            "address": "0xf4ca09d135831e7894c644fbd55c7c31216aee18"
+        },
+        "0x929fe11e753e3b9f5cd76e5a323d82f85938425d": {
+            "symbol": "Locus Chain",
+            "decimals": 18,
+            "address": "0x929fe11e753e3b9f5cd76e5a323d82f85938425d"
+        },
+        "0xd6d37e564da4080310659ee41a106b0597858b54": {
+            "symbol": "VERA",
+            "decimals": 18,
+            "address": "0xd6d37e564da4080310659ee41a106b0597858b54"
+        },
+        "0x98120ad791ee5dd732f7b115db2425f03a1faba7": {
+            "symbol": "OMI Token",
+            "decimals": 18,
+            "address": "0x98120ad791ee5dd732f7b115db2425f03a1faba7"
+        },
+        "0x43da8652c536d234152c4598d5f3adb98bccbc41": {
+            "symbol": "Hop Token",
+            "decimals": 18,
+            "address": "0x43da8652c536d234152c4598d5f3adb98bccbc41"
+        },
+        "0x4a5b4a7deddb8fb5cd7a021d2c04e5b38d260263": {
+            "symbol": "LIT",
+            "decimals": 18,
+            "address": "0x4a5b4a7deddb8fb5cd7a021d2c04e5b38d260263"
+        },
+        "0x3f78509cebe23ac36bd26b37134e35351bd7f298": {
+            "symbol": "Confetti",
+            "decimals": 18,
+            "address": "0x3f78509cebe23ac36bd26b37134e35351bd7f298"
+        },
+        "0x6a6bbffde3805ea9e3cd3fba827aeba868234f72": {
+            "symbol": "MicroValidator",
+            "decimals": 18,
+            "address": "0x6a6bbffde3805ea9e3cd3fba827aeba868234f72"
+        },
+        "0x1166461a8f1133afe8cd394948f56d0485d01898": {
+            "symbol": "Rai Reflex Index",
+            "decimals": 18,
+            "address": "0x1166461a8f1133afe8cd394948f56d0485d01898"
+        },
+        "0xce24e417a19532557dd2ec78ad678abc39aca0ac": {
+            "symbol": "MAP Protocol",
+            "decimals": 18,
+            "address": "0xce24e417a19532557dd2ec78ad678abc39aca0ac"
+        },
+        "0x5ba824ebed5a38963a3a8586cfe2069780bf4706": {
+            "symbol": "Gluwa Creditcoin Vesting Token",
+            "decimals": 18,
+            "address": "0x5ba824ebed5a38963a3a8586cfe2069780bf4706"
+        },
+        "0x7a0ca106aed5d6678be754ac5edba034f1a989b5": {
+            "symbol": "HEX",
+            "decimals": 18,
+            "address": "0x7a0ca106aed5d6678be754ac5edba034f1a989b5"
+        },
+        "0x9b66e1a412a72489360d892a8b96b0d7e6c26556": {
+            "symbol": "Value Liquidity",
+            "decimals": 18,
+            "address": "0x9b66e1a412a72489360d892a8b96b0d7e6c26556"
+        },
+        "0x28dd0118ada620cc7ab8fa369e304e06009e2f8e": {
+            "symbol": "Star Token",
+            "decimals": 18,
+            "address": "0x28dd0118ada620cc7ab8fa369e304e06009e2f8e"
+        },
+        "0xad5b06623184b4255c85b684d55ee5899626f5ab": {
+            "symbol": "SUKU",
+            "decimals": 18,
+            "address": "0xad5b06623184b4255c85b684d55ee5899626f5ab"
+        },
+        "0x9f67050c4ab51097dbf7d64355c533e49d6b4483": {
+            "symbol": "Route",
+            "decimals": 18,
+            "address": "0x9f67050c4ab51097dbf7d64355c533e49d6b4483"
+        },
+        "0x66b05d4b351d3263427f0be6275803e6dd5a06ff": {
+            "symbol": "Flux Token",
+            "decimals": 18,
+            "address": "0x66b05d4b351d3263427f0be6275803e6dd5a06ff"
+        },
+        "0x566ce89157fb0a806db7da35c7857c50e5298e32": {
+            "symbol": "Seek Tiger",
+            "decimals": 18,
+            "address": "0x566ce89157fb0a806db7da35c7857c50e5298e32"
+        },
+        "0xb153409524debbc41058988047f06046b90ab4c0": {
+            "symbol": "Black Hole Prince",
+            "decimals": 18,
+            "address": "0xb153409524debbc41058988047f06046b90ab4c0"
+        },
+        "0x12c4098b1ca41240ea7767c05df037bcc59eddaf": {
+            "symbol": "Bomber Coin",
+            "decimals": 18,
+            "address": "0x12c4098b1ca41240ea7767c05df037bcc59eddaf"
+        },
+        "0x42f71bcc7412bae23808c3f5e4f1669dcbf0f7b4": {
+            "symbol": "Vita Inu",
+            "decimals": 18,
+            "address": "0x42f71bcc7412bae23808c3f5e4f1669dcbf0f7b4"
+        },
+        "0x0170646cdd2bd1c8f773aa089718787a3098d550": {
+            "symbol": "Everdome",
+            "decimals": 18,
+            "address": "0x0170646cdd2bd1c8f773aa089718787a3098d550"
+        },
+        "0x9043e91e87970a4e98e75630cdaaee5f0ed15dc9": {
+            "symbol": "Squid Game",
+            "decimals": 18,
+            "address": "0x9043e91e87970a4e98e75630cdaaee5f0ed15dc9"
+        },
+        "0xd07baf29b40effbea586892a5f03071cdbbe66af": {
+            "symbol": "DAO staking Credential",
+            "decimals": 18,
+            "address": "0xd07baf29b40effbea586892a5f03071cdbbe66af"
+        },
+        "0x084da8ba3c4e450a6d96b22d206ff5f3a3c14ee4": {
+            "symbol": "Etermon",
+            "decimals": 18,
+            "address": "0x084da8ba3c4e450a6d96b22d206ff5f3a3c14ee4"
+        },
+        "0x2d76722826ca738a3854303184bac0fe858ca514": {
+            "symbol": "Frog Inu",
+            "decimals": 18,
+            "address": "0x2d76722826ca738a3854303184bac0fe858ca514"
+        },
+        "0x04cc6e49cab28d3c6ba328a25db685d1a27e0993": {
+            "symbol": "HyperVerse Token",
+            "decimals": 18,
+            "address": "0x04cc6e49cab28d3c6ba328a25db685d1a27e0993"
+        },
+        "0x28f7a902fa7b4a47920b45d5bf8daff673fb1f46": {
+            "symbol": "Vention",
+            "decimals": 18,
+            "address": "0x28f7a902fa7b4a47920b45d5bf8daff673fb1f46"
+        },
+        "0x84ea9a61d0ac2d74692e4d184efae11bddd22d4b": {
+            "symbol": "StartUPToken",
+            "decimals": 18,
+            "address": "0x84ea9a61d0ac2d74692e4d184efae11bddd22d4b"
+        },
+        "0x807c444c9b0fe45fc1ffee2e7d5cc27c256d248b": {
+            "symbol": "manogames.net",
+            "decimals": 18,
+            "address": "0x807c444c9b0fe45fc1ffee2e7d5cc27c256d248b"
+        },
+        "0x4790addca6b08a9644b212664b780fa2f22342a1": {
+            "symbol": "LXT-Token",
+            "decimals": 18,
+            "address": "0x4790addca6b08a9644b212664b780fa2f22342a1"
+        },
+        "0x124e12ce554fb464dd88376aefa888e0a1146ec5": {
+            "symbol": "CALO",
+            "decimals": 18,
+            "address": "0x124e12ce554fb464dd88376aefa888e0a1146ec5"
+        },
+        "0x0242ca94fc72655cc8e06dec5d81f66fdfcc300e": {
+            "symbol": "Senspark",
+            "decimals": 18,
+            "address": "0x0242ca94fc72655cc8e06dec5d81f66fdfcc300e"
+        },
+        "0x153f60f78a5062d89a99494f19382fa4b9e1b154": {
+            "symbol": "CFI",
+            "decimals": 18,
+            "address": "0x153f60f78a5062d89a99494f19382fa4b9e1b154"
+        },
+        "0x1298215d4eba5b0bc08b796c74f6c1a49896a909": {
+            "symbol": "Doge",
+            "decimals": 18,
+            "address": "0x1298215d4eba5b0bc08b796c74f6c1a49896a909"
+        },
+        "0x1f2c4f62f5ade9b84f996381460412a3815973b1": {
+            "symbol": "Doge",
+            "decimals": 9,
+            "address": "0x1f2c4f62f5ade9b84f996381460412a3815973b1"
+        },
+        "0x17ad31690227fec5bd62ad2067c39a49bc39eb5d": {
+            "symbol": "CubeMoon",
+            "decimals": 18,
+            "address": "0x17ad31690227fec5bd62ad2067c39a49bc39eb5d"
+        },
+        "0x79f1520268a20c879ef44d169a4e3812d223c6de": {
+            "symbol": "USDT",
+            "decimals": 18,
+            "address": "0x79f1520268a20c879ef44d169a4e3812d223c6de"
+        },
+        "0x18552fff49b60aabee5880da7abf1be10f552b4a": {
+            "symbol": "CubeMoon",
+            "decimals": 9
         }
     },
     "42161": {

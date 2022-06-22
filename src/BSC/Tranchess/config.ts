@@ -53,4 +53,18 @@ export const Config = {
         B: 2,
         A: 4,
     },
+    v2: {
+        BNBFund: {
+            primaryMarket: '0x991c55304790c75cEbEe69da7601A18aA0977F24',
+            primaryMarketRouter: '0xd5396F6D8173bD0a8f64c68d81b41a39162673eE',
+            shareStaking: '0xFa7b73009d635b0AB069cBe99C5a5D498F701c76',
+            twapOracle: '0x81f7bA3FaFEe999ab8cbfCd25058080A2068E6C4',
+            fund: '0x7618f37EfE8930d5EE6da34185b3AbB750BD2a34', // 获取token列表：tokenM : Queen | tokenA : Bishop | tokenB : Rook
+            tokens: [
+                '0xA5b75770FfBCaC62AaC621d57D7ce9f4EA60D7e7',
+                '0x20D269c5bF15B6679D832ED05734E30a7657dDF3',
+                '0x89035Eb6dC4D3Bb504c39E05F6cf25a7C8F68bbC',
+            ],
+        }
+    }
 };

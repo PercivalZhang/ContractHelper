@@ -14,7 +14,12 @@ const main = async () => {
     const lpDetails = await gSwissKnife.getLPTokenDetails(Config.SLP)
     const token0 = lpDetails.token0 // STRP
     const token1 = lpDetails.token1 // USDC
-    
+    logger.info(`liquidity pool > token0 - ${token0.symbol} balance: ${token0.readableAmountFromBN(lpDetails.reserve0).toFixed(4)}`)
+    logger.info(`liquidity pool > token1 - ${token1.symbol} balance: ${token1.readableAmountFromBN(lpDetails.reserve1).toFixed(4)}`)
+
+    const amountsOut = await sushiRouter.callReadMethod('getAmountsOut', new BigNumber(1).multipliedBy(Math.pow(10, token0.decimals)), [token0.address, token1.address])
+    logger.info(`voucher > token 0 - ${token0.symbol} price: ${token1.readableAmount(amountsOut[1]).toFixed(4)} ${token1.symbol}`)
+
     const dsaToken0Balance = await gSwissKnife.getERC20TokenBalance(token0.address, Config.DSA)
     const dsaToken1Balance = await gSwissKnife.getERC20TokenBalance(token1.address, Config.DSA)
     logger.info(`voucher > DSA account token0 - ${token0.symbol} balance: ${dsaToken0Balance.toFixed(4)}`)
@@ -39,8 +44,6 @@ const main = async () => {
     const vToken1Amount = token1.readableAmountFromBN(vRatio.multipliedBy(lpDetails.reserve1))
     logger.info(`voucher > token0 - ${token0.symbol}  balance: ${vToken0Amount.toFixed(4)}`)
     logger.info(`voucher > token1 - ${token1.symbol}  balance: ${vToken1Amount.toFixed(4)}`)
-    const amountsOut = await sushiRouter.callReadMethod('getAmountsOut', new BigNumber(1).multipliedBy(Math.pow(10, token0.decimals)), [token0.address, token1.address])
-    logger.info(`voucher > token 0 - ${token0.symbol} price: ${token1.readableAmount(amountsOut[1]).toFixed(4)} ${token1.symbol}`)
 };
 
 main().catch((e) => {
