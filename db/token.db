@@ -2064,6 +2064,10 @@
         "0x18552fff49b60aabee5880da7abf1be10f552b4a": {
             "symbol": "CubeMoon",
             "decimals": 9
+        },
+        "0x9603347a4421a35f6f390e3f187bd24c80bdfb27": {
+            "symbol": "iCube",
+            "decimals": 18
         }
     },
     "42161": {

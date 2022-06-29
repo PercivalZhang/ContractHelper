@@ -135,10 +135,13 @@ const main = async () => {
     // const blocks = await getBlocksFromTimestamps([t1, t2, tWeek])
     // console.log(blocks)
 
-    const data = await getBulkPairData(['0x42d0efc74a084fe0cc5e82c6f22667db72ed823f'], 1094)
+
+    //0x20e66bc8f35aa9573cc5c308f10dbead9e617a69 - cube/corn
+    //0x42d0efc74a084fe0cc5e82c6f22667db72ed823f - usdc/usdt
+    const data = await getBulkPairData(['0x20e66bc8f35aa9573cc5c308f10dbead9e617a69'], 1094)
     console.log(data)
 
-    await getUserPositions('0xdb6045b87471b3398329c384f61f66958c238c83')
+    //await getUserPositions('0xdb6045b87471b3398329c384f61f66958c238c83')
 };
 
 main().catch((e) => {
