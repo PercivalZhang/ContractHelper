@@ -1,0 +1,17 @@
+{
+    "1": {
+        "0x69D91B94f0AaF8e8A2586909fA77A5c2c89818d5": {
+            "factory": "0x1F98431c8aD98523631AE4a59f267346ea31F984",
+            "token0": "0x2b591e99afE9f32eAA6214f7B7629768c40Eeb39",
+            "token1": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "fee": 3000,
+            "tickSpacing": 60,
+            "maxLiquidityPerTick": [
+                462680162,
+                257080840,
+                710466737,
+                9294265
+            ]
+        }
+    }
+}

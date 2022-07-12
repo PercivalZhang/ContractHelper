@@ -9,7 +9,7 @@ import { keccak256 } from '@ethersproject/solidity';
 import { TickMath, SqrtPriceMath } from '@uniswap/v3-sdk';
 import { LoggerFactory } from '../LoggerFactory';
 import { ContractHelper } from '../contract.helper';
-import { NFTDB } from './nft.db';
+import { UniV3JSONDB } from './uni.v3.db';
 
 export type UniV3NFTPosition = {
     id: number;
@@ -38,7 +38,7 @@ export type Slot0Data = {
 const POOL_INIT_CODE_HASH = '0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54';
 
 const logger = LoggerFactory.getInstance().getLogger('UniV3Helper');
-const gNFTDB = NFTDB.getInstance();
+const gNFTDB = UniV3JSONDB.getInstance();
 
 const PositionManagerMetadata = {
     address: '',
@@ -122,13 +122,12 @@ export class UniV3PM {
     }
 
     public async getPositionById(posId: number, ignoreTokenAmount = true): Promise<UniV3NFTPosition> {
-        let pos = await gNFTDB.getById(posId.toString());
+        let pos = await gNFTDB.getPositionById(posId.toString());
         if (!pos) {
             // 获取position信息
             const position = await this.positionManager.callReadMethod('positions', posId);
             const tickLower = Number.parseInt(position.tickLower);
             const tickUpper = Number.parseInt(position.tickUpper);
-            const liquidity = JSBI.BigInt(position.liquidity);
             const token0Address = position.token0;
             const token1Address = position.token1;
             const fee = Number.parseInt(position.fee);
@@ -150,11 +149,11 @@ export class UniV3PM {
                 liquidity: position.liquidity,
                 token0: {
                     token: token0,
-                    amount: '0',
+                    amount: '0', // 取决于pool的tickCurrent
                 },
                 token1: {
                     token: token1,
-                    amount: '0',
+                    amount: '0', // 取决于pool的tickCurrent
                 },
                 fee: fee,
             };
@@ -175,7 +174,7 @@ export class UniV3PM {
             //计算并补齐position中缺失的两种token的数量
             pos = await this.calPositionTokenAmount(pos);
         }
-        await gNFTDB.syncUp(pos);
+        await gNFTDB.syncUpPosition(pos);
         return pos;
     }
     /**

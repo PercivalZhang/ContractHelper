@@ -29,6 +29,11 @@ const main = async () => {
     console.log(tx)
     const txReceipt = await web3.eth.getTransactionReceipt('0x6c0298c3b10e6fbb5fa8575f7d23bcb5b53905867b9ff7054d7f2b8e2c6524cf')
     console.log(txReceipt)
+
+    /**
+     * 合约内部方法再创建合约
+     * 需要分析internal tx
+     */
 };
 
 main().catch((e) => {

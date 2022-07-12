@@ -53,6 +53,10 @@ export class ContractHelper {
         methodName: string,
         ...args: any[]
     ) {
+        if(args == null) 
+            return this.contract.methods[methodName]().encodeABI()
+        if(args.length == 0)
+            return this.contract.methods[methodName]().encodeABI()
         return this.contract.methods[methodName](...args).encodeABI();
     }
 

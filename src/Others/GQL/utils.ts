@@ -37,7 +37,7 @@ export async function getBlocksFromTimestamps(timestamps, skipCount = 500) {
   }
 
   let fetchedData = await splitQuery(GET_BLOCKS, blockClient, [], timestamps, skipCount)
-
+  console.log(fetchedData)
   let blocks = []
   if (fetchedData) {
     for (var t in fetchedData) {
@@ -60,6 +60,11 @@ export function getTimestampsForChanges() {
   return [t1, t2, tWeek]
 }
 
+export function getSpecifiedTimestampsForChanges(deltaDays: number) {
+  const utcCurrentTime = dayjs()
+  const timestamp = utcCurrentTime.subtract(deltaDays, 'day').startOf('minute').unix()
+  return timestamp
+}
 
 /**
  * gets the amoutn difference plus the % change in change itself (second order change)

@@ -45,11 +45,11 @@ export class SwissKnife {
     public decode(pType: EVMDataType, hex: string) {
         switch(pType) {
             case EVMDataType.STRING:
-                return this.web3.eth.abi.decodeParameter('string', hex)
+                return this.web3.eth.abi.decodeParameter('string', hex).toString()
             case EVMDataType.UINT256:  
-                return this.web3.eth.abi.decodeParameter('uint256', hex)  
+                return this.web3.eth.abi.decodeParameter('uint256', hex).toString()
             case EVMDataType.ADDRESS:
-                return this.web3.eth.abi.decodeParameter('address', hex)    
+                return this.web3.eth.abi.decodeParameter('address', hex).toString() 
         }
     }
     public decodeArray(typesArray: Array<String|Object>, hex: string) {

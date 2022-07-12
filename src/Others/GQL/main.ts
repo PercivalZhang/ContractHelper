@@ -1,7 +1,7 @@
-import { getTimestampsForChanges, getBlocksFromTimestamps, get2DayPercentChange, getPercentChange } from "./utils";
+import { getTimestampsForChanges, getSpecifiedTimestampsForChanges, getBlocksFromTimestamps, get2DayPercentChange, getPercentChange } from "./utils";
 import { client } from './apollo/client'
 import { PAIRS_BULK, PAIRS_HISTORICAL_BULK, PAIR_DATA, USER_POSITIONS } from './apollo/query'
-
+import dayjs from 'dayjs'
 async function getUserPositions(userAddress: string) {
     try {
         let positions = await client.query({
@@ -138,10 +138,25 @@ const main = async () => {
 
     //0x20e66bc8f35aa9573cc5c308f10dbead9e617a69 - cube/corn
     //0x42d0efc74a084fe0cc5e82c6f22667db72ed823f - usdc/usdt
-    const data = await getBulkPairData(['0x20e66bc8f35aa9573cc5c308f10dbead9e617a69'], 1094)
-    console.log(data)
+    //const data = await getBulkPairData(['0x20e66bc8f35aa9573cc5c308f10dbead9e617a69'], 1094)
+    //console.log(data)
 
     //await getUserPositions('0xdb6045b87471b3398329c384f61f66958c238c83')
+
+    const tNow = getSpecifiedTimestampsForChanges(0)
+    console.log(dayjs.unix(tNow).format('DD/MM/YYYY'))
+    //const blocksNow = await getBlocksFromTimestamps(tNow)
+    //获取1天前的时间戳
+    const t29 = getSpecifiedTimestampsForChanges(1)
+    console.log(dayjs.unix(t29).format('DD/MM/YYYY'))
+    //获取1天前的区块
+    const blocks29 = await getBlocksFromTimestamps([t29])
+    console.log(blocks29)
+
+    const t28 = getSpecifiedTimestampsForChanges(2)
+    console.log(dayjs.unix(t28).format('DD/MM/YYYY'))
+    const blocks28 = await getBlocksFromTimestamps([t28])
+    console.log(blocks28)
 };
 
 main().catch((e) => {
