@@ -10,7 +10,7 @@ import BigNumber from 'bignumber.js';
 import { ContractHelper } from '../../library/contract.helper';
 import { SwissKnife } from '../../library/swiss.knife';
 import { Config } from './Config';
-import { Slot0Data, UniV3PM } from '../../library/uni.v3/uni.v3';
+import { Slot0Data, UniV3PM } from '../../library/uni.v3/uni.v3.pm';
 import { Position as UniV3POS } from '@uniswap/v3-sdk';
 import { UniV3Util } from '../../library/uni.v3/uni.v3.util';
 import JSBI from 'jsbi';

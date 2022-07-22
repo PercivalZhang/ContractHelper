@@ -37,7 +37,7 @@ export type Slot0Data = {
 
 const POOL_INIT_CODE_HASH = '0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54';
 
-const logger = LoggerFactory.getInstance().getLogger('UniV3Helper');
+const logger = LoggerFactory.getInstance().getLogger('UniV3PositionManager');
 const gNFTDB = UniV3JSONDB.getInstance();
 
 const PositionManagerMetadata = {
@@ -124,41 +124,47 @@ export class UniV3PM {
     public async getPositionById(posId: number, ignoreTokenAmount = true): Promise<UniV3NFTPosition> {
         let pos = await gNFTDB.getPositionById(posId.toString());
         if (!pos) {
+            logger.info(`getPositionById > fetch position infor from postion manager contract: ${posId}`)
             // 获取position信息
             const position = await this.positionManager.callReadMethod('positions', posId);
-            const tickLower = Number.parseInt(position.tickLower);
-            const tickUpper = Number.parseInt(position.tickUpper);
+            const tickLower = Number.parseInt(position.tickLower)
+            const tickUpper = Number.parseInt(position.tickUpper)
             const token0Address = position.token0;
             const token1Address = position.token1;
-            const fee = Number.parseInt(position.fee);
+            const fee = Number.parseInt(position.fee)
+            const liquidity = position.liquidity
             // ignore流动性为0的position
-            //if (JSBI.GT(liquidity, 0)) {
-            const token0 = await this.swissKnife.syncUpTokenDB(token0Address);
-            const token1 = await this.swissKnife.syncUpTokenDB(token1Address);
-            const poolAddress = UniV3PM.computePoolAddress(this.factoryAddress, token0Address, token1Address, fee);
-            logger.info(`getPositionById > pos id: ${posId}`);
-            logger.info(`getPositionById > pool - ${token0.symbol}/${token1.symbol}: ${poolAddress}`);
+            if (JSBI.GT(JSBI.BigInt(liquidity), 0)) { // 其实liquidity=0的postion已经无用，处于待销毁状态
+                const token0 = await this.swissKnife.syncUpTokenDB(token0Address);
+                const token1 = await this.swissKnife.syncUpTokenDB(token1Address);
+                const poolAddress = UniV3PM.computePoolAddress(this.factoryAddress, token0Address, token1Address, fee);
+                logger.info(`getPositionById > pos id: ${posId}`);
+                logger.info(`getPositionById > pool - ${token0.symbol}/${token1.symbol}: ${poolAddress}`);
 
-            pos = {
-                id: posId,
-                pool: poolAddress,
-                tickLower,
-                tickUpper,
-                priceLower: 0.0,
-                priceUpper: 0.0,
-                liquidity: position.liquidity,
-                token0: {
-                    token: token0,
-                    amount: '0', // 取决于pool的tickCurrent
-                },
-                token1: {
-                    token: token1,
-                    amount: '0', // 取决于pool的tickCurrent
-                },
-                fee: fee,
-            };
-            //pos.priceLower = this.tick2PriceDecimal(pos.tickLower, token0.decimals, token1.decimals);
-            //pos.priceUpper = this.tick2PriceDecimal(pos.tickUpper, token0.decimals, token1.decimals);
+                pos = {
+                    id: posId,
+                    pool: poolAddress,
+                    tickLower,
+                    tickUpper,
+                    priceLower: 0.0,
+                    priceUpper: 0.0,
+                    liquidity,
+                    token0: {
+                        token: token0,
+                        amount: '0', // 取决于pool的tickCurrent
+                    },
+                    token1: {
+                        token: token1,
+                        amount: '0', // 取决于pool的tickCurrent
+                    },
+                    fee: fee,
+                };
+                pos.priceLower = this.tick2PriceDecimal(pos.tickLower, token0.decimals, token1.decimals)
+                pos.priceUpper = this.tick2PriceDecimal(pos.tickUpper, token0.decimals, token1.decimals)
+                await gNFTDB.syncUpPosition(pos)
+            } else {
+                logger.debug(`getPositionById > ignored postion - ${posId} with zero liquidity`)
+            }
             /**
              * tokenId: position id/NFT tokenId
              * _user: user address
@@ -174,7 +180,6 @@ export class UniV3PM {
             //计算并补齐position中缺失的两种token的数量
             pos = await this.calPositionTokenAmount(pos);
         }
-        await gNFTDB.syncUpPosition(pos);
         return pos;
     }
     /**

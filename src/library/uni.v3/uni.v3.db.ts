@@ -1,7 +1,7 @@
 import * as path from 'path';
 import { LoggerFactory } from '../LoggerFactory';
 import { JSONDBBuilder } from '../db.json';
-import { UniV3NFTPosition } from './uni.v3';
+import { UniV3NFTPosition } from './uni.v3.pm';
 import { NetworkType, Web3Factory } from '../web3.factory';
 import JSBI from 'jsbi';
 import { SwissKnife, EVMDataType } from '../swiss.knife';
